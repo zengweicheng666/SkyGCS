@@ -10,6 +10,7 @@
 #include <QPlainTextEdit>
 #include <QPushButton>
 #include <QSpinBox>
+#include <QSplitter>
 #include <QStatusBar>
 #include <QTabWidget>
 #include <QTime>
@@ -20,7 +21,9 @@
 #include "commandpanel.h"
 #include "linkdialog.h"
 #include "messageinspector.h"
+#include "missionpanel.h"
 #include "serialconsole.h"
+#include "telemetrychart.h"
 #include "telemetrypanel.h"
 
 namespace skygcs {
@@ -40,11 +43,19 @@ MainWindow::MainWindow(QWidget* parent)
     // ---- 中央标签页 ----
     tabs_ = new QTabWidget(this);
     telemetry_ = new TelemetryPanel(endpoint_->vehicle(), this);
+    auto* teleChart = new TelemetryChart(endpoint_->vehicle(), this);
+    auto* teleSplit = new QSplitter(Qt::Vertical, this);
+    teleSplit->addWidget(telemetry_);
+    teleSplit->addWidget(teleChart);
+    teleSplit->setStretchFactor(0, 3);
+    teleSplit->setStretchFactor(1, 4);
     commands_ = new CommandPanel(endpoint_, this);
+    mission_ = new MissionPanel(endpoint_, this);
     serialConsole_ = new SerialConsole(this);
     inspector_ = new MessageInspector(endpoint_, this);
-    tabs_->addTab(telemetry_, tr("遥测监控"));
+    tabs_->addTab(teleSplit, tr("遥测监控"));
     tabs_->addTab(commands_, tr("飞行指令"));
+    tabs_->addTab(mission_, tr("任务规划"));
     tabs_->addTab(serialConsole_, tr("载荷串口控制台"));
     tabs_->addTab(inspector_, tr("消息检查器"));
     setCentralWidget(tabs_);

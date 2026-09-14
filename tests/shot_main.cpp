@@ -5,6 +5,7 @@
 // ============================================================================
 #include <QApplication>
 #include <QPixmap>
+#include <QSplitter>
 #include <QTabWidget>
 #include <QTimer>
 #include <QVBoxLayout>
@@ -15,6 +16,8 @@
 #include "../src/sim/flightsim.h"
 #include "../src/ui/commandpanel.h"
 #include "../src/ui/messageinspector.h"
+#include "../src/ui/missionpanel.h"
+#include "../src/ui/telemetrychart.h"
 #include "../src/ui/telemetrypanel.h"
 
 using namespace skygcs;
@@ -39,14 +42,20 @@ int main(int argc, char* argv[])
     sim->setHome(24.51, 117.65, 30.0);
     sim->startUdpServer(14550);
 
-    // 让 MainWindow 也持有同一 endpoint 无法直接注入, 改用独立窗口组合:
-    // 直接构造 TelemetryPanel+CommandPanel 用 endpoint 展示
+    // 独立窗口组合: 遥测(数值+曲线) / 飞行指令 / 任务规划 / 消息检查器
     QWidget host;
     host.setWindowTitle(QStringLiteral("SkyGCS 无人机地面站 (MAVLink / QT / C++)"));
     host.resize(1295, 857);
     auto* tabs = new QTabWidget(&host);
-    tabs->addTab(new TelemetryPanel(endpoint->vehicle(), tabs), QStringLiteral("遥测监控"));
+    auto* teleSplit = new QSplitter(Qt::Vertical, tabs);
+    teleSplit->addWidget(new TelemetryPanel(endpoint->vehicle(), teleSplit));
+    teleSplit->addWidget(new TelemetryChart(endpoint->vehicle(), teleSplit));
+    teleSplit->setStretchFactor(0, 3);
+    teleSplit->setStretchFactor(1, 4);
+    tabs->addTab(teleSplit, QStringLiteral("遥测监控"));
     tabs->addTab(new CommandPanel(endpoint, tabs), QStringLiteral("飞行指令"));
+    auto* mission = new MissionPanel(endpoint, tabs);
+    tabs->addTab(mission, QStringLiteral("任务规划"));
     auto* msgList = new QWidget(tabs);
     auto* ml = new QVBoxLayout(msgList);
     ml->addWidget(new MessageInspector(endpoint, msgList));
@@ -60,18 +69,43 @@ int main(int argc, char* argv[])
         endpoint->armDisarm(true);
         endpoint->takeoff(8.0f);
     });
-    QTimer::singleShot(9000, [&]() {
+    QTimer::singleShot(10500, [&]() {
+        // 上传 3 航点任务并开始 (与 test_integration 同款)
+        QVector<MavlinkEndpoint::MissionItem> items;
+        const double hLat = 24.51, hLon = 117.65;
+        const double dLat1 = 60.0 / 111320.0;
+        const double dLon1 = 60.0 / (111320.0 * std::cos(hLat * M_PI / 180.0));
+        MavlinkEndpoint::MissionItem it;
+        it.frame = mav::FRAME_GLOBAL_RELATIVE_ALT_INT;
+        it.z = 8.0f;
+        it.x = static_cast<int32_t>((hLat + dLat1) * 1e7);
+        it.y = static_cast<int32_t>(hLon * 1e7);
+        items.append(it);
+        it.x = static_cast<int32_t>((hLat + dLat1) * 1e7);
+        it.y = static_cast<int32_t>((hLon + dLon1) * 1e7);
+        items.append(it);
+        it.x = static_cast<int32_t>((hLat + 2 * dLat1) * 1e7);
+        items.append(it);
+        endpoint->uploadMission(items);
+    });
+    QTimer::singleShot(15000, [&]() {
+        endpoint->startMission();
+    });
+    QTimer::singleShot(22000, [&]() {
+        // 切换到任务规划页, 展示任务进度
+        tabs->setCurrentWidget(mission);
+    });
+    QTimer::singleShot(26000, [&]() {
         const QString out = (argc > 1) ? QString::fromLocal8Bit(argv[1])
                                        : QStringLiteral("docs/screenshot_live.png");
         const QPixmap pm = host.grab();
         const bool ok = pm.save(out);
         std::printf("%s %s (%dx%d)\n", ok ? "SAVED" : "FAIL", qPrintable(out),
                     pm.width(), pm.height());
-        std::printf("vehicle online=%d armed=%d altRel=%.1f mode=%s\n",
-                    endpoint->vehicle()->isOnline(),
-                    endpoint->vehicle()->armed() ? 1 : 0,
-                    endpoint->vehicle()->relAlt(),
-                    qPrintable(endpoint->vehicle()->modeName()));
+        const VehicleState* v = endpoint->vehicle();
+        std::printf("vehicle online=%d armed=%d altRel=%.1f mode=%s cur=%d reached=%d\n",
+                    v->isOnline(), v->armed() ? 1 : 0, v->relAlt(),
+                    qPrintable(v->modeName()), v->missionCurrent(), v->missionReached());
         app.exit(ok ? 0 : 1);
     });
     return app.exec();

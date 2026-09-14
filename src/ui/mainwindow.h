@@ -19,6 +19,7 @@ namespace skygcs {
 
 class TelemetryPanel;
 class CommandPanel;
+class MissionPanel;
 class SerialConsole;
 class MessageInspector;
 
@@ -46,6 +47,7 @@ private:
     QTabWidget* tabs_ = nullptr;
     TelemetryPanel* telemetry_ = nullptr;
     CommandPanel* commands_ = nullptr;
+    MissionPanel* mission_ = nullptr;
     SerialConsole* serialConsole_ = nullptr;
     MessageInspector* inspector_ = nullptr;
 

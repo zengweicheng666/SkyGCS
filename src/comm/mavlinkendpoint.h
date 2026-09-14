@@ -42,6 +42,20 @@ public:
     bool requestHome();
     bool sendPing();
 
+    // ---- 任务 (Mission) ----
+    struct MissionItem {
+        uint16_t command = mav::CMD_NAV_WAYPOINT;
+        uint8_t  frame = mav::FRAME_GLOBAL_RELATIVE_ALT_INT;
+        float    p1 = 0, p2 = 0, p3 = 0, p4 = 0;   // 参数 (通常 0)
+        int32_t  x = 0;                            // 纬度 degE7
+        int32_t  y = 0;                            // 经度 degE7
+        float    z = 5.0f;                         // 高度 m (相对)
+    };
+    // 异步上传: COUNT → 收到 REQUEST_INT(seq) → 发 ITEM(seq) → ... → ACK
+    bool uploadMission(const QVector<MissionItem>& items);
+    bool startMission();        // CMD_MISSION_START
+    bool abortMissionUpload();  // 取消上传流程
+
     // 发送任意 MavMessage (用于仿真注入/扩展)
     bool sendMessage(const MavMessage& msg);
 
@@ -77,6 +91,10 @@ private:
     void handleRadio(const MavMessage& msg);
     void handleCommandAck(const MavMessage& msg);
     void handlePing(const MavMessage& msg);
+    void handleMissionRequestInt(const MavMessage& msg);
+    void handleMissionAck(const MavMessage& msg);
+    void handleMissionCurrent(const MavMessage& msg);
+    void handleMissionItemReached(const MavMessage& msg);
 
     QList<LinkInterface*> links_;
     QHash<LinkInterface*, MavlinkCodec*> codecs_;
@@ -95,6 +113,15 @@ private:
     PendingCommand pending_;
     uint8_t targetSysid_ = 1;
     uint8_t targetCompid_ = 1;
+
+    // 任务上传状态机
+    struct MissionUpload {
+        QVector<MissionItem> items;
+        int nextSeq = 0;
+        bool active = false;
+        qint64 startedAtMs = 0;
+    };
+    MissionUpload missionUpload_;
 
     LinkInterface* lastLink_ = nullptr;    // 最近收到数据的链路 (用于回复)
 };

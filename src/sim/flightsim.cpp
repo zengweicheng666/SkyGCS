@@ -157,6 +157,66 @@ void FlightSim::handleCommand(const MavMessage& msg)
         }
         break;
     }
+    case MAV_MSG_ID_MISSION_COUNT: {
+        MissionCountMsg m;
+        const MsgDef* def = MavlinkCodec::findDef(MAV_MSG_ID_MISSION_COUNT);
+        if (def && MavlinkCodec::unpack(*def, msg.data(), msg.size(), &m)) {
+            missionCount_ = m.count;
+            missionItems_.clear();
+            missionReady_ = false;
+            missionActive_ = false;
+            missionIdx_ = 0;
+            if (m.count > 0) {
+                MissionRequestIntMsg req{};
+                req.seq = 0;
+                req.target_system = msg.sysid;
+                req.target_component = msg.compid;
+                encodeAndSend(MAV_MSG_ID_MISSION_REQUEST_INT, &req);
+            } else {
+                MissionAckMsg ack{};
+                ack.type = mav::MISSION_INVALID;
+                ack.target_system = msg.sysid;
+                ack.target_component = msg.compid;
+                encodeAndSend(MAV_MSG_ID_MISSION_ACK, &ack);
+            }
+        }
+        break;
+    }
+    case MAV_MSG_ID_MISSION_ITEM_INT: {
+        MissionItemIntMsg m;
+        const MsgDef* def = MavlinkCodec::findDef(MAV_MSG_ID_MISSION_ITEM_INT);
+        if (def && MavlinkCodec::unpack(*def, msg.data(), msg.size(), &m)) {
+            if (missionCount_ < 0 || m.seq >= static_cast<uint16_t>(missionCount_)) {
+                MissionAckMsg ack{};
+                ack.type = mav::MISSION_INVALID_SEQUENCE;
+                ack.target_system = msg.sysid;
+                ack.target_component = msg.compid;
+                encodeAndSend(MAV_MSG_ID_MISSION_ACK, &ack);
+                break;
+            }
+            // 填充到正确槽位
+            if (static_cast<int>(missionItems_.size()) <= m.seq)
+                missionItems_.resize(m.seq + 1);
+            missionItems_[m.seq] = m;
+            if (m.seq == static_cast<uint16_t>(missionCount_ - 1)) {
+                missionReady_ = true;
+                MissionAckMsg ack{};
+                ack.type = mav::MISSION_ACCEPTED;
+                ack.target_system = msg.sysid;
+                ack.target_component = msg.compid;
+                encodeAndSend(MAV_MSG_ID_MISSION_ACK, &ack);
+                emitStatustext(mav::SEVERITY_INFO,
+                               QStringLiteral("任务上传完成: %1 个航点").arg(missionCount_));
+            } else {
+                MissionRequestIntMsg req{};
+                req.seq = m.seq + 1;
+                req.target_system = msg.sysid;
+                req.target_component = msg.compid;
+                encodeAndSend(MAV_MSG_ID_MISSION_REQUEST_INT, &req);
+            }
+        }
+        break;
+    }
     default:
         break;
     }
@@ -204,6 +264,23 @@ void FlightSim::processCommandLong(const CommandLongMsg& c)
         setMode(mav::PX4_MODE_AUTO, mav::PX4_AUTO_RTL);
         emitStatustext(mav::SEVERITY_INFO, "返航指令 (RTL)");
         ack.result = mav::RESULT_ACCEPTED;
+        break;
+    case mav::CMD_MISSION_START:
+        if (!armed_) {
+            ack.result = mav::RESULT_DENIED;
+            emitStatustext(mav::SEVERITY_ERROR, "任务被拒: 未解锁");
+        } else if (!missionReady_ || missionItems_.empty()) {
+            ack.result = mav::RESULT_FAILED;
+            emitStatustext(mav::SEVERITY_ERROR, "任务被拒: 无已上传任务");
+        } else {
+            missionActive_ = true;
+            missionIdx_ = 0;
+            missionReachedSent_ = false;
+            setMode(mav::PX4_MODE_AUTO, mav::PX4_AUTO_MISSION);
+            emitStatustext(mav::SEVERITY_INFO,
+                           QStringLiteral("任务开始: %1 个航点").arg(missionItems_.size()));
+            ack.result = mav::RESULT_ACCEPTED;
+        }
         break;
     case mav::CMD_GET_HOME_POSITION:
         ack.result = mav::RESULT_ACCEPTED;
@@ -266,6 +343,20 @@ void FlightSim::onTick()
             targetZ = -0.02;
         if (mainMode_ == mav::PX4_MODE_AUTO && subMode_ == mav::PX4_AUTO_RTL)
             targetZ = std::min(-targetAlt_, posN_[2] - 1.0);
+
+        // 任务: 航点目标 (GLOBAL_RELATIVE_ALT_INT: x=latE7 y=lonE7 z=相对高度m)
+        double wpTx = 0, wpTy = 0, wpTz = 0;
+        bool hasWp = false;
+        if (mainMode_ == mav::PX4_MODE_AUTO && subMode_ == mav::PX4_AUTO_MISSION
+            && missionActive_ && missionIdx_ < static_cast<int>(missionItems_.size())) {
+            const MissionItemIntMsg& wp = missionItems_[missionIdx_];
+            wpTx = (wp.x / 1e7 - homeLat_) * 111320.0;
+            wpTy = (wp.y / 1e7 - homeLon_) * 111320.0 * std::cos(homeLat_ * M_PI / 180.0);
+            wpTz = -wp.z;
+            targetZ = wpTz;
+            hasWp = true;
+        }
+
         const double desiredVel = std::clamp((targetZ - posN_[2]) * 0.6, -MAX_CLIMB, MAX_CLIMB);
         // 推力修正: 当前速度高于期望(过快上升/下降)则减推力; desiredVel 向上为负
         thrust = G + std::clamp((velN_[2] - desiredVel) * 1.2, -4.0, 4.0);
@@ -274,6 +365,36 @@ void FlightSim::onTick()
         // 水平: 回中漂移抑制
         ax = -velN_[0] * 0.5;
         ay = -velN_[1] * 0.5;
+
+        // 任务水平移动: 航点跟踪 (速度式控制, 限速 4m/s, 减速接近)
+        if (hasWp) {
+            const double dx = wpTx - posN_[0];
+            const double dy = wpTy - posN_[1];
+            const double dist = std::sqrt(dx * dx + dy * dy);
+            const double vxDes = std::clamp(dx * 1.0, -4.0, 4.0);
+            const double vyDes = std::clamp(dy * 1.0, -4.0, 4.0);
+            ax = std::clamp((vxDes - velN_[0]) * 2.0, -6.0, 6.0);
+            ay = std::clamp((vyDes - velN_[1]) * 2.0, -6.0, 6.0);
+            // 到达判定: 水平 2m 且高度 1.5m 内
+            if (dist < 2.0 && std::abs(posN_[2] - wpTz) < 1.5) {
+                MissionItemReachedMsg r{};
+                r.seq = static_cast<uint16_t>(missionIdx_);
+                encodeAndSend(MAV_MSG_ID_MISSION_ITEM_REACHED, &r);
+                emitStatustext(mav::SEVERITY_INFO,
+                               QStringLiteral("到达航点 %1/%2")
+                               .arg(missionIdx_ + 1).arg(missionItems_.size()));
+                ++missionIdx_;
+                if (missionIdx_ >= static_cast<int>(missionItems_.size())) {
+                    missionActive_ = false;
+                    emitStatustext(mav::SEVERITY_INFO, "任务完成, 自动返航");
+                    setMode(mav::PX4_MODE_AUTO, mav::PX4_AUTO_RTL);
+                } else {
+                    MissionCurrentMsg cur{};
+                    cur.seq = static_cast<uint16_t>(missionIdx_);
+                    encodeAndSend(MAV_MSG_ID_MISSION_CURRENT, &cur);
+                }
+            }
+        }
 
         // 任务水平移动: RTL 飞回家点
         if (mainMode_ == mav::PX4_MODE_AUTO && subMode_ == mav::PX4_AUTO_RTL) {
@@ -425,6 +546,12 @@ void FlightSim::onTick()
         h.longitude = static_cast<int32_t>(homeLon_ * 1e7);
         h.altitude = static_cast<int32_t>(homeAltMsl_ * 1e3);
         encodeAndSend(MAV_MSG_ID_HOME_POSITION, &h);
+    }
+    // MISSION_CURRENT 1Hz (255=无任务)
+    if (tick_ % 20 == 0) {
+        MissionCurrentMsg cur{};
+        cur.seq = missionActive_ ? static_cast<uint16_t>(missionIdx_) : 255;
+        encodeAndSend(MAV_MSG_ID_MISSION_CURRENT, &cur);
     }
 }
 

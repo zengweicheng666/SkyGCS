@@ -2,7 +2,7 @@
 // 本文件由 tools/gen_mavlink.py 自动生成 —— 请勿手工修改
 // 字段序/CRC/LEN 提取自官方 c_library_v2 (github.com/mavlink/c_library_v2)
 // 已按 mavlink C 库 crc_accumulate 算法交叉验证
-// 生成时间: 2026-09-14 18:14:19
+// 生成时间: 2026-09-14 18:48:57
 // ============================================================================
 #pragma once
 #include <cstdint>
@@ -25,6 +25,12 @@ enum MavMsgId : uint32_t {
     MAV_MSG_ID_LOCAL_POSITION_NED = 32,
     MAV_MSG_ID_GLOBAL_POSITION_INT = 33,
     MAV_MSG_ID_RC_CHANNELS_RAW = 35,
+    MAV_MSG_ID_MISSION_CURRENT = 42,
+    MAV_MSG_ID_MISSION_COUNT = 44,
+    MAV_MSG_ID_MISSION_ITEM_REACHED = 46,
+    MAV_MSG_ID_MISSION_ACK = 47,
+    MAV_MSG_ID_MISSION_REQUEST_INT = 51,
+    MAV_MSG_ID_MISSION_ITEM_INT = 73,
     MAV_MSG_ID_VFR_HUD = 74,
     MAV_MSG_ID_COMMAND_INT = 75,
     MAV_MSG_ID_COMMAND_LONG = 76,
@@ -164,6 +170,55 @@ static constexpr FieldDef kFields_RC_CHANNELS_RAW[] = {
     { FieldType::U16, 18, 2 },
     { FieldType::U8, 20, 1 },
     { FieldType::U8, 21, 1 },
+};
+
+// MISSION_CURRENT: id=42, crc_extra=28, payload=18B
+static constexpr FieldDef kFields_MISSION_CURRENT[] = {
+    { FieldType::U16, 0, 2 },
+};
+
+// MISSION_COUNT: id=44, crc_extra=221, payload=9B
+static constexpr FieldDef kFields_MISSION_COUNT[] = {
+    { FieldType::U16, 0, 2 },
+    { FieldType::U8, 2, 1 },
+    { FieldType::U8, 3, 1 },
+};
+
+// MISSION_ITEM_REACHED: id=46, crc_extra=11, payload=2B
+static constexpr FieldDef kFields_MISSION_ITEM_REACHED[] = {
+    { FieldType::U16, 0, 2 },
+};
+
+// MISSION_ACK: id=47, crc_extra=153, payload=8B
+static constexpr FieldDef kFields_MISSION_ACK[] = {
+    { FieldType::U8, 0, 1 },
+    { FieldType::U8, 1, 1 },
+    { FieldType::U8, 2, 1 },
+};
+
+// MISSION_REQUEST_INT: id=51, crc_extra=196, payload=5B
+static constexpr FieldDef kFields_MISSION_REQUEST_INT[] = {
+    { FieldType::U16, 0, 2 },
+    { FieldType::U8, 2, 1 },
+    { FieldType::U8, 3, 1 },
+};
+
+// MISSION_ITEM_INT: id=73, crc_extra=38, payload=38B
+static constexpr FieldDef kFields_MISSION_ITEM_INT[] = {
+    { FieldType::F32, 0, 4 },
+    { FieldType::F32, 4, 4 },
+    { FieldType::F32, 8, 4 },
+    { FieldType::F32, 12, 4 },
+    { FieldType::I32, 16, 4 },
+    { FieldType::I32, 20, 4 },
+    { FieldType::F32, 24, 4 },
+    { FieldType::U16, 28, 2 },
+    { FieldType::U16, 30, 2 },
+    { FieldType::U8, 32, 1 },
+    { FieldType::U8, 33, 1 },
+    { FieldType::U8, 34, 1 },
+    { FieldType::U8, 35, 1 },
+    { FieldType::U8, 36, 1 },
 };
 
 // VFR_HUD: id=74, crc_extra=20, payload=20B
@@ -336,6 +391,12 @@ static constexpr MsgDef kMsgDefs[] = {
     { 32, "LOCAL_POSITION_NED", 185, 28, 28, kFields_LOCAL_POSITION_NED, 7 },
     { 33, "GLOBAL_POSITION_INT", 104, 28, 28, kFields_GLOBAL_POSITION_INT, 9 },
     { 35, "RC_CHANNELS_RAW", 244, 22, 22, kFields_RC_CHANNELS_RAW, 11 },
+    { 42, "MISSION_CURRENT", 28, 2, 18, kFields_MISSION_CURRENT, 1 },
+    { 44, "MISSION_COUNT", 221, 4, 9, kFields_MISSION_COUNT, 3 },
+    { 46, "MISSION_ITEM_REACHED", 11, 2, 2, kFields_MISSION_ITEM_REACHED, 1 },
+    { 47, "MISSION_ACK", 153, 3, 8, kFields_MISSION_ACK, 3 },
+    { 51, "MISSION_REQUEST_INT", 196, 4, 5, kFields_MISSION_REQUEST_INT, 3 },
+    { 73, "MISSION_ITEM_INT", 38, 37, 38, kFields_MISSION_ITEM_INT, 14 },
     { 74, "VFR_HUD", 20, 20, 20, kFields_VFR_HUD, 6 },
     { 75, "COMMAND_INT", 158, 35, 35, kFields_COMMAND_INT, 13 },
     { 76, "COMMAND_LONG", 152, 33, 33, kFields_COMMAND_LONG, 11 },
@@ -349,6 +410,6 @@ static constexpr MsgDef kMsgDefs[] = {
     { 242, "HOME_POSITION", 104, 52, 60, kFields_HOME_POSITION, 10 },
     { 253, "STATUSTEXT", 83, 51, 54, kFields_STATUSTEXT, 2 },
 };
-static constexpr size_t kMsgDefCount = 24;
+static constexpr size_t kMsgDefCount = 30;
 
 } // namespace skygcs

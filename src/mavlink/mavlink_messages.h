@@ -63,6 +63,52 @@ struct SetModeMsg {
     uint8_t  base_mode;
 };
 
+// MISSION_CURRENT (id=42)
+struct MissionCurrentMsg {
+    uint16_t seq;          // 255 = 无任务
+};
+
+// MISSION_COUNT (id=44)
+struct MissionCountMsg {
+    uint16_t count;
+    uint8_t  target_system;
+    uint8_t  target_component;
+};
+
+// MISSION_ITEM_REACHED (id=46)
+struct MissionItemReachedMsg {
+    uint16_t seq;
+};
+
+// MISSION_ACK (id=47)
+struct MissionAckMsg {
+    uint8_t target_system;
+    uint8_t target_component;
+    uint8_t type;          // MAV_MISSION_RESULT
+};
+
+// MISSION_REQUEST_INT (id=51)
+struct MissionRequestIntMsg {
+    uint16_t seq;
+    uint8_t  target_system;
+    uint8_t  target_component;
+};
+
+// MISSION_ITEM_INT (id=73, 基础 37B; mission_type 为扩展字段, 不入表)
+struct MissionItemIntMsg {
+    float    param1, param2, param3, param4;
+    int32_t  x;            // 纬度 degE7 (global frame)
+    int32_t  y;            // 经度 degE7
+    float    z;            // 高度 m
+    uint16_t seq;
+    uint16_t command;
+    uint8_t  target_system;
+    uint8_t  target_component;
+    uint8_t  frame;
+    uint8_t  current;
+    uint8_t  autocontinue;
+};
+
 // PARAM_REQUEST_LIST (id=21)
 struct ParamRequestListMsg {
     uint8_t target_system;
@@ -367,6 +413,65 @@ inline bool unpackCommandAck(const MavMessage& msg, CommandAckMsg& out)
 inline bool unpackPing(const MavMessage& msg, PingMsg& out)
 {
     const MsgDef* def = MavlinkCodec::findDef(MAV_MSG_ID_PING);
+    return def && MavlinkCodec::unpack(*def, msg.data(), msg.size(), &out);
+}
+
+inline bool packMissionItemInt(uint16_t seq, uint8_t frame, uint16_t command,
+                               int32_t x, int32_t y, float z,
+                               uint8_t sysid, uint8_t compid, MavMessage& out,
+                               float p1 = 0, float p2 = 0, float p3 = 0, float p4 = 0)
+{
+    MissionItemIntMsg m{};
+    m.seq = seq; m.frame = frame; m.command = command;
+    m.x = x; m.y = y; m.z = z;
+    m.param1 = p1; m.param2 = p2; m.param3 = p3; m.param4 = p4;
+    m.target_system = sysid; m.target_component = compid;
+    m.current = 0; m.autocontinue = 1;
+    const MsgDef* def = MavlinkCodec::findDef(MAV_MSG_ID_MISSION_ITEM_INT);
+    return def && MavlinkCodec::pack(*def, &m, out);
+}
+
+inline bool packMissionCount(uint16_t count, uint8_t sysid, uint8_t compid, MavMessage& out)
+{
+    MissionCountMsg m{};
+    m.count = count; m.target_system = sysid; m.target_component = compid;
+    const MsgDef* def = MavlinkCodec::findDef(MAV_MSG_ID_MISSION_COUNT);
+    return def && MavlinkCodec::pack(*def, &m, out);
+}
+
+inline bool unpackMissionCount(const MavMessage& msg, MissionCountMsg& out)
+{
+    const MsgDef* def = MavlinkCodec::findDef(MAV_MSG_ID_MISSION_COUNT);
+    return def && MavlinkCodec::unpack(*def, msg.data(), msg.size(), &out);
+}
+
+inline bool unpackMissionItemInt(const MavMessage& msg, MissionItemIntMsg& out)
+{
+    const MsgDef* def = MavlinkCodec::findDef(MAV_MSG_ID_MISSION_ITEM_INT);
+    return def && MavlinkCodec::unpack(*def, msg.data(), msg.size(), &out);
+}
+
+inline bool unpackMissionRequestInt(const MavMessage& msg, MissionRequestIntMsg& out)
+{
+    const MsgDef* def = MavlinkCodec::findDef(MAV_MSG_ID_MISSION_REQUEST_INT);
+    return def && MavlinkCodec::unpack(*def, msg.data(), msg.size(), &out);
+}
+
+inline bool unpackMissionAck(const MavMessage& msg, MissionAckMsg& out)
+{
+    const MsgDef* def = MavlinkCodec::findDef(MAV_MSG_ID_MISSION_ACK);
+    return def && MavlinkCodec::unpack(*def, msg.data(), msg.size(), &out);
+}
+
+inline bool unpackMissionCurrent(const MavMessage& msg, MissionCurrentMsg& out)
+{
+    const MsgDef* def = MavlinkCodec::findDef(MAV_MSG_ID_MISSION_CURRENT);
+    return def && MavlinkCodec::unpack(*def, msg.data(), msg.size(), &out);
+}
+
+inline bool unpackMissionItemReached(const MavMessage& msg, MissionItemReachedMsg& out)
+{
+    const MsgDef* def = MavlinkCodec::findDef(MAV_MSG_ID_MISSION_ITEM_REACHED);
     return def && MavlinkCodec::unpack(*def, msg.data(), msg.size(), &out);
 }
 

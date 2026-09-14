@@ -5,9 +5,9 @@ set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_AUTOMOC ON)
 
-find_package(Qt6 COMPONENTS Widgets Network SerialPort QUIET)
+find_package(Qt6 COMPONENTS Widgets Network SerialPort Charts QUIET)
 if(NOT Qt6_FOUND)
-    find_package(Qt5 5.15 COMPONENTS Widgets Network SerialPort REQUIRED)
+    find_package(Qt5 5.15 COMPONENTS Widgets Network SerialPort Charts REQUIRED)
 endif()
 
 add_executable(skygcs
@@ -24,6 +24,8 @@ add_executable(skygcs
     src/ui/attitudeindicator.cpp
     src/ui/telemetrypanel.cpp
     src/ui/commandpanel.cpp
+    src/ui/missionpanel.cpp
+    src/ui/telemetrychart.cpp
     src/ui/linkdialog.cpp
     src/ui/serialconsole.cpp
     src/ui/messageinspector.cpp
@@ -31,7 +33,7 @@ add_executable(skygcs
 )
 
 target_include_directories(skygcs PRIVATE src)
-target_link_libraries(skygcs PRIVATE Qt::Widgets Qt::Network Qt::SerialPort)
+target_link_libraries(skygcs PRIVATE Qt::Widgets Qt::Network Qt::SerialPort Qt::Charts)
 
 # ---- 测试 ----
 option(SKYGCS_BUILD_TESTS "构建协议/集成测试" ON)
@@ -65,10 +67,12 @@ if(SKYGCS_BUILD_TESTS)
         src/ui/attitudeindicator.cpp
         src/ui/telemetrypanel.cpp
         src/ui/commandpanel.cpp
+        src/ui/missionpanel.cpp
+        src/ui/telemetrychart.cpp
         src/ui/linkdialog.cpp
         src/ui/serialconsole.cpp
         src/ui/messageinspector.cpp
         src/ui/mainwindow.cpp)
     target_include_directories(shot_main PRIVATE src)
-    target_link_libraries(shot_main PRIVATE Qt::Widgets Qt::Network Qt::SerialPort)
+    target_link_libraries(shot_main PRIVATE Qt::Widgets Qt::Network Qt::SerialPort Qt::Charts)
 endif()

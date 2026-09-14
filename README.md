@@ -27,9 +27,9 @@
 |---|---|---|
 | **SITL**（软件在环） | 跑**真实飞控代码**，输入由仿真环境提供 | PX4 SITL + **Gazebo**、jMAVSim、AirSim、SIH；遥测默认 **UDP 14550** |
 | **HITL**（硬件在环） | 真实飞控板 + 仿真传感器/执行机构 | X-Plane、Gazebo |
-| 简单仿真 | 无需真实飞控 | 本项目的内置仿真器（模拟 PX4 心跳/遥测/指令 ACK） |
+| 简单仿真 | 无需真实飞控 | 本项目的内置仿真器（模拟 PX4 心跳/遥测/指令 ACK/任务执行） |
 
-> 对本项目：内置仿真器模拟"PX4 行为 + UDP 遥测"，因此**零硬件、零 PX4 安装**即可演示完整地面站闭环；真实 PX4 SITL 只需把链路指向 `127.0.0.1:14550`。
+> 对本项目：内置仿真器模拟"PX4 行为 + UDP 遥测"，因此**零硬件、零 PX4 安装**即可演示完整地面站闭环（含航点任务）；真实 PX4 SITL 只需把链路指向 `127.0.0.1:14550`。
 
 ---
 
@@ -38,8 +38,8 @@
 | JD 要求 | 本项目实现 |
 |---|---|
 | QT/C++ 桌面应用 | Qt 6 Widgets（兼容 Qt 5.15），CMake 工程，深色专业风格 |
-| 无人机地面站开发 | 遥测监控（人工地平仪+仪表条）、飞行指令（ARM/TAKEOFF/LAND/RTL/模式）、消息检查器、系统日志 |
-| 与 PX4 飞控通信（MAVLink） | **自研 MAVLink v1/v2 编解码**（不依赖第三方库，24 条消息 CRC 与官方全对齐） |
+| 无人机地面站开发 | 遥测监控（人工地平仪+仪表条+**实时趋势曲线**）、飞行指令、**任务规划（航点上传/执行/进度）**、消息检查器、系统日志 |
+| 与 PX4 飞控通信（MAVLink） | **自研 MAVLink v1/v2 编解码**（不依赖第三方库，30 条消息 CRC 与官方全对齐） |
 | RS485/RS422/CAN 串口通信 | ① 串口链路（QSerialPort，含 RS485/422 半双工说明）② HDLC 风格载荷帧协议 ③ Modbus RTU（CRC16-Modbus + 静默切帧）④ **SLCAN（CAN 桥）** 协议 |
 
 ---
@@ -65,12 +65,14 @@ SkyGCS/
 │  │  ├─ mavlinkendpoint.h/.cpp       #   协议引擎：1Hz 心跳、指令+ACK 跟踪重发、遥测分发
 │  │  ├─ serialframeprotocol.h/.cpp   #   HDLC 帧协议 + Modbus RTU
 │  │  └─ slcanprotocol.h/.cpp         #   SLCAN（CAN 桥）
-│  ├─ sim/flightsim.h/.cpp            # ★ 内置 PX4 四旋翼仿真（20Hz 物理 + 注入/UDP 双模式）
+│  ├─ sim/flightsim.h/.cpp            # ★ 内置 PX4 四旋翼仿真（20Hz 物理 + 注入/UDP 双模式 + 航点任务执行）
 │  └─ ui/                             # 地面站界面
 │     ├─ mainwindow.h/.cpp            #   主窗口/菜单/工具栏/日志/状态栏
 │     ├─ attitudeindicator.h/.cpp     #   人工地平仪（自定义绘制）
 │     ├─ telemetrypanel.h/.cpp        #   遥测面板
+│     ├─ telemetrychart.h/.cpp        #   遥测趋势曲线（QtCharts：高度/垂直速度/电量）
 │     ├─ commandpanel.h/.cpp          #   指令面板
+│     ├─ missionpanel.h/.cpp          #   任务规划面板（航点编辑/上传/开始/进度）
 │     ├─ linkdialog.h/.cpp            #   新建链路对话框
 │     ├─ serialconsole.h/.cpp         #   载荷串口控制台（HDLC/Modbus/SLCAN 发送）
 │     └─ messageinspector.h/.cpp      #   消息检查器
@@ -88,9 +90,9 @@ SkyGCS/
 
 | 测试 | 内容 | 结果 |
 |---|---|---|
-| `tools/gen_mavlink.py` | 从官方 `c_library_v2` 提取字段序/CRC，交叉计算 crc_extra | **24/24 与官方一致**（含 SYS_STATUS=124、HIL_GPS=124、BATTERY_STATUS=154…） |
+| `tools/gen_mavlink.py` | 从官方 `c_library_v2` 提取字段序/CRC，交叉计算 crc_extra | **30/30 与官方一致**（含 MISSION_COUNT=221、MISSION_ITEM_INT=38、MISSION_ACK=153…） |
 | `tests/test_codec.cpp` | ① 与 **pymavlink v20** 逐字节比对 ATTITUDE/HEARTBEAT/GLOBAL_POSITION_INT 帧 ② 解码 pymavlink 帧 ③ 往返 ④ 粘连/噪声流式解析 ⑤ 官方 CRC 抽样 | **13/13 通过** |
-| `tests/test_integration.cpp` | 内置仿真器(UDP) → UdpLink → 协议引擎 → 状态聚合：心跳上线、遥测刷新、ARM ACK、STATUSTEXT、**起飞爬升轨迹** | **9/9 通过** |
+| `tests/test_integration.cpp` | 内置仿真器(UDP) → UdpLink → 协议引擎 → 状态聚合：心跳上线、遥测刷新、ARM ACK、STATUSTEXT、**起飞爬升**、**航点任务**（上传确认→3 航点依次到达→自动返航） | **14/14 通过** |
 
 > 途中发现并修复的协议级坑：① 部署生态字段按类型长度降序（XML 声明序会全 MISMATCH）；② `GLOBAL_POSITION_INT` 已从 c_library_v2 master 移除、需按 PX4 锁定 XML 补充；③ 标量字段 count=0 导致的打包字节数为 0；④ pymavlink 按 MAVLink2 规则截断尾部零字节（COMMAND_LONG 的 confirmation=0），属合法行为。
 
@@ -111,7 +113,7 @@ cmake --build SkyGCS/build
 ### 运行与体验（零硬件）
 1. 启动 `build/skygcs.exe`。
 2. 点击工具栏 **「▶ 启动内置仿真 (UDP)」** —— 地面站自动监听 14550，内置仿真器向该端口注入遥测。
-3. 遥测监控页：姿态地平仪、高度/速度/电量实时变化；**飞行指令**页点「解锁」→「起飞」（可设高度）→「返航」→「降落」，全程可看 ACK 与 STATUSTEXT；**消息检查器**页查看逐帧解码。
+3. 遥测监控页：姿态地平仪、高度/速度/电量实时变化 + 趋势曲线；**飞行指令**页点「解锁」→「起飞」（可设高度）→「返航」→「降落」，全程可看 ACK 与 STATUSTEXT；**任务规划**页预置 3 个示例航点，「上传任务」→「开始任务」即可看到飞行器依次飞越航点、任务完成自动返航；**消息检查器**页查看逐帧解码。
 4. 串口体验：接 USB-转串口设备后，「新建串口链路」打开，在**载荷串口控制台**页可用 HDLC 帧 / Modbus RTU / SLCAN(CAN) 三种协议收发载荷帧。
 5. 对接真实 PX4 SITL：`make px4_sitl gazebo` 启动后，新建 UDP 链路（本地 14550 / 目标 127.0.0.1:14550）即可。
 

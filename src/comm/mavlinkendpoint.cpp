@@ -2,6 +2,8 @@
 
 #include <QDateTime>
 
+#include "../mavlink/mavlink_names.h"
+
 namespace skygcs {
 
 MavlinkEndpoint::MavlinkEndpoint(QObject* parent)
@@ -85,6 +87,10 @@ void MavlinkEndpoint::handleMessage(const MavMessage& msg)
     case MAV_MSG_ID_RADIO_STATUS: handleRadio(msg); break;
     case MAV_MSG_ID_COMMAND_ACK: handleCommandAck(msg); break;
     case MAV_MSG_ID_PING: handlePing(msg); break;
+    case MAV_MSG_ID_MISSION_REQUEST_INT: handleMissionRequestInt(msg); break;
+    case MAV_MSG_ID_MISSION_ACK: handleMissionAck(msg); break;
+    case MAV_MSG_ID_MISSION_CURRENT: handleMissionCurrent(msg); break;
+    case MAV_MSG_ID_MISSION_ITEM_REACHED: handleMissionItemReached(msg); break;
     default: break;
     }
 }
@@ -205,6 +211,65 @@ void MavlinkEndpoint::handlePing(const MavMessage& msg)
         if (MavlinkCodec::pack(*MavlinkCodec::findDef(MAV_MSG_ID_PING), &m, reply))
             sendFrame(lastLink_, reply);
     }
+}
+
+// ---------------------------------------------------------------------------
+// 任务 (Mission)
+// ---------------------------------------------------------------------------
+void MavlinkEndpoint::handleMissionRequestInt(const MavMessage& msg)
+{
+    MissionRequestIntMsg req;
+    if (!unpackMissionRequestInt(msg, req))
+        return;
+    if (!missionUpload_.active || !lastLink_)
+        return;
+    // 飞控请求指定航点 → 回发对应 ITEM
+    if (req.seq >= missionUpload_.items.size()) {
+        emit logMessage(QObject::tr("[任务] 飞控请求越界航点 %1, 中止上传").arg(req.seq));
+        missionUpload_.active = false;
+        vehicle_.setMissionUploaded(false);
+        return;
+    }
+    const MissionItem& it = missionUpload_.items[req.seq];
+    MavMessage out;
+    out.msgid = MAV_MSG_ID_MISSION_ITEM_INT;
+    out.sysid = 255;
+    out.compid = 190;
+    if (packMissionItemInt(static_cast<uint16_t>(req.seq), it.frame, it.command,
+                           it.x, it.y, it.z, targetSysid_, targetCompid_, out,
+                           it.p1, it.p2, it.p3, it.p4)) {
+        sendFrame(lastLink_, out);
+        emit logMessage(QObject::tr("[任务] 已发送航点 %1/%2")
+                        .arg(req.seq + 1).arg(missionUpload_.items.size()));
+    }
+}
+
+void MavlinkEndpoint::handleMissionAck(const MavMessage& msg)
+{
+    MissionAckMsg ack;
+    if (!unpackMissionAck(msg, ack))
+        return;
+    missionUpload_.active = false;
+    vehicle_.setMissionUploaded(ack.type == mav::MISSION_ACCEPTED);
+    vehicle_.setMissionResult(ack.type);
+    emit logMessage(QObject::tr("[任务] 上传完成, 结果=%1")
+                    .arg(mav::missionResultName(ack.type)));
+}
+
+void MavlinkEndpoint::handleMissionCurrent(const MavMessage& msg)
+{
+    MissionCurrentMsg m;
+    if (!unpackMissionCurrent(msg, m))
+        return;
+    vehicle_.updateMissionCurrent(m.seq, m.seq != 255);
+}
+
+void MavlinkEndpoint::handleMissionItemReached(const MavMessage& msg)
+{
+    MissionItemReachedMsg m;
+    if (!unpackMissionItemReached(msg, m))
+        return;
+    vehicle_.updateMissionReached(m.seq);
 }
 
 // ---------------------------------------------------------------------------
@@ -332,6 +397,45 @@ bool MavlinkEndpoint::sendPing()
     if (!MavlinkCodec::pack(*MavlinkCodec::findDef(MAV_MSG_ID_PING), &m, msg))
         return false;
     return sendMessage(msg);
+}
+
+// ---------------------------------------------------------------------------
+// 任务上传 (异步状态机: COUNT → REQUEST_INT(seq) → ITEM(seq) → … → ACK)
+// ---------------------------------------------------------------------------
+bool MavlinkEndpoint::uploadMission(const QVector<MissionItem>& items)
+{
+    if (items.isEmpty() || items.size() > 0xFFFF) {
+        emit logMessage(QObject::tr("[任务] 航点数量非法: %1").arg(items.size()));
+        return false;
+    }
+    missionUpload_.items = items;
+    missionUpload_.nextSeq = 0;
+    missionUpload_.active = true;
+    missionUpload_.startedAtMs = QDateTime::currentMSecsSinceEpoch();
+    vehicle_.setMissionUploaded(false);
+
+    MavMessage out;
+    out.msgid = MAV_MSG_ID_MISSION_COUNT;
+    out.sysid = 255;
+    out.compid = 190;
+    if (!packMissionCount(static_cast<uint16_t>(items.size()), targetSysid_, targetCompid_, out))
+        return false;
+    if (!sendMessage(out))
+        return false;
+    emit logMessage(QObject::tr("[任务] 开始上传 %1 个航点...").arg(items.size()));
+    return true;
+}
+
+bool MavlinkEndpoint::startMission()
+{
+    return sendCommandLong(mav::CMD_MISSION_START, 0, 0, 0, 0, 0, 0, 0);
+}
+
+bool MavlinkEndpoint::abortMissionUpload()
+{
+    missionUpload_.active = false;
+    vehicle_.setMissionUploaded(false);
+    return true;
 }
 
 void MavlinkEndpoint::onAckTimer()

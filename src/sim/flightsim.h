@@ -15,6 +15,7 @@
 #include <QObject>
 #include <QTimer>
 #include <QUdpSocket>
+#include <vector>
 
 #include "../mavlink/mavlink_codec.h"
 #include "../mavlink/mavlink_messages.h"
@@ -67,6 +68,14 @@ private:
     double targetAlt_ = 5.0;
     double battery_ = 100.0;
     qint64 startMs_ = 0;
+
+    // ---- 任务 (Mission) ----
+    std::vector<MissionItemIntMsg> missionItems_;   // 已上传航点
+    int missionCount_ = -1;                         // 期望航点数
+    bool missionReady_ = false;                     // 上传完成 (ACK 已发)
+    bool missionActive_ = false;                    // 正在执行
+    int missionIdx_ = 0;                            // 当前航点
+    bool missionReachedSent_ = false;
 
     // 节流发送计数
     int tick_ = 0;

@@ -46,6 +46,8 @@ int main(int argc, char* argv[])
     bool gotStatus = false;
     bool gotAttitude = false;
     bool gotPos = false;
+    bool gotMissionReached = false;
+    int missionReachedSeq = -1;
 
     QObject::connect(endpoint, &MavlinkEndpoint::vehicleOnline, [&](bool online) {
         gotOnline = gotOnline || online;
@@ -62,6 +64,13 @@ int main(int argc, char* argv[])
             gotAttitude = true;
         if (msg.msgid == MAV_MSG_ID_GLOBAL_POSITION_INT)
             gotPos = true;
+        if (msg.msgid == MAV_MSG_ID_MISSION_ITEM_REACHED) {
+            MissionItemReachedMsg r;
+            if (unpackMissionItemReached(msg, r)) {
+                gotMissionReached = true;
+                missionReachedSeq = r.seq;
+            }
+        }
     });
 
     sim->setHome(24.51, 117.65, 30.0);
@@ -78,16 +87,46 @@ int main(int argc, char* argv[])
     });
     // 每秒打印轨迹 (验证物理模型: 解锁→起飞爬升)
     int traceSec = 0;
+    double maxLat = 24.51, maxLon = 117.65;
     auto* trace = new QTimer;
     QObject::connect(trace, &QTimer::timeout, [&]() {
         ++traceSec;
         const VehicleState* v = endpoint->vehicle();
-        std::printf("  [轨迹] t=%2ds armed=%d alt=%5.1fm climb=%+5.1f mode=%s\n",
+        maxLat = std::max(maxLat, v->lat());
+        maxLon = std::max(maxLon, v->lon());
+        std::printf("  [轨迹] t=%2ds armed=%d alt=%5.1fm climb=%+5.1f mode=%s cur=%d reached=%d\n",
                     traceSec, v->armed() ? 1 : 0, v->relAlt(),
-                    v->climb(), qPrintable(v->modeName()));
+                    v->climb(), qPrintable(v->modeName()),
+                    v->missionCurrent(), v->missionReached());
+        std::fflush(stdout);
     });
     trace->start(1000);
-    QTimer::singleShot(9000, [&]() {
+
+    // ---- 阶段2: 航点任务 ----
+    QTimer::singleShot(10000, [&]() {
+        QVector<MavlinkEndpoint::MissionItem> items;
+        const double hLat = 24.51, hLon = 117.65;
+        // 航点1: 北 30m; 航点2: 北 30m 东 30m; 航点3: 北 60m 东 30m
+        const double dLat1 = 30.0 / 111320.0;
+        const double dLon1 = 30.0 / (111320.0 * std::cos(hLat * M_PI / 180.0));
+        MavlinkEndpoint::MissionItem it;
+        it.frame = mav::FRAME_GLOBAL_RELATIVE_ALT_INT;
+        it.z = 8.0f;
+        it.x = static_cast<int32_t>((hLat + dLat1) * 1e7);
+        it.y = static_cast<int32_t>(hLon * 1e7);
+        items.append(it);
+        it.x = static_cast<int32_t>((hLat + dLat1) * 1e7);
+        it.y = static_cast<int32_t>((hLon + dLon1) * 1e7);
+        items.append(it);
+        it.x = static_cast<int32_t>((hLat + 2 * dLat1) * 1e7);
+        items.append(it);
+        endpoint->uploadMission(items);
+    });
+    QTimer::singleShot(14500, [&]() {
+        endpoint->startMission();    // 上传完成后开始任务
+    });
+
+    QTimer::singleShot(52000, [&]() {
         const VehicleState* v = endpoint->vehicle();
         check(v->isOnline(), "心跳 → 飞行器在线");
         check(gotOnline, "vehicleOnline 信号触发");
@@ -98,6 +137,14 @@ int main(int argc, char* argv[])
         check(gotStatus, "STATUSTEXT 事件透传");
         check(sim->running(), "仿真器运行中");
         check(v->relAlt() > 5.0, "起飞后高度爬升 (>5m)");
+        check(v->missionUploaded(), "任务上传被飞控确认 (MISSION_ACK=ACCEPTED)");
+        check(gotMissionReached, "收到 MISSION_ITEM_REACHED 事件");
+        check(v->missionReached() >= 1, "至少到达 2 个航点 (reached>=1)");
+        // 任务期间峰值位置应深入东北方向 (RTL 后已回到原点)
+        check(maxLat > 24.5102 && maxLon > 117.6502,
+              "任务期间位置向航点方向移动 (峰值北/东偏移 >20m)");
+        check(v->missionCurrent() == 255 && !v->missionActive(),
+              "任务结束: 当前航点复位 (MISSION_CURRENT=255)");
         std::printf("\n%s (%d 项)\n", g_fail ? "存在失败项" : "全部通过", g_fail);
         app.exit(g_fail ? 1 : 0);
     });
