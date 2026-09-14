@@ -11,7 +11,6 @@ namespace skygcs {
 
 namespace {
 constexpr double G = 9.81;
-constexpr double MAX_CLIMB = 3.0;
 constexpr double MAX_SPEED = 5.0;
 constexpr double MAX_TILT = 0.35;    // rad (~20deg)
 } // namespace
@@ -452,11 +451,14 @@ void FlightSim::onTick()
 
     if (armed_) {
         // 垂直: 高度 P 控制 + 速度阻尼
+        // 参数化: MPC_Z_VEL_MAX 限制垂直速度, RTL_RETURN_ALT 返航高度
+        const double maxClimb = params_.count("MPC_Z_VEL_MAX") ? params_["MPC_Z_VEL_MAX"] : 3.0;
+        const double rtlAlt   = params_.count("RTL_RETURN_ALT") ? params_["RTL_RETURN_ALT"] : 30.0;
         double targetZ = -targetAlt_;   // NED: 高度向上为负
         if (mainMode_ == mav::PX4_MODE_AUTO && subMode_ == mav::PX4_AUTO_LAND)
             targetZ = -0.02;
         if (mainMode_ == mav::PX4_MODE_AUTO && subMode_ == mav::PX4_AUTO_RTL)
-            targetZ = std::min(-targetAlt_, posN_[2] - 1.0);
+            targetZ = -rtlAlt;
 
         // 任务: 航点目标 (GLOBAL_RELATIVE_ALT_INT: x=latE7 y=lonE7 z=相对高度m)
         double wpTx = 0, wpTy = 0, wpTz = 0;
@@ -471,7 +473,7 @@ void FlightSim::onTick()
             hasWp = true;
         }
 
-        const double desiredVel = std::clamp((targetZ - posN_[2]) * 0.6, -MAX_CLIMB, MAX_CLIMB);
+        const double desiredVel = std::clamp((targetZ - posN_[2]) * 0.6, -maxClimb, maxClimb);
         // 推力修正: 当前速度高于期望(过快上升/下降)则减推力; desiredVel 向上为负
         thrust = G + std::clamp((velN_[2] - desiredVel) * 1.2, -4.0, 4.0);
         az = G - thrust;   // NED: 重力 +z, 推力 -z
@@ -480,17 +482,19 @@ void FlightSim::onTick()
         ax = -velN_[0] * 0.5;
         ay = -velN_[1] * 0.5;
 
-        // 任务水平移动: 航点跟踪 (速度式控制, 限速 4m/s, 减速接近)
+        // 任务水平移动: 航点跟踪 (速度式控制, 巡航速度 MPC_XY_CRUISE, 减速接近)
         if (hasWp) {
+            const double cruise = params_.count("MPC_XY_CRUISE") ? params_["MPC_XY_CRUISE"] : 4.0;
+            const double accRad = params_.count("NAV_ACC_RAD") ? params_["NAV_ACC_RAD"] : 2.0;
             const double dx = wpTx - posN_[0];
             const double dy = wpTy - posN_[1];
             const double dist = std::sqrt(dx * dx + dy * dy);
-            const double vxDes = std::clamp(dx * 1.0, -4.0, 4.0);
-            const double vyDes = std::clamp(dy * 1.0, -4.0, 4.0);
+            const double vxDes = std::clamp(dx * 1.0, -cruise, cruise);
+            const double vyDes = std::clamp(dy * 1.0, -cruise, cruise);
             ax = std::clamp((vxDes - velN_[0]) * 2.0, -6.0, 6.0);
             ay = std::clamp((vyDes - velN_[1]) * 2.0, -6.0, 6.0);
-            // 到达判定: 水平 2m 且高度 1.5m 内
-            if (dist < 2.0 && std::abs(posN_[2] - wpTz) < 1.5) {
+            // 到达判定: 水平 accRad 且高度 1.5m 内 (NAV_ACC_RAD 参数化)
+            if (dist < accRad && std::abs(posN_[2] - wpTz) < 1.5) {
                 MissionItemReachedMsg r{};
                 r.seq = static_cast<uint16_t>(missionIdx_);
                 encodeAndSend(MAV_MSG_ID_MISSION_ITEM_REACHED, &r);

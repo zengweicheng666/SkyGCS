@@ -22,3 +22,5 @@ Desktop.ini
 
 # ---- 构建产物 (Release) ----
 build-*/
+
+build-msvc-*/

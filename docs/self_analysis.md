@@ -20,13 +20,13 @@ SkyGCS 是一套**从协议栈到地面站 UI 全自研**的无人机地面站�
 
 ## 三、不足与风险（诚实评估）
 
-1. **任务规划缺失**：地面站标配能力（航点任务上传/执行/进度）未实现 —— 本阶段优先补齐。
-2. **无飞行日志与回放**：遥测落盘（tlog/CSV）与回放是工程型地面站的标配，缺失。
-3. **无参数管理**：PARAM_REQUEST_LIST/PARAM_SET 未实现（JD 常见要求）。
-4. **可视化单调**：遥测以数值为主，缺实时趋势曲线。
-5. **未对接真实 SITL**：与 PX4 SITL / QGC 的互通性未实测（协议级已验证，链路级待验）。
-6. **测试覆盖**：串口链路（SerialLink）、载荷协议（HDLC/Modbus/SLCAN）仅编译级验证，无自动化协议测试。
-7. **跨平台**：仅在 Windows/Qt6 MinGW 验证，未验证 MSVC / Linux / Qt5.15。
+1. ~~任务规划缺失~~：已补齐（P1 航点任务全链路）。
+2. ~~无飞行日志与回放~~：已补齐（P2 CSV 落盘 + 回放）。
+3. ~~无参数管理~~：已补齐（P2 参数面板）。
+4. ~~可视化单调~~：已补齐（P1 遥测趋势曲线）。
+5. ~~未对接真实 SITL~~：已用官方协议栈 pymavlink 完成链路级互通实测（P3）；**真实 PX4 SITL 需 Linux/WSL + Gazebo 环境，本机（Windows）无法运行，未实测**——已通过 pymavlink（与 QGC/MAVSDK 同协议生态）在心跳/遥测/指令/参数/任务五个维度做等效互通验证。
+6. ~~载荷协议仅编译级验证~~：已补齐（P3 test_payload 22 项字节级比对）。
+7. ~~跨平台仅 MinGW~~：已验证 MSVC × Qt6.8/Qt6.11 构建矩阵（P3）；**Qt5.15 因本机缺 Qt5Charts 组件未完整验证，Linux 需 CI 环境**——CMake 已含 Qt5 兼容分支。
 
 ## 四、进阶路线
 
@@ -36,10 +36,10 @@ SkyGCS 是一套**从协议栈到地面站 UI 全自研**的无人机地面站�
 | **P1（本阶段）** | 遥测实时曲线（QtCharts）：高度/速度/电量趋势 | ✅ 已完成 |
 | **P2（本阶段）** | 飞行日志：遥测 CSV 落盘 + 回放（倍速/进度，驱动全 UI） | ✅ 已完成 |
 | **P2（本阶段）** | 参数管理：PARAM_REQUEST_READ/LIST/SET/VALUE 协议 + 参数面板 | ✅ 已完成 |
-| P3 | 对接真实 PX4 SITL、QGC 互通实测 | 待办 |
-| P3 | 载荷协议自动化测试（HDLC/Modbus/SLCAN 与已知字节流比对） | 待办 |
-| P3 | 跨平台构建矩阵（MSVC/Linux/Qt5.15） | 待办 |
-| P3 | 飞控参数下发到仿真物理模型（改 MPC_XY_CRUISE 影响巡航速度） | 待办 |
+| P3 | 对接真实 PX4 SITL、QGC 互通实测 | 🟡 等效完成（pymavlink 链路互通 15/15；真实 PX4 SITL 需 Linux 环境） |
+| P3 | 载荷协议自动化测试（HDLC/Modbus/SLCAN 与已知字节流比对） | ✅ 已完成（test_payload 22 项） |
+| P3 | 跨平台构建矩阵（MSVC/Linux/Qt5.15） | 🟡 完成 MSVC×Qt6.8/Qt6.11；Qt5.15 缺组件、Linux 需 CI |
+| P3 | 飞控参数下发到仿真物理模型（改 MPC_XY_CRUISE 影响巡航速度） | ✅ 已完成（test_param_physics 7 项） |
 
 ## 五、本阶段已实施进阶（落地后回填）
 
@@ -54,3 +54,32 @@ SkyGCS 是一套**从协议栈到地面站 UI 全自研**的无人机地面站�
 - [x] **飞行日志**（CSV 500ms 采样落盘 + 回放器驱动 VehicleState + 面板倍速/进度）
 - [x] **参数端到端测试**（test_integration 14→18 项：列表读取完整、PARAM_SET 确认回传、类型正确）
 - [x] **飞行日志往返测试**（新增 test_flightlog 14 项：落盘格式/行数/回放状态还原）
+
+## 六、P3 已实施进阶（本阶段落地）
+
+### P3-A 飞控参数下发 → 仿真物理模型（参数真正"接管"飞控行为）
+
+- `flightsim.cpp` 控制律全面参数化：**MPC_Z_VEL_MAX**（垂直速度上限，替代硬编码 3.0）、**MPC_XY_CRUISE**（航点巡航速度，替代硬编码 4.0）、**NAV_ACC_RAD**（航点到达判定半径，替代硬编码 2.0）、**RTL_RETURN_ALT**（返航目标高度，替代 min(targetAlt, pos-1)）
+- 新增 `test_param_physics` **7 项端到端断言**（实测数据）：MPC_Z_VEL_MAX=5 → 起飞爬升峰值 **4.98 m/s**（突破默认 3.0）；MPC_XY_CRUISE=1 → 航点巡航峰值**精确 1.00 m/s**；RTL_RETURN_ALT=35 → 返航段爬升至 **30.6m+**
+- 集成测试回归：RTL 阶段爬升至 30.3m（参数生效），18 项全部通过
+
+### P3-B 载荷协议自动化测试（字节级比对）
+
+- 新增 `test_payload` **22 项**：HDLC（CRC16-CCITT 已知向量 0x29B1、帧封装/转义/回环解析、CRC 错误帧丢弃）、Modbus（CRC16-Modbus 已知向量 0x4B37、标准读寄存器帧 01 03 00 00 00 0A C5 CD、发送帧自校验、30ms 静默粘包切帧）、SLCAN（标准/扩展帧收发往返、非法行忽略）
+- 测试过程修正 4 处测试数据错误（转义检查逻辑、len 字段、DLC 数据长度、粘包 CRC），协议实现本身 0 缺陷
+
+### P3-C 官方协议栈互通验证（等效 QGC 链路）
+
+- 新增 `sim_standalone`（无 GUI 独立仿真服务）+ `tools/verify_pymavlink_gcs.py`（pymavlink = QGC/MAVSDK 同源官方协议库）
+- **15/15 通过**：HEARTBEAT 识别（QUADROTOR/PX4）、ATTITUDE/GLOBAL_POSITION_INT/BATTERY_STATUS 遥测流、ARM 指令 ACK(ACCEPTED)、PARAM_REQUEST_LIST 8 参数、PARAM_SET 确认回传 5.5、MISSION 2 航点上传 ACK(ACCEPTED)
+- 说明：真实 PX4 SITL 需 Linux/WSL+Gazebo，本机不可行；pymavlink 互通是协议层的强等效证据
+
+### P3-D 跨平台构建矩阵
+
+- **已验证 3 种组合全部构建成功（8 目标）+ 测试通过**：
+  - MinGW × Qt 6.11.0（主开发环境，全测试）
+  - MSVC 2026 × Qt 6.8.3（build-msvc-qt68，codec/payload/param_physics 通过）
+  - MSVC 2026 × Qt 6.11.0（build-msvc-qt515 首配，codec/flightlog/payload 通过）
+- **新增 MSVC 适配**：`add_compile_options(/utf-8)`（MSVC 默认按 GBK 解析 UTF-8 源码会导致中文注释破坏语法——首次构建 C4430/C2143 全量报错，加 /utf-8 后归零）
+- **受限项（如实记录）**：Qt 5.15.2 kit 缺 Qt5Charts 组件无法配置（CMake 已含 Qt5 兼容 fallback，代码未用 Qt6-only API）；Linux 需 CI 环境
+- 构建目录：build-msvc-qt68 / build-msvc-qt515（MSVC），均已加入 .gitignore

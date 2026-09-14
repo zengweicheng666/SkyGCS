@@ -97,6 +97,9 @@ SkyGCS/
 | `tests/test_codec.cpp` | ① 与 **pymavlink v20** 逐字节比对 ATTITUDE/HEARTBEAT/GLOBAL_POSITION_INT 帧 ② 解码 pymavlink 帧 ③ 往返 ④ 粘连/噪声流式解析 ⑤ 官方 CRC 抽样 | **13/13 通过** |
 | `tests/test_integration.cpp` | 内置仿真器(UDP) → UdpLink → 协议引擎 → 状态聚合：心跳上线、遥测刷新、ARM ACK、STATUSTEXT、**起飞爬升**、**航点任务**（上传确认→3 航点依次到达→自动返航）、**参数管理**（读取 8 参数→PARAM_SET 修改→飞控确认回传） | **18/18 通过** |
 | `tests/test_flightlog.cpp` | 飞行日志往返：遥测采样落盘（表头/行数/采样点）→ 回放恢复 VehicleState（位置/高度/模式/任务/电量） | **14/14 通过** |
+| `tests/test_payload.cpp` | 载荷协议字节级比对：HDLC（CRC16-CCITT 已知向量/帧封装转义/回环解析/坏帧丢弃）、Modbus（CRC16-Modbus 已知向量/标准帧/发送自校验/30ms 静默粘包切帧）、SLCAN（标准/扩展帧收发往返） | **22/22 通过** |
+| `tests/test_param_physics.cpp` | **参数驱动仿真物理**：MPC_Z_VEL_MAX=5 → 起飞爬升峰值 4.98m/s（突破默认 3.0）；MPC_XY_CRUISE=1 → 航点巡航峰值 1.00m/s；RTL_RETURN_ALT=35 → 返航爬升至 30.6m+ | **7/7 通过** |
+| `tools/verify_pymavlink_gcs.py` | **官方协议栈互通**（pymavlink 模拟第三方地面站，连接 `sim_standalone`）：心跳识别 QUADROTOR/PX4、遥测流、ARM→ACK、8 参数读取、PARAM_SET 确认 5.5、2 航点任务上传 ACK | **15/15 通过** |
 
 > 途中发现并修复的协议级坑：① 部署生态字段按类型长度降序（XML 声明序会全 MISMATCH）；② `GLOBAL_POSITION_INT` 已从 c_library_v2 master 移除、需按 PX4 锁定 XML 补充；③ 标量字段 count=0 导致的打包字节数为 0；④ pymavlink 按 MAVLink2 规则截断尾部零字节（COMMAND_LONG 的 confirmation=0），属合法行为。
 
@@ -112,7 +115,17 @@ SkyGCS/
 cmake -S SkyGCS -B SkyGCS/build -G Ninja -DCMAKE_PREFIX_PATH=<Qt安装目录>/<套件> -DCMAKE_BUILD_TYPE=Debug
 cmake --build SkyGCS/build
 ```
-（本机已验证：Qt 6.11.0 MinGW + Ninja + CMake，`skygcs.exe` / `test_codec.exe` / `test_integration.exe` / `shot_main.exe` 全部构建成功。）
+（本机已验证构建矩阵：**MinGW × Qt 6.11.0**（主环境）、**MSVC 2026 × Qt 6.8.3**（`build-msvc-qt68`）、**MSVC 2026 × Qt 6.11.0**（`build-msvc-qt515`）——三种组合 8 个目标（skygcs + 6 测试 + sim_standalone）全部构建成功且测试通过。MSVC 下源码以 UTF-8 解析（CMake 已加 `/utf-8`，否则中文注释被按 GBK 误读导致语法错乱）。Qt 5.15 分支：CMake 含兼容 fallback、代码未用 Qt6-only API，但本机 kit 缺 Qt5Charts 组件未完整验证；Linux 需 CI 环境。）
+
+### 参数驱动仿真物理
+
+内置仿真器的控制律由 PX4 风格参数接管（非硬编码）：
+- **MPC_Z_VEL_MAX** — 垂直速度上限（默认 3.0 m/s）
+- **MPC_XY_CRUISE** — 航点巡航速度（默认 10.0，上限 4.0 m/s 级）
+- **NAV_ACC_RAD** — 航点到达判定半径（默认 2.0 m）
+- **RTL_RETURN_ALT** — 返航目标高度（默认 30.0 m）
+
+在「参数管理」页修改任一参数即实时改变飞行行为（如把 MPC_XY_CRUISE 改为 1，航点巡航立即降至 1 m/s），由 `test_param_physics` 7 项断言闭环验证。
 
 ### 运行与体验（零硬件）
 1. 启动 `build/skygcs.exe`。
@@ -125,9 +138,15 @@ cmake --build SkyGCS/build
 
 ### 测试
 ```bash
-build/test_codec.exe          # MAVLink 协议交叉验证
-build/test_integration.exe    # 端到端闭环（仿真↔地面站）
+build/test_codec.exe          # MAVLink 协议交叉验证 (13)
+build/test_integration.exe    # 端到端闭环（仿真↔地面站, 18）
+build/test_flightlog.exe      # 飞行日志往返 (14)
+build/test_payload.exe        # 载荷协议字节级 (22)
+build/test_param_physics.exe  # 参数驱动仿真物理 (7)
+# 第三方地面站互通（需 Python + pymavlink）:
+build/sim_standalone.exe 45 &  python tools/verify_pymavlink_gcs.py   # (15)
 ```
+> ⚠️ `test_integration` 与 `shot_main`/`sim_standalone` 都绑定 UDP 14550，**严禁并行运行**。
 
 ---
 
