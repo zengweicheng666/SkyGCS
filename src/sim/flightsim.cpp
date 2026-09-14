@@ -530,8 +530,23 @@ void FlightSim::onTick()
         // 姿态跟随加速度方向 (简化)
         pitchTarget = std::clamp(ax / G * 0.5, -MAX_TILT, MAX_TILT);
         rollTarget = std::clamp(-ay / G * 0.5, -MAX_TILT, MAX_TILT);
+
+        // 航向跟随水平速度方向 + 转弯横滚 (偏航转向时向内侧倾斜)
+        if (std::hypot(velN_[0], velN_[1]) > 0.2) {
+            const double hdgTarget = std::atan2(velN_[1], velN_[0]);
+            double dHdg = hdgTarget - att_[2];
+            while (dHdg > M_PI) dHdg -= 2.0 * M_PI;
+            while (dHdg < -M_PI) dHdg += 2.0 * M_PI;
+            att_[2] += dHdg * 2.0 * dt;                       // 偏航一阶跟随
+            rollTarget += std::clamp(dHdg * 0.8, -1.0, 1.0);  // 转向越急, 横滚越大
+        }
+        rollTarget = std::clamp(rollTarget, -MAX_TILT, MAX_TILT);
         att_[0] += (rollTarget - att_[0]) * 2.0 * dt;
         att_[1] += (pitchTarget - att_[1]) * 2.0 * dt;
+
+        // 悬停微扰动 (气动噪声, 让姿态指示器鲜活, ±0.5°)
+        att_[0] += std::sin(tick_ * 0.065) * 0.008;
+        att_[1] += std::cos(tick_ * 0.055) * 0.008;
     } else {
         thrust = 0;
         az = G - thrust;                                             // 自由下落, 地面约束
