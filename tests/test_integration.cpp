@@ -45,6 +45,7 @@ int main(int argc, char* argv[])
     bool gotOnline = false;
     bool gotAck = false;
     bool gotStatus = false;
+    bool gotStatusChinese = false;
     bool gotAttitude = false;
     bool gotPos = false;
     bool gotMissionReached = false;
@@ -67,8 +68,10 @@ int main(int argc, char* argv[])
         if (cmd == mav::CMD_COMPONENT_ARM_DISARM && res == mav::RESULT_ACCEPTED)
             gotAck = true;
     });
-    QObject::connect(endpoint, &MavlinkEndpoint::statustext, [&](int, const QString&) {
+    QObject::connect(endpoint, &MavlinkEndpoint::statustext, [&](int, const QString& t) {
         gotStatus = true;
+        if (t.contains(QStringLiteral("SkyGCS 仿真 UDP 服务启动")))
+            gotStatusChinese = true;   // UTF-8 中文往返 (防 fromLatin1 回归)
     });
     QObject::connect(endpoint, &MavlinkEndpoint::messageReceived, [&](const MavMessage& msg) {
         if (msg.msgid == MAV_MSG_ID_ATTITUDE)
@@ -154,6 +157,7 @@ int main(int argc, char* argv[])
         check(v->lat() > 24.0 && v->lon() > 117.0, "经纬度聚合正确 (漳州附近)");
         check(gotAck, "ARM 指令收到 ACK (ACCEPTED)");
         check(gotStatus, "STATUSTEXT 事件透传");
+        check(gotStatusChinese, "STATUSTEXT 中文往返 (UTF-8 编码)");
         check(sim->running(), "仿真器运行中");
         check(v->relAlt() > 5.0, "起飞后高度爬升 (>5m)");
         check(v->missionUploaded(), "任务上传被飞控确认 (MISSION_ACK=ACCEPTED)");

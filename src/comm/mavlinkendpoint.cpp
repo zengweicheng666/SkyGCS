@@ -161,8 +161,8 @@ void MavlinkEndpoint::handleStatustext(const MavMessage& msg)
     StatustextMsg m;
     if (!unpackStatustext(msg, m))
         return;
-    // 截断以 NUL 结尾的文本
-    QString text = QString::fromLatin1(m.text);
+    // 截断以 NUL 结尾的文本 (MAVLink 规范: text 为 UTF-8)
+    QString text = QString::fromUtf8(m.text);
     const int nul = text.indexOf(QChar('\0'));
     if (nul >= 0)
         text.truncate(nul);
