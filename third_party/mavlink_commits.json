@@ -1,0 +1,1232 @@
+[
+  {
+    "sha": "1c5b39f6709166596341b855d92331c1c0885b5c",
+    "node_id": "C_kwDOACGBC9oAKDFjNWIzOWY2NzA5MTY2NTk2MzQxYjg1NWQ5MjMzMWMxYzA4ODViNWM",
+    "commit": {
+      "author": {
+        "name": "Hamish Willee",
+        "email": "hamishwillee@gmail.com",
+        "date": "2026-09-09T21:30:26Z"
+      },
+      "committer": {
+        "name": "GitHub",
+        "email": "noreply@github.com",
+        "date": "2026-09-09T21:30:26Z"
+      },
+      "message": "common.xml: Remove WIP from MAV_CMD_CONDITION_GATE (#2588)\n\nMAV_CMD_CONDITION_GATE has a real implementation in PX4 (NAV_CMD_CONDITION_GATE\nhandling in the navigator's mission_block/FeasibilityChecker), shipped since\nPX4 v1.11.0.\n\n\nClaude-Session: https://claude.ai/code/session_01QcmbS5CGZxgNk7XKUXZ2mP\n\nCo-authored-by: Claude Sonnet 5 <noreply@anthropic.com>",
+      "tree": {
+        "sha": "72a501c676248d8768f1a77e9435cf3ab77ea734",
+        "url": "https://api.github.com/repos/mavlink/mavlink/git/trees/72a501c676248d8768f1a77e9435cf3ab77ea734"
+      },
+      "url": "https://api.github.com/repos/mavlink/mavlink/git/commits/1c5b39f6709166596341b855d92331c1c0885b5c",
+      "comment_count": 0,
+      "verification": {
+        "verified": true,
+        "reason": "valid",
+        "signature": "-----BEGIN PGP SIGNATURE-----\n\nwsFcBAABCAAQBQJqoc/yCRC1aQ7uu5UhlAAAxTkQAJwpglk8UBxn711xAIwFIrcO\nTrfuwb3jig0sdhwXWReZBMFHw2TX3ZfBGdCaHOyvvVIwX6nkSdYEWj9ivVM884Wx\nkpAWLdMuzXQgUeyLGV3GtFl/DL59ei7g9SfmIV3xvZF95bWPRVf81JZ829vT6QBa\nRzwXVzhbDXL2o5iTc8iRlyqOg4JtJ5CuvcCqo+XdOtf01NQ2cezdmqEhzLiPEw+N\nCcBhMP6rYro/NyxjGMUDpfNmCFwYG+N8mTLgRmNRWxA+0rZ2NZ7MjjFjV52NMjG8\nBAKgN6LtiI3ZztAewe8Tc7Ddga4/A2M1dsNNnCx0XpI7NYTHR07Bk0Q2TcwKWVu7\nuT8eDlvpz2jauhnFtetcyhtHwqw2kZ55CuNVjb78lbbWcyW6FEEAhbtCM8JNcAwD\nyWdVc7mjvuywd1nJj2ZEXswf9fNBTd183gkuWNIRn65404wBtSX5W7WPlWOUP7xI\n2bWiLyoMYe1GJWHsoFFhjJllxa7lwkA+xV6WCUZzdQLFfcGafgAn18ZHHAVJL0n6\nWpAo23Oi+Yu+c7WdR/59jIx3KdYID8x8u8ioDPyYj3hVR1v1fls3/jGbWIlSAMC5\nWpzcYKyBLO9Pv26iRCCfImeRE4yIDqQqbaDCVBgC7LpmWzo/2ZZnM0KT6c6/KOjq\nURogJ6sz0bzXBrDeSQpO\n=ElTF\n-----END PGP SIGNATURE-----\n",
+        "payload": "tree 72a501c676248d8768f1a77e9435cf3ab77ea734\nparent 97582aa92d464a798dd834c26eb7ea95c456cab5\nauthor Hamish Willee <hamishwillee@gmail.com> 1788989426 +1000\ncommitter GitHub <noreply@github.com> 1788989426 +1000\n\ncommon.xml: Remove WIP from MAV_CMD_CONDITION_GATE (#2588)\n\nMAV_CMD_CONDITION_GATE has a real implementation in PX4 (NAV_CMD_CONDITION_GATE\nhandling in the navigator's mission_block/FeasibilityChecker), shipped since\nPX4 v1.11.0.\n\n\nClaude-Session: https://claude.ai/code/session_01QcmbS5CGZxgNk7XKUXZ2mP\n\nCo-authored-by: Claude Sonnet 5 <noreply@anthropic.com>",
+        "verified_at": "2026-09-09T21:30:26Z"
+      }
+    },
+    "url": "https://api.github.com/repos/mavlink/mavlink/commits/1c5b39f6709166596341b855d92331c1c0885b5c",
+    "html_url": "https://github.com/mavlink/mavlink/commit/1c5b39f6709166596341b855d92331c1c0885b5c",
+    "comments_url": "https://api.github.com/repos/mavlink/mavlink/commits/1c5b39f6709166596341b855d92331c1c0885b5c/comments",
+    "author": {
+      "login": "hamishwillee",
+      "id": 5368500,
+      "node_id": "MDQ6VXNlcjUzNjg1MDA=",
+      "avatar_url": "https://avatars.githubusercontent.com/u/5368500?v=4",
+      "gravatar_id": "",
+      "url": "https://api.github.com/users/hamishwillee",
+      "html_url": "https://github.com/hamishwillee",
+      "followers_url": "https://api.github.com/users/hamishwillee/followers",
+      "following_url": "https://api.github.com/users/hamishwillee/following{/other_user}",
+      "gists_url": "https://api.github.com/users/hamishwillee/gists{/gist_id}",
+      "starred_url": "https://api.github.com/users/hamishwillee/starred{/owner}{/repo}",
+      "subscriptions_url": "https://api.github.com/users/hamishwillee/subscriptions",
+      "organizations_url": "https://api.github.com/users/hamishwillee/orgs",
+      "repos_url": "https://api.github.com/users/hamishwillee/repos",
+      "events_url": "https://api.github.com/users/hamishwillee/events{/privacy}",
+      "received_events_url": "https://api.github.com/users/hamishwillee/received_events",
+      "type": "User",
+      "user_view_type": "public",
+      "site_admin": false
+    },
+    "committer": {
+      "login": "web-flow",
+      "id": 19864447,
+      "node_id": "MDQ6VXNlcjE5ODY0NDQ3",
+      "avatar_url": "https://avatars.githubusercontent.com/u/19864447?v=4",
+      "gravatar_id": "",
+      "url": "https://api.github.com/users/web-flow",
+      "html_url": "https://github.com/web-flow",
+      "followers_url": "https://api.github.com/users/web-flow/followers",
+      "following_url": "https://api.github.com/users/web-flow/following{/other_user}",
+      "gists_url": "https://api.github.com/users/web-flow/gists{/gist_id}",
+      "starred_url": "https://api.github.com/users/web-flow/starred{/owner}{/repo}",
+      "subscriptions_url": "https://api.github.com/users/web-flow/subscriptions",
+      "organizations_url": "https://api.github.com/users/web-flow/orgs",
+      "repos_url": "https://api.github.com/users/web-flow/repos",
+      "events_url": "https://api.github.com/users/web-flow/events{/privacy}",
+      "received_events_url": "https://api.github.com/users/web-flow/received_events",
+      "type": "User",
+      "user_view_type": "public",
+      "site_admin": false
+    },
+    "parents": [
+      {
+        "sha": "97582aa92d464a798dd834c26eb7ea95c456cab5",
+        "url": "https://api.github.com/repos/mavlink/mavlink/commits/97582aa92d464a798dd834c26eb7ea95c456cab5",
+        "html_url": "https://github.com/mavlink/mavlink/commit/97582aa92d464a798dd834c26eb7ea95c456cab5"
+      }
+    ]
+  },
+  {
+    "sha": "9166d32ba90345f2049c052c0a7849a21929d24e",
+    "node_id": "C_kwDOACGBC9oAKDkxNjZkMzJiYTkwMzQ1ZjIwNDljMDUyYzBhNzg0OWEyMTkyOWQyNGU",
+    "commit": {
+      "author": {
+        "name": "James Botwina",
+        "email": "34082590+JBotwina@users.noreply.github.com",
+        "date": "2026-09-09T00:36:07Z"
+      },
+      "committer": {
+        "name": "GitHub",
+        "email": "noreply@github.com",
+        "date": "2026-09-09T00:36:07Z"
+      },
+      "message": "common.xml: specify character encoding for parameter id fields (#2602)\n\nAnnotate param_id in the PARAM_* and PARAM_EXT_* messages as 7-bit ASCII,\nand note that PARAM_EXT_*.param_value carries raw bytes interpreted\naccording to param_type rather than a text string.\n\nDocumentation only: no wire format or field type changes.\n\nPart of #2366.",
+      "tree": {
+        "sha": "309701015e9979ceb36d56e2b8fbb94ba093b3e3",
+        "url": "https://api.github.com/repos/mavlink/mavlink/git/trees/309701015e9979ceb36d56e2b8fbb94ba093b3e3"
+      },
+      "url": "https://api.github.com/repos/mavlink/mavlink/git/commits/9166d32ba90345f2049c052c0a7849a21929d24e",
+      "comment_count": 0,
+      "verification": {
+        "verified": true,
+        "reason": "valid",
+        "signature": "-----BEGIN PGP SIGNATURE-----\n\nwsFcBAABCAAQBQJqoKn3CRC1aQ7uu5UhlAAABA4QAEM3HA1DT7iZaPlow4zljVtQ\nDPY9JwewW03Tqiagp8yM85nNmiT1024SPGsccAJy5tcZMILqqlnQ5fU7Z0yHuqsJ\nupeXqvdr8jfovr1vpBwHTrB4CUs6Cfssfmp1kGLetnY29CgXAs/DWQ4QRP7gGOPf\nQ6qsaecgkpBDPvp69exCXRakNp50HRqouH2wXxasRK5NA/XPSSBO3ina2iCB6Guw\nkC1rMvwy2wnC/AyybqVtVLFGwUIG6uNS9Zivd3NGqcy9K9UIfvYpRkRFsJGTpyaa\nKTpj6Fc351hEjZUNC1C3Q423wfHVZqkLOtxM7x+z2EOwwCl8B3uag6t+hoARU57r\nfFz+hfvJePULj9w6CEpPsKAFpW78dogwAEkh+/w3bOWSrqV66IhDQ+SZ0/Dbb2Un\nktYTQj+n3VHytdy08aaulitLrJ8+Cv3oIPWP+6v2mf7wyHuA+8y+Ktjtcni7wX42\nQvbK03FncDux87gfl5GGsNBDZ1nnbXMxUuwO5ej+I93yXf3NLsqngofopYLf2oQs\naeWt5QilDivezKj7wDLp1k1tvlUmn5qze1NS+JSo6wAeSvFB9PSHq16uQbesialu\nxLpv2Mh3UnfSjDuPKP7hLeBg7d52iy5V3BxIgbXPLPN+kLTHD2600p7DZ5Dcm+Nh\nfoRMd8F7VA+gNueQe+D6\n=oh0f\n-----END PGP SIGNATURE-----\n",
+        "payload": "tree 309701015e9979ceb36d56e2b8fbb94ba093b3e3\nparent dbbcb6c16ce16a67d2b8bf1e18b5417c0e788c53\nauthor James Botwina <34082590+JBotwina@users.noreply.github.com> 1788914167 -0400\ncommitter GitHub <noreply@github.com> 1788914167 +1000\n\ncommon.xml: specify character encoding for parameter id fields (#2602)\n\nAnnotate param_id in the PARAM_* and PARAM_EXT_* messages as 7-bit ASCII,\nand note that PARAM_EXT_*.param_value carries raw bytes interpreted\naccording to param_type rather than a text string.\n\nDocumentation only: no wire format or field type changes.\n\nPart of #2366.",
+        "verified_at": "2026-09-09T00:36:08Z"
+      }
+    },
+    "url": "https://api.github.com/repos/mavlink/mavlink/commits/9166d32ba90345f2049c052c0a7849a21929d24e",
+    "html_url": "https://github.com/mavlink/mavlink/commit/9166d32ba90345f2049c052c0a7849a21929d24e",
+    "comments_url": "https://api.github.com/repos/mavlink/mavlink/commits/9166d32ba90345f2049c052c0a7849a21929d24e/comments",
+    "author": {
+      "login": "JBotwina",
+      "id": 34082590,
+      "node_id": "MDQ6VXNlcjM0MDgyNTkw",
+      "avatar_url": "https://avatars.githubusercontent.com/u/34082590?v=4",
+      "gravatar_id": "",
+      "url": "https://api.github.com/users/JBotwina",
+      "html_url": "https://github.com/JBotwina",
+      "followers_url": "https://api.github.com/users/JBotwina/followers",
+      "following_url": "https://api.github.com/users/JBotwina/following{/other_user}",
+      "gists_url": "https://api.github.com/users/JBotwina/gists{/gist_id}",
+      "starred_url": "https://api.github.com/users/JBotwina/starred{/owner}{/repo}",
+      "subscriptions_url": "https://api.github.com/users/JBotwina/subscriptions",
+      "organizations_url": "https://api.github.com/users/JBotwina/orgs",
+      "repos_url": "https://api.github.com/users/JBotwina/repos",
+      "events_url": "https://api.github.com/users/JBotwina/events{/privacy}",
+      "received_events_url": "https://api.github.com/users/JBotwina/received_events",
+      "type": "User",
+      "user_view_type": "public",
+      "site_admin": false
+    },
+    "committer": {
+      "login": "web-flow",
+      "id": 19864447,
+      "node_id": "MDQ6VXNlcjE5ODY0NDQ3",
+      "avatar_url": "https://avatars.githubusercontent.com/u/19864447?v=4",
+      "gravatar_id": "",
+      "url": "https://api.github.com/users/web-flow",
+      "html_url": "https://github.com/web-flow",
+      "followers_url": "https://api.github.com/users/web-flow/followers",
+      "following_url": "https://api.github.com/users/web-flow/following{/other_user}",
+      "gists_url": "https://api.github.com/users/web-flow/gists{/gist_id}",
+      "starred_url": "https://api.github.com/users/web-flow/starred{/owner}{/repo}",
+      "subscriptions_url": "https://api.github.com/users/web-flow/subscriptions",
+      "organizations_url": "https://api.github.com/users/web-flow/orgs",
+      "repos_url": "https://api.github.com/users/web-flow/repos",
+      "events_url": "https://api.github.com/users/web-flow/events{/privacy}",
+      "received_events_url": "https://api.github.com/users/web-flow/received_events",
+      "type": "User",
+      "user_view_type": "public",
+      "site_admin": false
+    },
+    "parents": [
+      {
+        "sha": "dbbcb6c16ce16a67d2b8bf1e18b5417c0e788c53",
+        "url": "https://api.github.com/repos/mavlink/mavlink/commits/dbbcb6c16ce16a67d2b8bf1e18b5417c0e788c53",
+        "html_url": "https://github.com/mavlink/mavlink/commit/dbbcb6c16ce16a67d2b8bf1e18b5417c0e788c53"
+      }
+    ]
+  },
+  {
+    "sha": "dbbcb6c16ce16a67d2b8bf1e18b5417c0e788c53",
+    "node_id": "C_kwDOACGBC9oAKGRiYmNiNmMxNmNlMTZhNjdkMmI4YmYxZTE4YjU0MTdjMGU3ODhjNTM",
+    "commit": {
+      "author": {
+        "name": "Hamish Willee",
+        "email": "hamishwillee@gmail.com",
+        "date": "2026-09-09T00:07:41Z"
+      },
+      "committer": {
+        "name": "GitHub",
+        "email": "noreply@github.com",
+        "date": "2026-09-09T00:07:41Z"
+      },
+      "message": "chore(common): Remove redundant hasLocation/isDestination false attributes (#2582)\n\nBoth attributes default to false and need not be set, so drop the\nexplicit false/false pairs left on 121 MAV_CMD entries.",
+      "tree": {
+        "sha": "7fc34ca939788dc8dae4f412bc4f17df4b6b5b5b",
+        "url": "https://api.github.com/repos/mavlink/mavlink/git/trees/7fc34ca939788dc8dae4f412bc4f17df4b6b5b5b"
+      },
+      "url": "https://api.github.com/repos/mavlink/mavlink/git/commits/dbbcb6c16ce16a67d2b8bf1e18b5417c0e788c53",
+      "comment_count": 0,
+      "verification": {
+        "verified": true,
+        "reason": "valid",
+        "signature": "-----BEGIN PGP SIGNATURE-----\n\nwsFcBAABCAAQBQJqoKNNCRC1aQ7uu5UhlAAALIwQACjgNsGWlprF/m4R8aropxBc\nFjrKsEY3J0R/9iX6ipALCpmy8qkYh+CLhUxTw84g5PgcDy7IoeYKA0qXZnB8fX+h\nuxAHE79mHqxdWBgGW5497Su0f8JCvR93Sg5sLF1zc4S9Bn5mqzq/Jhm8sDnIV/VE\nAYiq2oe7/0p5o6CyoUM8c+W2SJTFZZBS2PNf/HN54sZoouH4jb/i1fQUwV8Vu5zc\neoOqhKgkbRRqVN28VQE8auJT/6u+HnRTgBVoA/nbfhbDfki+ry5IjN222L89wkS3\nBMN1ekiWkB5Su85Ls8La+rP4k2qCgHjtFGGz4ZWlaDU9Ksu5DMrUUcs3zvCY4xvE\nPEJX0vC00IoKSZok+HmAUup70DvAMJq7FadoNibyHpZuk1xOsnBCz/RjnMiwQ5dh\nyOi553MCV8zSQ6hqaHPMtDJ7Jjhq03SjjTe0/cjGhJ6WAJHq5ziBRW4v4Vmf+Rhz\nKREgB5vKkJ36n3rY9QZMu4/08wKFbYx9FHfJP7ZFMA1ERM1VqBu4QcswbCf5xIvZ\nVNrOM4c4ASUDF4XY8oNeYKxtYg6yc/7tBVH+eJUWCPB1yK2XWmMCXKN7+8cvBDdL\n/uhnSiLZGRF02+bUZeA2bs3lGblcL/1K4m33L9/8GABiD2LYVLTlGvB/gjX8Nt0Q\naA83VHA5uq/1RjP+XvwB\n=0oZp\n-----END PGP SIGNATURE-----\n",
+        "payload": "tree 7fc34ca939788dc8dae4f412bc4f17df4b6b5b5b\nparent dc00ea886d7a8aa9c80fcfde57811d4d6c1a11af\nauthor Hamish Willee <hamishwillee@gmail.com> 1788912461 +1000\ncommitter GitHub <noreply@github.com> 1788912461 +1000\n\nchore(common): Remove redundant hasLocation/isDestination false attributes (#2582)\n\nBoth attributes default to false and need not be set, so drop the\nexplicit false/false pairs left on 121 MAV_CMD entries.",
+        "verified_at": "2026-09-09T00:07:42Z"
+      }
+    },
+    "url": "https://api.github.com/repos/mavlink/mavlink/commits/dbbcb6c16ce16a67d2b8bf1e18b5417c0e788c53",
+    "html_url": "https://github.com/mavlink/mavlink/commit/dbbcb6c16ce16a67d2b8bf1e18b5417c0e788c53",
+    "comments_url": "https://api.github.com/repos/mavlink/mavlink/commits/dbbcb6c16ce16a67d2b8bf1e18b5417c0e788c53/comments",
+    "author": {
+      "login": "hamishwillee",
+      "id": 5368500,
+      "node_id": "MDQ6VXNlcjUzNjg1MDA=",
+      "avatar_url": "https://avatars.githubusercontent.com/u/5368500?v=4",
+      "gravatar_id": "",
+      "url": "https://api.github.com/users/hamishwillee",
+      "html_url": "https://github.com/hamishwillee",
+      "followers_url": "https://api.github.com/users/hamishwillee/followers",
+      "following_url": "https://api.github.com/users/hamishwillee/following{/other_user}",
+      "gists_url": "https://api.github.com/users/hamishwillee/gists{/gist_id}",
+      "starred_url": "https://api.github.com/users/hamishwillee/starred{/owner}{/repo}",
+      "subscriptions_url": "https://api.github.com/users/hamishwillee/subscriptions",
+      "organizations_url": "https://api.github.com/users/hamishwillee/orgs",
+      "repos_url": "https://api.github.com/users/hamishwillee/repos",
+      "events_url": "https://api.github.com/users/hamishwillee/events{/privacy}",
+      "received_events_url": "https://api.github.com/users/hamishwillee/received_events",
+      "type": "User",
+      "user_view_type": "public",
+      "site_admin": false
+    },
+    "committer": {
+      "login": "web-flow",
+      "id": 19864447,
+      "node_id": "MDQ6VXNlcjE5ODY0NDQ3",
+      "avatar_url": "https://avatars.githubusercontent.com/u/19864447?v=4",
+      "gravatar_id": "",
+      "url": "https://api.github.com/users/web-flow",
+      "html_url": "https://github.com/web-flow",
+      "followers_url": "https://api.github.com/users/web-flow/followers",
+      "following_url": "https://api.github.com/users/web-flow/following{/other_user}",
+      "gists_url": "https://api.github.com/users/web-flow/gists{/gist_id}",
+      "starred_url": "https://api.github.com/users/web-flow/starred{/owner}{/repo}",
+      "subscriptions_url": "https://api.github.com/users/web-flow/subscriptions",
+      "organizations_url": "https://api.github.com/users/web-flow/orgs",
+      "repos_url": "https://api.github.com/users/web-flow/repos",
+      "events_url": "https://api.github.com/users/web-flow/events{/privacy}",
+      "received_events_url": "https://api.github.com/users/web-flow/received_events",
+      "type": "User",
+      "user_view_type": "public",
+      "site_admin": false
+    },
+    "parents": [
+      {
+        "sha": "dc00ea886d7a8aa9c80fcfde57811d4d6c1a11af",
+        "url": "https://api.github.com/repos/mavlink/mavlink/commits/dc00ea886d7a8aa9c80fcfde57811d4d6c1a11af",
+        "html_url": "https://github.com/mavlink/mavlink/commit/dc00ea886d7a8aa9c80fcfde57811d4d6c1a11af"
+      }
+    ]
+  },
+  {
+    "sha": "dc00ea886d7a8aa9c80fcfde57811d4d6c1a11af",
+    "node_id": "C_kwDOACGBC9oAKGRjMDBlYTg4NmQ3YThhYTljODBmY2ZkZTU3ODExZDRkNmMxYTExYWY",
+    "commit": {
+      "author": {
+        "name": "Hamish Willee",
+        "email": "hamishwillee@gmail.com",
+        "date": "2026-09-08T20:51:05Z"
+      },
+      "committer": {
+        "name": "GitHub",
+        "email": "noreply@github.com",
+        "date": "2026-09-08T20:51:05Z"
+      },
+      "message": "update(common): MAV_CMD_DO_SET_MISSION_CURRENT suggest MAV_BOOL text (#2466)\n\n* update(common): MAV_CMD_DO_SET_MISSION_CURRENT suggest MAV_BOOL text\n\n* common(update): All other bools to same format",
+      "tree": {
+        "sha": "440211c3d6ecb00d3c3d9f156a2627e656560722",
+        "url": "https://api.github.com/repos/mavlink/mavlink/git/trees/440211c3d6ecb00d3c3d9f156a2627e656560722"
+      },
+      "url": "https://api.github.com/repos/mavlink/mavlink/git/commits/dc00ea886d7a8aa9c80fcfde57811d4d6c1a11af",
+      "comment_count": 0,
+      "verification": {
+        "verified": true,
+        "reason": "valid",
+        "signature": "-----BEGIN PGP SIGNATURE-----\n\nwsFcBAABCAAQBQJqoHU5CRC1aQ7uu5UhlAAAgRgQADuMzbc3DvK68rjEeDnp8QkM\nAeoI+dX8wDBp0tFFTh3Sfv0+aIr1rktY9iypfMC78ZqPczM/xLQmMeyP2OpuoEKi\nMNz1bGykiALMRoJm2cbFySYAp7NjqgjguhTfGW+jpETNqEvzSlRkEd6sVTuhm93Z\nWdE3US+XwMH1QS/TjaTcW1XqHGxITD/VCINCUbJr3KKmeZOuZWjy02S7yOdme2I9\nN/sHm9iUYy7CKjB8nYy3wlm8bpGTH7np2yPDxlboOM7WiRu0/eiH1DOQZmUk0scG\n2ehArVluqO68eWaBWlpcT2B1JsZUtca/T1cWihG7dtex3OVsf6oTagy+DoKH9mC+\nluK1V/JsKLmGnslXiVVGTBGeLFN3eem9AJIWthM31xMetLzoemn3QxiRRxMnY4u9\nVHq7Rn680b21Tn+4zPozQ9YeUjyAlSjenx1u/qg/AJ6PLNhdOefyts76JTWERpFg\ntqjJJri7uRDVpCc2ahGl8pwYW2Azg/voX9Jynl/MO9gcUoEB3bJ6rzK6/pYarbKu\nL8i8a/X1OzOQnX1hu6X0hMtaNtPcy6l0Gdpl7J/Y2NKx8MLKj4Mo2Ds3ttmSkLwt\n79NF639IiT89C6dTF331odPX04Y9Izn2Khnvjkb8trNmMvN4drcr5kmNXXvgM3F0\nSzHUrw0Dl+phqb28oI4t\n=/hHF\n-----END PGP SIGNATURE-----\n",
+        "payload": "tree 440211c3d6ecb00d3c3d9f156a2627e656560722\nparent aae24cc6e7b2a1a6d5ad3a58ef0799f90703a59e\nauthor Hamish Willee <hamishwillee@gmail.com> 1788900665 +1000\ncommitter GitHub <noreply@github.com> 1788900665 +1000\n\nupdate(common): MAV_CMD_DO_SET_MISSION_CURRENT suggest MAV_BOOL text (#2466)\n\n* update(common): MAV_CMD_DO_SET_MISSION_CURRENT suggest MAV_BOOL text\n\n* common(update): All other bools to same format",
+        "verified_at": "2026-09-08T20:51:06Z"
+      }
+    },
+    "url": "https://api.github.com/repos/mavlink/mavlink/commits/dc00ea886d7a8aa9c80fcfde57811d4d6c1a11af",
+    "html_url": "https://github.com/mavlink/mavlink/commit/dc00ea886d7a8aa9c80fcfde57811d4d6c1a11af",
+    "comments_url": "https://api.github.com/repos/mavlink/mavlink/commits/dc00ea886d7a8aa9c80fcfde57811d4d6c1a11af/comments",
+    "author": {
+      "login": "hamishwillee",
+      "id": 5368500,
+      "node_id": "MDQ6VXNlcjUzNjg1MDA=",
+      "avatar_url": "https://avatars.githubusercontent.com/u/5368500?v=4",
+      "gravatar_id": "",
+      "url": "https://api.github.com/users/hamishwillee",
+      "html_url": "https://github.com/hamishwillee",
+      "followers_url": "https://api.github.com/users/hamishwillee/followers",
+      "following_url": "https://api.github.com/users/hamishwillee/following{/other_user}",
+      "gists_url": "https://api.github.com/users/hamishwillee/gists{/gist_id}",
+      "starred_url": "https://api.github.com/users/hamishwillee/starred{/owner}{/repo}",
+      "subscriptions_url": "https://api.github.com/users/hamishwillee/subscriptions",
+      "organizations_url": "https://api.github.com/users/hamishwillee/orgs",
+      "repos_url": "https://api.github.com/users/hamishwillee/repos",
+      "events_url": "https://api.github.com/users/hamishwillee/events{/privacy}",
+      "received_events_url": "https://api.github.com/users/hamishwillee/received_events",
+      "type": "User",
+      "user_view_type": "public",
+      "site_admin": false
+    },
+    "committer": {
+      "login": "web-flow",
+      "id": 19864447,
+      "node_id": "MDQ6VXNlcjE5ODY0NDQ3",
+      "avatar_url": "https://avatars.githubusercontent.com/u/19864447?v=4",
+      "gravatar_id": "",
+      "url": "https://api.github.com/users/web-flow",
+      "html_url": "https://github.com/web-flow",
+      "followers_url": "https://api.github.com/users/web-flow/followers",
+      "following_url": "https://api.github.com/users/web-flow/following{/other_user}",
+      "gists_url": "https://api.github.com/users/web-flow/gists{/gist_id}",
+      "starred_url": "https://api.github.com/users/web-flow/starred{/owner}{/repo}",
+      "subscriptions_url": "https://api.github.com/users/web-flow/subscriptions",
+      "organizations_url": "https://api.github.com/users/web-flow/orgs",
+      "repos_url": "https://api.github.com/users/web-flow/repos",
+      "events_url": "https://api.github.com/users/web-flow/events{/privacy}",
+      "received_events_url": "https://api.github.com/users/web-flow/received_events",
+      "type": "User",
+      "user_view_type": "public",
+      "site_admin": false
+    },
+    "parents": [
+      {
+        "sha": "aae24cc6e7b2a1a6d5ad3a58ef0799f90703a59e",
+        "url": "https://api.github.com/repos/mavlink/mavlink/commits/aae24cc6e7b2a1a6d5ad3a58ef0799f90703a59e",
+        "html_url": "https://github.com/mavlink/mavlink/commit/aae24cc6e7b2a1a6d5ad3a58ef0799f90703a59e"
+      }
+    ]
+  },
+  {
+    "sha": "4dae2c3a0a562203ccf4e742ceb1fa52457809a2",
+    "node_id": "C_kwDOACGBC9oAKDRkYWUyYzNhMGE1NjIyMDNjY2Y0ZTc0MmNlYjFmYTUyNDU3ODA5YTI",
+    "commit": {
+      "author": {
+        "name": "Hamish Willee",
+        "email": "hamishwillee@gmail.com",
+        "date": "2026-09-03T02:20:07Z"
+      },
+      "committer": {
+        "name": "GitHub",
+        "email": "noreply@github.com",
+        "date": "2026-09-03T02:20:07Z"
+      },
+      "message": "common.xml: rename MAV_WINCH_STATUS_CLUTCH_ENGAGED to MAV_WINCH_STATUS_CLUTCH_DISENGAGED\n\nThe description is obviously at odds with what people are expecting engaged/disengaged to mean.  Change the name, not the meaning.\n\nCo-authored-by: Peter Barker <pbarker@barker.dropbear.id.au>",
+      "tree": {
+        "sha": "28a6964d1e30dfe636040336f26b9380594c709b",
+        "url": "https://api.github.com/repos/mavlink/mavlink/git/trees/28a6964d1e30dfe636040336f26b9380594c709b"
+      },
+      "url": "https://api.github.com/repos/mavlink/mavlink/git/commits/4dae2c3a0a562203ccf4e742ceb1fa52457809a2",
+      "comment_count": 0,
+      "verification": {
+        "verified": true,
+        "reason": "valid",
+        "signature": "-----BEGIN PGP SIGNATURE-----\n\nwsFcBAABCAAQBQJqmNlXCRC1aQ7uu5UhlAAAU7EQAFnDFXBURiEldPIV8gSBs0K4\nFrg0Ucfxney3bZ4us5wDjvBljjtbN0tvjbUsD6XSm7AXw/tp+CnaQcZ0KMXmdX+Y\n7wye+dc0I1E73o0P7FHlcK0tr5OIg+LfwwmKiOmzoo2J9scNQTRIOCmRsoO9V1i/\nJKbpNBP3bpbHY44o2gwl6m9YS3ykEj6KGYOoxY0BtrrzAGI8tHODowoTLXGJZchA\nfQ48hjKG1+hI2oxBjFkXUraGz5EdfvkZc2GrDXDBC1TsfrK2vygpvSMWB6q6+S4K\nMDVj0/7k+P/f2BgmenCkeQlhfyIU0Fnmwkh0KTt2160fGGx6fCMmzRuED+q/7ugn\nV596tbkfFZGJJhxbfhjm5sPi//02xLRaMS6Ck4WfxFDQ/6F/fzsbQ/Jh2BWltfmy\nSSGyOlingiz9JirlWqmd5aTzSbiu+quyR+0apUiAUsBSFaxZ2cptr58i4sYWopAw\nxPs4TpD0XD9B/HbhAmgAaM7etCxQf2yvGLuB/mpfecMUCMz75iA9bnu55hvSWKQ+\nWDrOx6v6wL/rDeEz9xdnT+fTPoCq7swZwHOGfojR4nXbvup4KlBgOKWaNy8GGiIz\n169PLsAxhBBRjINkJVUZ6jHFxStwhz9q1l+gHIMJfVUVy6T6OdCGI/dva/pwbFAL\ngZvXewQIuF7hexG1nztS\n=r56A\n-----END PGP SIGNATURE-----\n",
+        "payload": "tree 28a6964d1e30dfe636040336f26b9380594c709b\nparent 1958fc6a285698c9dd996dfba06f297ebb945ef1\nauthor Hamish Willee <hamishwillee@gmail.com> 1788402007 +1000\ncommitter GitHub <noreply@github.com> 1788402007 +1000\n\ncommon.xml: rename MAV_WINCH_STATUS_CLUTCH_ENGAGED to MAV_WINCH_STATUS_CLUTCH_DISENGAGED\n\nThe description is obviously at odds with what people are expecting engaged/disengaged to mean.  Change the name, not the meaning.\n\nCo-authored-by: Peter Barker <pbarker@barker.dropbear.id.au>",
+        "verified_at": "2026-09-03T02:20:07Z"
+      }
+    },
+    "url": "https://api.github.com/repos/mavlink/mavlink/commits/4dae2c3a0a562203ccf4e742ceb1fa52457809a2",
+    "html_url": "https://github.com/mavlink/mavlink/commit/4dae2c3a0a562203ccf4e742ceb1fa52457809a2",
+    "comments_url": "https://api.github.com/repos/mavlink/mavlink/commits/4dae2c3a0a562203ccf4e742ceb1fa52457809a2/comments",
+    "author": {
+      "login": "hamishwillee",
+      "id": 5368500,
+      "node_id": "MDQ6VXNlcjUzNjg1MDA=",
+      "avatar_url": "https://avatars.githubusercontent.com/u/5368500?v=4",
+      "gravatar_id": "",
+      "url": "https://api.github.com/users/hamishwillee",
+      "html_url": "https://github.com/hamishwillee",
+      "followers_url": "https://api.github.com/users/hamishwillee/followers",
+      "following_url": "https://api.github.com/users/hamishwillee/following{/other_user}",
+      "gists_url": "https://api.github.com/users/hamishwillee/gists{/gist_id}",
+      "starred_url": "https://api.github.com/users/hamishwillee/starred{/owner}{/repo}",
+      "subscriptions_url": "https://api.github.com/users/hamishwillee/subscriptions",
+      "organizations_url": "https://api.github.com/users/hamishwillee/orgs",
+      "repos_url": "https://api.github.com/users/hamishwillee/repos",
+      "events_url": "https://api.github.com/users/hamishwillee/events{/privacy}",
+      "received_events_url": "https://api.github.com/users/hamishwillee/received_events",
+      "type": "User",
+      "user_view_type": "public",
+      "site_admin": false
+    },
+    "committer": {
+      "login": "web-flow",
+      "id": 19864447,
+      "node_id": "MDQ6VXNlcjE5ODY0NDQ3",
+      "avatar_url": "https://avatars.githubusercontent.com/u/19864447?v=4",
+      "gravatar_id": "",
+      "url": "https://api.github.com/users/web-flow",
+      "html_url": "https://github.com/web-flow",
+      "followers_url": "https://api.github.com/users/web-flow/followers",
+      "following_url": "https://api.github.com/users/web-flow/following{/other_user}",
+      "gists_url": "https://api.github.com/users/web-flow/gists{/gist_id}",
+      "starred_url": "https://api.github.com/users/web-flow/starred{/owner}{/repo}",
+      "subscriptions_url": "https://api.github.com/users/web-flow/subscriptions",
+      "organizations_url": "https://api.github.com/users/web-flow/orgs",
+      "repos_url": "https://api.github.com/users/web-flow/repos",
+      "events_url": "https://api.github.com/users/web-flow/events{/privacy}",
+      "received_events_url": "https://api.github.com/users/web-flow/received_events",
+      "type": "User",
+      "user_view_type": "public",
+      "site_admin": false
+    },
+    "parents": [
+      {
+        "sha": "1958fc6a285698c9dd996dfba06f297ebb945ef1",
+        "url": "https://api.github.com/repos/mavlink/mavlink/commits/1958fc6a285698c9dd996dfba06f297ebb945ef1",
+        "html_url": "https://github.com/mavlink/mavlink/commit/1958fc6a285698c9dd996dfba06f297ebb945ef1"
+      }
+    ]
+  },
+  {
+    "sha": "1958fc6a285698c9dd996dfba06f297ebb945ef1",
+    "node_id": "C_kwDOACGBC9oAKDE5NThmYzZhMjg1Njk4YzlkZDk5NmRmYmEwNmYyOTdlYmI5NDVlZjE",
+    "commit": {
+      "author": {
+        "name": "njdevi11",
+        "email": "devin.barillari@gmail.com",
+        "date": "2026-09-02T02:28:31Z"
+      },
+      "committer": {
+        "name": "GitHub",
+        "email": "noreply@github.com",
+        "date": "2026-09-02T02:28:31Z"
+      },
+      "message": "add enum for describing bitmask for FOLLOW_TARGET.est_capabilities (#2576)\n\n* add enum for describing bitmask for FOLLOW_TARGET.est_capabilities\n\n* subedit to conventions\n\n* Add frame info from source code Ardu/PX4\n\n---------\n\nCo-authored-by: Devin Barillari <barillari_devin@bah.com>\nCo-authored-by: Hamish Willee <hamishwillee@gmail.com>",
+      "tree": {
+        "sha": "3ac4775fcae9591dc2778fe4b0bbef62258e5bf4",
+        "url": "https://api.github.com/repos/mavlink/mavlink/git/trees/3ac4775fcae9591dc2778fe4b0bbef62258e5bf4"
+      },
+      "url": "https://api.github.com/repos/mavlink/mavlink/git/commits/1958fc6a285698c9dd996dfba06f297ebb945ef1",
+      "comment_count": 0,
+      "verification": {
+        "verified": true,
+        "reason": "valid",
+        "signature": "-----BEGIN PGP SIGNATURE-----\n\nwsFcBAABCAAQBQJql4nPCRC1aQ7uu5UhlAAA5c4QAIrZ+vbhn/6mT887UH9g37t7\nlAAqHcxtyD/PK7oQuruUUChbX4lA6zs14+YKJQtG65dPfmC6yyhi1D4rnTHWPkui\neCDbeivPzcMg/J4oY86HArEmjLuGoXGRnumpLeRes78pd5CntDYgxFnHih3I1hN6\n8LBuMVTxyzmxXtf/Y7ZROlZP/tlTu2sXHmp+T5czRXdmp/DoeuItZURF654bjSqJ\nY2GhRbEJ2SVngfasDocEdl712eH3wJKiigCL4HcmEFfC3OJ0iEIJZD8c/lN2dntG\ncYHtYLgNI/Dighr0+DwtEx9WdxMwRYLmIBIHd7t7F1B2wZsaFg1XfVvgMZnNgopo\n86PzxZaQdBw1ZeTAIlP000v6A9Gh1Xrrq69xgZGjaOM9LGn3eYmbP/m74kf0eWLa\nlCuDa8DDrN2pcCg1BgW4SddZPYqrAb/dg6PymrF/D4MPmhwdZ1H6z3Staxk1CWI4\nNTeKOp1SB/3qAc9iNeQsMMRyOnuLlHl8xFPLrbfAggvg4fkDYycTJXybQFBiga5M\nl7BLFNHvf9vLqexRXy1Eo4d+5JLFqc6V7IBIi6bOwlJhRPB+8f6zwSV2y8zS+6GL\n0IwJpKnoC4xTMN2biri7Ujp5TiHzIcH9nWTUryXEbXqMcPkyYzCELbdNLJ59kOyy\nuPIR0RKfJA27thnoLT8z\n=Kgy8\n-----END PGP SIGNATURE-----\n",
+        "payload": "tree 3ac4775fcae9591dc2778fe4b0bbef62258e5bf4\nparent b0f6dcd60e2aa34b913b393a468796ae7bcfdc3a\nauthor njdevi11 <devin.barillari@gmail.com> 1788316111 -0400\ncommitter GitHub <noreply@github.com> 1788316111 +1000\n\nadd enum for describing bitmask for FOLLOW_TARGET.est_capabilities (#2576)\n\n* add enum for describing bitmask for FOLLOW_TARGET.est_capabilities\n\n* subedit to conventions\n\n* Add frame info from source code Ardu/PX4\n\n---------\n\nCo-authored-by: Devin Barillari <barillari_devin@bah.com>\nCo-authored-by: Hamish Willee <hamishwillee@gmail.com>",
+        "verified_at": "2026-09-02T02:28:32Z"
+      }
+    },
+    "url": "https://api.github.com/repos/mavlink/mavlink/commits/1958fc6a285698c9dd996dfba06f297ebb945ef1",
+    "html_url": "https://github.com/mavlink/mavlink/commit/1958fc6a285698c9dd996dfba06f297ebb945ef1",
+    "comments_url": "https://api.github.com/repos/mavlink/mavlink/commits/1958fc6a285698c9dd996dfba06f297ebb945ef1/comments",
+    "author": {
+      "login": "njdevi11",
+      "id": 21677553,
+      "node_id": "MDQ6VXNlcjIxNjc3NTUz",
+      "avatar_url": "https://avatars.githubusercontent.com/u/21677553?v=4",
+      "gravatar_id": "",
+      "url": "https://api.github.com/users/njdevi11",
+      "html_url": "https://github.com/njdevi11",
+      "followers_url": "https://api.github.com/users/njdevi11/followers",
+      "following_url": "https://api.github.com/users/njdevi11/following{/other_user}",
+      "gists_url": "https://api.github.com/users/njdevi11/gists{/gist_id}",
+      "starred_url": "https://api.github.com/users/njdevi11/starred{/owner}{/repo}",
+      "subscriptions_url": "https://api.github.com/users/njdevi11/subscriptions",
+      "organizations_url": "https://api.github.com/users/njdevi11/orgs",
+      "repos_url": "https://api.github.com/users/njdevi11/repos",
+      "events_url": "https://api.github.com/users/njdevi11/events{/privacy}",
+      "received_events_url": "https://api.github.com/users/njdevi11/received_events",
+      "type": "User",
+      "user_view_type": "public",
+      "site_admin": false
+    },
+    "committer": {
+      "login": "web-flow",
+      "id": 19864447,
+      "node_id": "MDQ6VXNlcjE5ODY0NDQ3",
+      "avatar_url": "https://avatars.githubusercontent.com/u/19864447?v=4",
+      "gravatar_id": "",
+      "url": "https://api.github.com/users/web-flow",
+      "html_url": "https://github.com/web-flow",
+      "followers_url": "https://api.github.com/users/web-flow/followers",
+      "following_url": "https://api.github.com/users/web-flow/following{/other_user}",
+      "gists_url": "https://api.github.com/users/web-flow/gists{/gist_id}",
+      "starred_url": "https://api.github.com/users/web-flow/starred{/owner}{/repo}",
+      "subscriptions_url": "https://api.github.com/users/web-flow/subscriptions",
+      "organizations_url": "https://api.github.com/users/web-flow/orgs",
+      "repos_url": "https://api.github.com/users/web-flow/repos",
+      "events_url": "https://api.github.com/users/web-flow/events{/privacy}",
+      "received_events_url": "https://api.github.com/users/web-flow/received_events",
+      "type": "User",
+      "user_view_type": "public",
+      "site_admin": false
+    },
+    "parents": [
+      {
+        "sha": "b0f6dcd60e2aa34b913b393a468796ae7bcfdc3a",
+        "url": "https://api.github.com/repos/mavlink/mavlink/commits/b0f6dcd60e2aa34b913b393a468796ae7bcfdc3a",
+        "html_url": "https://github.com/mavlink/mavlink/commit/b0f6dcd60e2aa34b913b393a468796ae7bcfdc3a"
+      }
+    ]
+  },
+  {
+    "sha": "ad25e3f5bf948389cc33eeb22492cc12a401e93c",
+    "node_id": "C_kwDOACGBC9oAKGFkMjVlM2Y1YmY5NDgzODljYzMzZWViMjI0OTJjYzEyYTQwMWU5M2M",
+    "commit": {
+      "author": {
+        "name": "Hamish Willee",
+        "email": "hamishwillee@gmail.com",
+        "date": "2026-08-26T04:17:52Z"
+      },
+      "committer": {
+        "name": "GitHub",
+        "email": "noreply@github.com",
+        "date": "2026-08-26T04:17:52Z"
+      },
+      "message": "hasAltitudeOnly: MAV_CMD_NAV_CONTINUE_AND_CHANGE_ALT MAV_CMD_CONDITION_CHANGE_ALT (#2566)",
+      "tree": {
+        "sha": "901fa3b4656485f6404adf2ab32279bc74d5adc6",
+        "url": "https://api.github.com/repos/mavlink/mavlink/git/trees/901fa3b4656485f6404adf2ab32279bc74d5adc6"
+      },
+      "url": "https://api.github.com/repos/mavlink/mavlink/git/commits/ad25e3f5bf948389cc33eeb22492cc12a401e93c",
+      "comment_count": 0,
+      "verification": {
+        "verified": true,
+        "reason": "valid",
+        "signature": "-----BEGIN PGP SIGNATURE-----\n\nwsFcBAABCAAQBQJqjmjwCRC1aQ7uu5UhlAAAY6gQAJNTHTkWMn3YEaWJZ4RNhXoY\nnNa/F/gJmXkWHtuzicXRYWWg46AmV3/r3quEG2651P/Qo1jO0ndgj1hEE1XCOTa/\nANJD6j79NoFIZ9Hb1zuzsOkFF2lqQGcuaVd60jByODTErgaGqtAcOcKdk5oJ3ujr\nGBDl8bLPi4J/GvWzu1H3PmRP7LbsgOnPNq0Ve78mpD66trmdGhMbobIjOokYgoEw\nWI/k1piCIe0eAVjOUdxbRCd/2Mse7bF+KcH9199kAaOol+Fx8O3cjk4hk4UH1xxk\nTrvT3JCSGGCKabSZhaYUha/qbLlhnVkgpyK0cg5uVtE6Vf2yRQBtD6eqeYnLdDIR\ncNHymX3P7yWO75mNWZ6zxkkzFLQFdMT7XDBBPlXPMr6cJFhnnqwmkKRfJHiDjMed\noPZS4kIEO4lYFxhwJKaajscwKGPXhOUaoTFi5H3gtTWB+XnTdnkohCavmPIgg+U2\nQJBXlqmx5AIJ/RPzqd3y1LgWzREy8TMA1Of5wg0kEGQEmYiYZepiBMxCgWA5mpoC\nQ5XLYF2f/2rM5jHDX9gdYd2QVb66MHjc7rpPw7hNWJd6UvohSE9Bh496ABHJzDlK\n32Kdq9zHrGw/ua2sEsJQFF5x7o5mxBWNmBpeWD7VmnP5BCJYjzuI+LPl2ynmJHIL\nDkQDAI6gZqrCkXLLN0TL\n=CmHw\n-----END PGP SIGNATURE-----\n",
+        "payload": "tree 901fa3b4656485f6404adf2ab32279bc74d5adc6\nparent 3687a157f0288890da275645ad5e899820c90def\nauthor Hamish Willee <hamishwillee@gmail.com> 1787717872 +1000\ncommitter GitHub <noreply@github.com> 1787717872 +1000\n\nhasAltitudeOnly: MAV_CMD_NAV_CONTINUE_AND_CHANGE_ALT MAV_CMD_CONDITION_CHANGE_ALT (#2566)",
+        "verified_at": "2026-08-26T04:17:52Z"
+      }
+    },
+    "url": "https://api.github.com/repos/mavlink/mavlink/commits/ad25e3f5bf948389cc33eeb22492cc12a401e93c",
+    "html_url": "https://github.com/mavlink/mavlink/commit/ad25e3f5bf948389cc33eeb22492cc12a401e93c",
+    "comments_url": "https://api.github.com/repos/mavlink/mavlink/commits/ad25e3f5bf948389cc33eeb22492cc12a401e93c/comments",
+    "author": {
+      "login": "hamishwillee",
+      "id": 5368500,
+      "node_id": "MDQ6VXNlcjUzNjg1MDA=",
+      "avatar_url": "https://avatars.githubusercontent.com/u/5368500?v=4",
+      "gravatar_id": "",
+      "url": "https://api.github.com/users/hamishwillee",
+      "html_url": "https://github.com/hamishwillee",
+      "followers_url": "https://api.github.com/users/hamishwillee/followers",
+      "following_url": "https://api.github.com/users/hamishwillee/following{/other_user}",
+      "gists_url": "https://api.github.com/users/hamishwillee/gists{/gist_id}",
+      "starred_url": "https://api.github.com/users/hamishwillee/starred{/owner}{/repo}",
+      "subscriptions_url": "https://api.github.com/users/hamishwillee/subscriptions",
+      "organizations_url": "https://api.github.com/users/hamishwillee/orgs",
+      "repos_url": "https://api.github.com/users/hamishwillee/repos",
+      "events_url": "https://api.github.com/users/hamishwillee/events{/privacy}",
+      "received_events_url": "https://api.github.com/users/hamishwillee/received_events",
+      "type": "User",
+      "user_view_type": "public",
+      "site_admin": false
+    },
+    "committer": {
+      "login": "web-flow",
+      "id": 19864447,
+      "node_id": "MDQ6VXNlcjE5ODY0NDQ3",
+      "avatar_url": "https://avatars.githubusercontent.com/u/19864447?v=4",
+      "gravatar_id": "",
+      "url": "https://api.github.com/users/web-flow",
+      "html_url": "https://github.com/web-flow",
+      "followers_url": "https://api.github.com/users/web-flow/followers",
+      "following_url": "https://api.github.com/users/web-flow/following{/other_user}",
+      "gists_url": "https://api.github.com/users/web-flow/gists{/gist_id}",
+      "starred_url": "https://api.github.com/users/web-flow/starred{/owner}{/repo}",
+      "subscriptions_url": "https://api.github.com/users/web-flow/subscriptions",
+      "organizations_url": "https://api.github.com/users/web-flow/orgs",
+      "repos_url": "https://api.github.com/users/web-flow/repos",
+      "events_url": "https://api.github.com/users/web-flow/events{/privacy}",
+      "received_events_url": "https://api.github.com/users/web-flow/received_events",
+      "type": "User",
+      "user_view_type": "public",
+      "site_admin": false
+    },
+    "parents": [
+      {
+        "sha": "3687a157f0288890da275645ad5e899820c90def",
+        "url": "https://api.github.com/repos/mavlink/mavlink/commits/3687a157f0288890da275645ad5e899820c90def",
+        "html_url": "https://github.com/mavlink/mavlink/commit/3687a157f0288890da275645ad5e899820c90def"
+      }
+    ]
+  },
+  {
+    "sha": "2368e36b94245457f9f5d3cb3c063810f0693dc4",
+    "node_id": "C_kwDOACGBC9oAKDIzNjhlMzZiOTQyNDU0NTdmOWY1ZDNjYjNjMDYzODEwZjA2OTNkYzQ",
+    "commit": {
+      "author": {
+        "name": "Andrew Tridgell",
+        "email": "andrew@tridgell.net",
+        "date": "2026-08-19T05:36:47Z"
+      },
+      "committer": {
+        "name": "GitHub",
+        "email": "noreply@github.com",
+        "date": "2026-08-19T05:36:47Z"
+      },
+      "message": "common: added reboot to mass storage option (#2572)",
+      "tree": {
+        "sha": "7ecaf88f8e9c0c9cd64e932339c3ecd025461bd3",
+        "url": "https://api.github.com/repos/mavlink/mavlink/git/trees/7ecaf88f8e9c0c9cd64e932339c3ecd025461bd3"
+      },
+      "url": "https://api.github.com/repos/mavlink/mavlink/git/commits/2368e36b94245457f9f5d3cb3c063810f0693dc4",
+      "comment_count": 0,
+      "verification": {
+        "verified": true,
+        "reason": "valid",
+        "signature": "-----BEGIN PGP SIGNATURE-----\n\nwsFcBAABCAAQBQJqhUDvCRC1aQ7uu5UhlAAAZroQAGvrNFXlGz94LBGJZ773EKLJ\nqmbGzVTh1pins/61hv9LfdMko2AFtebQDtT34Mh7Bdx1VQrP3L0iLR+qEEt8J66i\nCvDcMmGITQcrP0oBKMBSnppH4cF9o6JarigvBUZCJGo5MadP3+0bbNfJlubUOG9r\nqhalISqf6cye+j6uZMpzJ45goT0YaPB29W3NcvjIeafUa4HbmCjCACqdOV+FKFY+\nUwb8pH97k1QavNjWJlbesn/rvmQRx4XnZgnkkkpL4ixlZawfizYTU4rBoeY5a8Oh\nAtDz6BJosoluN1WscKn5cBJCilXVk66z2xC3woLYzQP8uMEEnNR8s+sZDmH0a9jE\noH8sjktUMKfNXTeircPjrYRtXg0Ipr2Z8ip49LFK3vyJWEIFszPMoLWi559Nh/SI\nyg1uD4rVtW1eXq6YSasYjpNkxMK1QgMN711kfJ/XIVCHszu4NuOkvnF7nOE4C0tl\n4J4+V6+d4f7ZOHDpwo7wKfbjpEsZbINvotWFMHZq1GOIpZJ96sM9fMekexKOF95y\nd/wY7pJGlivvULv54n6ESccabimtkEqGSJRE1sFfknkpMfG9jmKCkrPGaGW0aVB7\nVlddZXOyoJ7Yau+saXq5B11z55vwwy7PSdS9UDq9R3cgojU3b3SCLtb6ANgwYHXh\nq93yE92GM1x8BnvrgS73\n=N0EH\n-----END PGP SIGNATURE-----\n",
+        "payload": "tree 7ecaf88f8e9c0c9cd64e932339c3ecd025461bd3\nparent a8fc384f5d4d92a80f8e91bba40f3113f236f305\nauthor Andrew Tridgell <andrew@tridgell.net> 1787117807 +1000\ncommitter GitHub <noreply@github.com> 1787117807 +1000\n\ncommon: added reboot to mass storage option (#2572)",
+        "verified_at": "2026-08-19T05:36:47Z"
+      }
+    },
+    "url": "https://api.github.com/repos/mavlink/mavlink/commits/2368e36b94245457f9f5d3cb3c063810f0693dc4",
+    "html_url": "https://github.com/mavlink/mavlink/commit/2368e36b94245457f9f5d3cb3c063810f0693dc4",
+    "comments_url": "https://api.github.com/repos/mavlink/mavlink/commits/2368e36b94245457f9f5d3cb3c063810f0693dc4/comments",
+    "author": {
+      "login": "tridge",
+      "id": 831867,
+      "node_id": "MDQ6VXNlcjgzMTg2Nw==",
+      "avatar_url": "https://avatars.githubusercontent.com/u/831867?v=4",
+      "gravatar_id": "",
+      "url": "https://api.github.com/users/tridge",
+      "html_url": "https://github.com/tridge",
+      "followers_url": "https://api.github.com/users/tridge/followers",
+      "following_url": "https://api.github.com/users/tridge/following{/other_user}",
+      "gists_url": "https://api.github.com/users/tridge/gists{/gist_id}",
+      "starred_url": "https://api.github.com/users/tridge/starred{/owner}{/repo}",
+      "subscriptions_url": "https://api.github.com/users/tridge/subscriptions",
+      "organizations_url": "https://api.github.com/users/tridge/orgs",
+      "repos_url": "https://api.github.com/users/tridge/repos",
+      "events_url": "https://api.github.com/users/tridge/events{/privacy}",
+      "received_events_url": "https://api.github.com/users/tridge/received_events",
+      "type": "User",
+      "user_view_type": "public",
+      "site_admin": false
+    },
+    "committer": {
+      "login": "web-flow",
+      "id": 19864447,
+      "node_id": "MDQ6VXNlcjE5ODY0NDQ3",
+      "avatar_url": "https://avatars.githubusercontent.com/u/19864447?v=4",
+      "gravatar_id": "",
+      "url": "https://api.github.com/users/web-flow",
+      "html_url": "https://github.com/web-flow",
+      "followers_url": "https://api.github.com/users/web-flow/followers",
+      "following_url": "https://api.github.com/users/web-flow/following{/other_user}",
+      "gists_url": "https://api.github.com/users/web-flow/gists{/gist_id}",
+      "starred_url": "https://api.github.com/users/web-flow/starred{/owner}{/repo}",
+      "subscriptions_url": "https://api.github.com/users/web-flow/subscriptions",
+      "organizations_url": "https://api.github.com/users/web-flow/orgs",
+      "repos_url": "https://api.github.com/users/web-flow/repos",
+      "events_url": "https://api.github.com/users/web-flow/events{/privacy}",
+      "received_events_url": "https://api.github.com/users/web-flow/received_events",
+      "type": "User",
+      "user_view_type": "public",
+      "site_admin": false
+    },
+    "parents": [
+      {
+        "sha": "a8fc384f5d4d92a80f8e91bba40f3113f236f305",
+        "url": "https://api.github.com/repos/mavlink/mavlink/commits/a8fc384f5d4d92a80f8e91bba40f3113f236f305",
+        "html_url": "https://github.com/mavlink/mavlink/commit/a8fc384f5d4d92a80f8e91bba40f3113f236f305"
+      }
+    ]
+  },
+  {
+    "sha": "2e8a4fb14edf7d7c60b58eec951e980d967cf1c3",
+    "node_id": "C_kwDOACGBC9oAKDJlOGE0ZmIxNGVkZjdkN2M2MGI1OGVlYzk1MWU5ODBkOTY3Y2YxYzM",
+    "commit": {
+      "author": {
+        "name": "Claudio Chies",
+        "email": "61051109+Claudio-Chies@users.noreply.github.com",
+        "date": "2026-08-18T23:03:09Z"
+      },
+      "committer": {
+        "name": "GitHub",
+        "email": "noreply@github.com",
+        "date": "2026-08-18T23:03:09Z"
+      },
+      "message": " feat(failure injection): add datalink and bus failure units (#2562)",
+      "tree": {
+        "sha": "20d07bbd5047f2798ced44c256513abd547d4e46",
+        "url": "https://api.github.com/repos/mavlink/mavlink/git/trees/20d07bbd5047f2798ced44c256513abd547d4e46"
+      },
+      "url": "https://api.github.com/repos/mavlink/mavlink/git/commits/2e8a4fb14edf7d7c60b58eec951e980d967cf1c3",
+      "comment_count": 0,
+      "verification": {
+        "verified": true,
+        "reason": "valid",
+        "signature": "-----BEGIN PGP SIGNATURE-----\n\nwsFcBAABCAAQBQJqhOStCRC1aQ7uu5UhlAAA9tQQAC1i157p1cTOhb/qW+WIcih5\nb3snL0EQqOcpyw0BML2YGt5bWRxkbll+rAWn9RpNIQyW891iwksWI8NSXjK0wOrJ\njJtzoUO5gtSMjrWkivKLNa0xy/TcARpNQoJ6ByYCeQhv6WfJS8V7VF1sK8FMY/qQ\nn7UXUQqpMY14eg36KNywpdnqDCt86Zq2LQuhh3a4CmudMGFaIYqu2gOTBpKFDv7Q\nXNKWmXhCiuhVRQVj19Xy27pdiN1rO2XuTcguh7ifCbadBDgKatYTMQ2HJcTRnJCc\niKeperBIFsDtg2dpuIGQwUgPbgXJwpbzW8exW5AHWRwFecqyvR5UUkUqfsu7MfvZ\ndj734uAsznZ92DCnsT3BeL623+H6YkqynffrVGAJ7VijP573tgwAXv1eJNLZWvV5\nIAzCnmxLvwkS2nUIWtR7jd21t/X7225U+9b/ofZMHbfd197DWVfLq0bD9Pby5M8d\niBdbwsKYa3ZCSdGHN9wbjdjz7JVDdxRVhvFiw3KYipwpS7RPc5WOZkLKYAIV/O1t\ni09Am8Skdid93dJ5o2JK2LouzSgWSnIXFHwkqjUVV282LvqnfD6xqyI8IqXs/96I\nvdIem7kH+O6vSrSBHFdgRxOmKkTGFo1IvXfQT2yY2/QARJGAWUu8yV1NwZj3Dlxg\nhmTYL+jMirQbYfsL1hp/\n=no4x\n-----END PGP SIGNATURE-----\n",
+        "payload": "tree 20d07bbd5047f2798ced44c256513abd547d4e46\nparent 94f19382bc5882e1a2048750e96118ff599c965b\nauthor Claudio Chies <61051109+Claudio-Chies@users.noreply.github.com> 1787094189 +0200\ncommitter GitHub <noreply@github.com> 1787094189 +1000\n\n feat(failure injection): add datalink and bus failure units (#2562)",
+        "verified_at": "2026-08-18T23:03:09Z"
+      }
+    },
+    "url": "https://api.github.com/repos/mavlink/mavlink/commits/2e8a4fb14edf7d7c60b58eec951e980d967cf1c3",
+    "html_url": "https://github.com/mavlink/mavlink/commit/2e8a4fb14edf7d7c60b58eec951e980d967cf1c3",
+    "comments_url": "https://api.github.com/repos/mavlink/mavlink/commits/2e8a4fb14edf7d7c60b58eec951e980d967cf1c3/comments",
+    "author": {
+      "login": "Claudio-Chies",
+      "id": 61051109,
+      "node_id": "MDQ6VXNlcjYxMDUxMTA5",
+      "avatar_url": "https://avatars.githubusercontent.com/u/61051109?v=4",
+      "gravatar_id": "",
+      "url": "https://api.github.com/users/Claudio-Chies",
+      "html_url": "https://github.com/Claudio-Chies",
+      "followers_url": "https://api.github.com/users/Claudio-Chies/followers",
+      "following_url": "https://api.github.com/users/Claudio-Chies/following{/other_user}",
+      "gists_url": "https://api.github.com/users/Claudio-Chies/gists{/gist_id}",
+      "starred_url": "https://api.github.com/users/Claudio-Chies/starred{/owner}{/repo}",
+      "subscriptions_url": "https://api.github.com/users/Claudio-Chies/subscriptions",
+      "organizations_url": "https://api.github.com/users/Claudio-Chies/orgs",
+      "repos_url": "https://api.github.com/users/Claudio-Chies/repos",
+      "events_url": "https://api.github.com/users/Claudio-Chies/events{/privacy}",
+      "received_events_url": "https://api.github.com/users/Claudio-Chies/received_events",
+      "type": "User",
+      "user_view_type": "public",
+      "site_admin": false
+    },
+    "committer": {
+      "login": "web-flow",
+      "id": 19864447,
+      "node_id": "MDQ6VXNlcjE5ODY0NDQ3",
+      "avatar_url": "https://avatars.githubusercontent.com/u/19864447?v=4",
+      "gravatar_id": "",
+      "url": "https://api.github.com/users/web-flow",
+      "html_url": "https://github.com/web-flow",
+      "followers_url": "https://api.github.com/users/web-flow/followers",
+      "following_url": "https://api.github.com/users/web-flow/following{/other_user}",
+      "gists_url": "https://api.github.com/users/web-flow/gists{/gist_id}",
+      "starred_url": "https://api.github.com/users/web-flow/starred{/owner}{/repo}",
+      "subscriptions_url": "https://api.github.com/users/web-flow/subscriptions",
+      "organizations_url": "https://api.github.com/users/web-flow/orgs",
+      "repos_url": "https://api.github.com/users/web-flow/repos",
+      "events_url": "https://api.github.com/users/web-flow/events{/privacy}",
+      "received_events_url": "https://api.github.com/users/web-flow/received_events",
+      "type": "User",
+      "user_view_type": "public",
+      "site_admin": false
+    },
+    "parents": [
+      {
+        "sha": "94f19382bc5882e1a2048750e96118ff599c965b",
+        "url": "https://api.github.com/repos/mavlink/mavlink/commits/94f19382bc5882e1a2048750e96118ff599c965b",
+        "html_url": "https://github.com/mavlink/mavlink/commit/94f19382bc5882e1a2048750e96118ff599c965b"
+      }
+    ]
+  },
+  {
+    "sha": "d46e6b71361136be7d95e4cdc80852b7e08c7383",
+    "node_id": "C_kwDOACGBC9oAKGQ0NmU2YjcxMzYxMTM2YmU3ZDk1ZTRjZGM4MDg1MmI3ZTA4YzczODM",
+    "commit": {
+      "author": {
+        "name": "Hamish Willee",
+        "email": "hamishwillee@gmail.com",
+        "date": "2026-08-12T00:51:20Z"
+      },
+      "committer": {
+        "name": "GitHub",
+        "email": "noreply@github.com",
+        "date": "2026-08-12T00:51:20Z"
+      },
+      "message": "update(common): AVAILABLE_MODES.seq (#2557)",
+      "tree": {
+        "sha": "e0071a85bb6a69353afbe2e0246e45e2efe119f4",
+        "url": "https://api.github.com/repos/mavlink/mavlink/git/trees/e0071a85bb6a69353afbe2e0246e45e2efe119f4"
+      },
+      "url": "https://api.github.com/repos/mavlink/mavlink/git/commits/d46e6b71361136be7d95e4cdc80852b7e08c7383",
+      "comment_count": 0,
+      "verification": {
+        "verified": true,
+        "reason": "valid",
+        "signature": "-----BEGIN PGP SIGNATURE-----\n\nwsFcBAABCAAQBQJqe8OICRC1aQ7uu5UhlAAA4ioQAJPmHglQLf0BHz5DBGi4YgF4\nfbqTiRqSoS0pDp7bAOWG6FqCecxKC6jYftwRhCVDa5gpUAsEuHmG/PS/3wcgACTr\n/oLFjeGn7BLF3tdBQGMgF3UkmJ/AYudlt22skanhNgOtSD845gIeMezhDIoHcXNx\n6ELroyF4SbCYXeMD0aIjatCjviLRSW8pRP642S0QVDsv9z+0y97lX+dawx9813U3\nZo3/kjoFLPjO4H2mbXksDuM5kT46pgp/2Hb6ufWq01wjMk1RZmfoPcjYG/g7FdJ2\nuC+wIaZc8u8mzKCVdAfYIq+akT98fxZjwLcDqlSoNf4MU8qgbmvWr2mFTonYavM4\nFx8fKoKFI+f8CvGQAaGn3b01Fav0+I+g2v72pW+IKmiSwuVXXEaePdNT5SCsxGXO\nm3FCPvC3KjciShTRRk9ziWJN+GShI9Yi0lA31HqBcU0S6Wl4v+h716u7ME5IvYlw\nDIHD+2OKkjHS0Q0Yib7VQjSBu/Yx2XgRoUcp9xS7VmH16+buxeGAUwSLjMelXNZC\ntvZuJcBO7cNNXUbamhNik8MfVp8u0eWpOOX3AbbdcJehw+P90zIxwVvn2ZDvO7Ob\nxeOWHA8+IHmHKMV2gNpzXH5V9P5yFA5NTtWUBIOxdEiVeWXnU2NOwZZOsKoiaE5r\n+wFAha4Iyu78I9T3qUqn\n=RzbA\n-----END PGP SIGNATURE-----\n",
+        "payload": "tree e0071a85bb6a69353afbe2e0246e45e2efe119f4\nparent cbb831e0890c810447249d64be6545510ff95307\nauthor Hamish Willee <hamishwillee@gmail.com> 1786495880 +1000\ncommitter GitHub <noreply@github.com> 1786495880 +1000\n\nupdate(common): AVAILABLE_MODES.seq (#2557)",
+        "verified_at": "2026-08-12T00:51:29Z"
+      }
+    },
+    "url": "https://api.github.com/repos/mavlink/mavlink/commits/d46e6b71361136be7d95e4cdc80852b7e08c7383",
+    "html_url": "https://github.com/mavlink/mavlink/commit/d46e6b71361136be7d95e4cdc80852b7e08c7383",
+    "comments_url": "https://api.github.com/repos/mavlink/mavlink/commits/d46e6b71361136be7d95e4cdc80852b7e08c7383/comments",
+    "author": {
+      "login": "hamishwillee",
+      "id": 5368500,
+      "node_id": "MDQ6VXNlcjUzNjg1MDA=",
+      "avatar_url": "https://avatars.githubusercontent.com/u/5368500?v=4",
+      "gravatar_id": "",
+      "url": "https://api.github.com/users/hamishwillee",
+      "html_url": "https://github.com/hamishwillee",
+      "followers_url": "https://api.github.com/users/hamishwillee/followers",
+      "following_url": "https://api.github.com/users/hamishwillee/following{/other_user}",
+      "gists_url": "https://api.github.com/users/hamishwillee/gists{/gist_id}",
+      "starred_url": "https://api.github.com/users/hamishwillee/starred{/owner}{/repo}",
+      "subscriptions_url": "https://api.github.com/users/hamishwillee/subscriptions",
+      "organizations_url": "https://api.github.com/users/hamishwillee/orgs",
+      "repos_url": "https://api.github.com/users/hamishwillee/repos",
+      "events_url": "https://api.github.com/users/hamishwillee/events{/privacy}",
+      "received_events_url": "https://api.github.com/users/hamishwillee/received_events",
+      "type": "User",
+      "user_view_type": "public",
+      "site_admin": false
+    },
+    "committer": {
+      "login": "web-flow",
+      "id": 19864447,
+      "node_id": "MDQ6VXNlcjE5ODY0NDQ3",
+      "avatar_url": "https://avatars.githubusercontent.com/u/19864447?v=4",
+      "gravatar_id": "",
+      "url": "https://api.github.com/users/web-flow",
+      "html_url": "https://github.com/web-flow",
+      "followers_url": "https://api.github.com/users/web-flow/followers",
+      "following_url": "https://api.github.com/users/web-flow/following{/other_user}",
+      "gists_url": "https://api.github.com/users/web-flow/gists{/gist_id}",
+      "starred_url": "https://api.github.com/users/web-flow/starred{/owner}{/repo}",
+      "subscriptions_url": "https://api.github.com/users/web-flow/subscriptions",
+      "organizations_url": "https://api.github.com/users/web-flow/orgs",
+      "repos_url": "https://api.github.com/users/web-flow/repos",
+      "events_url": "https://api.github.com/users/web-flow/events{/privacy}",
+      "received_events_url": "https://api.github.com/users/web-flow/received_events",
+      "type": "User",
+      "user_view_type": "public",
+      "site_admin": false
+    },
+    "parents": [
+      {
+        "sha": "cbb831e0890c810447249d64be6545510ff95307",
+        "url": "https://api.github.com/repos/mavlink/mavlink/commits/cbb831e0890c810447249d64be6545510ff95307",
+        "html_url": "https://github.com/mavlink/mavlink/commit/cbb831e0890c810447249d64be6545510ff95307"
+      }
+    ]
+  },
+  {
+    "sha": "cbb831e0890c810447249d64be6545510ff95307",
+    "node_id": "C_kwDOACGBC9oAKGNiYjgzMWUwODkwYzgxMDQ0NzI0OWQ2NGJlNjU0NTUxMGZmOTUzMDc",
+    "commit": {
+      "author": {
+        "name": "Hamish Willee",
+        "email": "hamishwillee@gmail.com",
+        "date": "2026-08-11T23:31:48Z"
+      },
+      "committer": {
+        "name": "GitHub",
+        "email": "noreply@github.com",
+        "date": "2026-08-11T23:31:48Z"
+      },
+      "message": "common(commands); Add missing hasLocation, isDestination attributes (#1994)",
+      "tree": {
+        "sha": "209f3f44c3ba5ea218e22f4789812bbf5f18a6ff",
+        "url": "https://api.github.com/repos/mavlink/mavlink/git/trees/209f3f44c3ba5ea218e22f4789812bbf5f18a6ff"
+      },
+      "url": "https://api.github.com/repos/mavlink/mavlink/git/commits/cbb831e0890c810447249d64be6545510ff95307",
+      "comment_count": 0,
+      "verification": {
+        "verified": true,
+        "reason": "valid",
+        "signature": "-----BEGIN PGP SIGNATURE-----\n\nwsFcBAABCAAQBQJqe7DkCRC1aQ7uu5UhlAAASiEQAGc/kkF+KrgDUjICpGRDAbnQ\n6+Lghz8Mg39Z6zOj3aBo7mc+hJte879nxvpIrXGG07yeKKhkncaEzBms3IWfoJ70\nLOHaZZ3n9hxzSE54VHFy7cgEw38lQRuaFjQUTRIN2YVzjNdHABN8YqQPNKhfjyCo\nvwbCSHu709ReiIWyAuUuFd0uZvzMmky+ApdSJZreU5Wmymm1JQzm55XKV+lmB9q+\nqZAj73ORUHDcDa3PrMM27IUwX05iZw0s9Acmvi0O/JLH+m8u3NkBNXIAaBXZxy1Z\nZohvIxaDhDMKCAoQlnfj9tt55qAJmyAFdKTl/1jCT6dG2DuXcKP9Lv68ELXSxYF+\nObpmrUSZcwcwsnS0g9mYMYxxAdKi01QxGavpU0Kpg5B5zcFQShQMUGWdIYjnvZyD\nfn4m/XK1n+9TMAXOwHHi5C9C/noA9AJWr9nitNYLNpqWxG50wLjUeUYk65NRLPF4\nRmTyePLGam24DGrfUg3tv06hHY6oHkRTJV3KQgL9lOhCFVMEsp97LJw8WMgq2e/N\nP7O3fdXktfU52poeZY0/5HMs/S/3McOygiS0fjsUGd/IPe4tBryHnIuYlSWwOfc6\nEcTpwdixrvJSCJOLMRlhPJgjUcXGHdbZOfhUKPawP1vcBXC+tuUfLgbYX0nTXLTO\n8XaPQJ5RZgZ1AsbumXiP\n=wVrT\n-----END PGP SIGNATURE-----\n",
+        "payload": "tree 209f3f44c3ba5ea218e22f4789812bbf5f18a6ff\nparent 9527a843fa6804ad38550ab7f337dc6b64667187\nauthor Hamish Willee <hamishwillee@gmail.com> 1786491108 +1000\ncommitter GitHub <noreply@github.com> 1786491108 +1000\n\ncommon(commands); Add missing hasLocation, isDestination attributes (#1994)",
+        "verified_at": "2026-08-11T23:31:57Z"
+      }
+    },
+    "url": "https://api.github.com/repos/mavlink/mavlink/commits/cbb831e0890c810447249d64be6545510ff95307",
+    "html_url": "https://github.com/mavlink/mavlink/commit/cbb831e0890c810447249d64be6545510ff95307",
+    "comments_url": "https://api.github.com/repos/mavlink/mavlink/commits/cbb831e0890c810447249d64be6545510ff95307/comments",
+    "author": {
+      "login": "hamishwillee",
+      "id": 5368500,
+      "node_id": "MDQ6VXNlcjUzNjg1MDA=",
+      "avatar_url": "https://avatars.githubusercontent.com/u/5368500?v=4",
+      "gravatar_id": "",
+      "url": "https://api.github.com/users/hamishwillee",
+      "html_url": "https://github.com/hamishwillee",
+      "followers_url": "https://api.github.com/users/hamishwillee/followers",
+      "following_url": "https://api.github.com/users/hamishwillee/following{/other_user}",
+      "gists_url": "https://api.github.com/users/hamishwillee/gists{/gist_id}",
+      "starred_url": "https://api.github.com/users/hamishwillee/starred{/owner}{/repo}",
+      "subscriptions_url": "https://api.github.com/users/hamishwillee/subscriptions",
+      "organizations_url": "https://api.github.com/users/hamishwillee/orgs",
+      "repos_url": "https://api.github.com/users/hamishwillee/repos",
+      "events_url": "https://api.github.com/users/hamishwillee/events{/privacy}",
+      "received_events_url": "https://api.github.com/users/hamishwillee/received_events",
+      "type": "User",
+      "user_view_type": "public",
+      "site_admin": false
+    },
+    "committer": {
+      "login": "web-flow",
+      "id": 19864447,
+      "node_id": "MDQ6VXNlcjE5ODY0NDQ3",
+      "avatar_url": "https://avatars.githubusercontent.com/u/19864447?v=4",
+      "gravatar_id": "",
+      "url": "https://api.github.com/users/web-flow",
+      "html_url": "https://github.com/web-flow",
+      "followers_url": "https://api.github.com/users/web-flow/followers",
+      "following_url": "https://api.github.com/users/web-flow/following{/other_user}",
+      "gists_url": "https://api.github.com/users/web-flow/gists{/gist_id}",
+      "starred_url": "https://api.github.com/users/web-flow/starred{/owner}{/repo}",
+      "subscriptions_url": "https://api.github.com/users/web-flow/subscriptions",
+      "organizations_url": "https://api.github.com/users/web-flow/orgs",
+      "repos_url": "https://api.github.com/users/web-flow/repos",
+      "events_url": "https://api.github.com/users/web-flow/events{/privacy}",
+      "received_events_url": "https://api.github.com/users/web-flow/received_events",
+      "type": "User",
+      "user_view_type": "public",
+      "site_admin": false
+    },
+    "parents": [
+      {
+        "sha": "9527a843fa6804ad38550ab7f337dc6b64667187",
+        "url": "https://api.github.com/repos/mavlink/mavlink/commits/9527a843fa6804ad38550ab7f337dc6b64667187",
+        "html_url": "https://github.com/mavlink/mavlink/commit/9527a843fa6804ad38550ab7f337dc6b64667187"
+      }
+    ]
+  },
+  {
+    "sha": "9527a843fa6804ad38550ab7f337dc6b64667187",
+    "node_id": "C_kwDOACGBC9oAKDk1MjdhODQzZmE2ODA0YWQzODU1MGFiN2YzMzdkYzZiNjQ2NjcxODc",
+    "commit": {
+      "author": {
+        "name": "murata,katsutoshi",
+        "email": "ma2maru@gmail.com",
+        "date": "2026-08-11T23:20:56Z"
+      },
+      "committer": {
+        "name": "GitHub",
+        "email": "noreply@github.com",
+        "date": "2026-08-11T23:20:56Z"
+      },
+      "message": "common: add SYS_STATUS extended bits for 3rd and 4th magnetometers (#2560)",
+      "tree": {
+        "sha": "7a5bd0569442c9410900476314f1f6e1acfe3f96",
+        "url": "https://api.github.com/repos/mavlink/mavlink/git/trees/7a5bd0569442c9410900476314f1f6e1acfe3f96"
+      },
+      "url": "https://api.github.com/repos/mavlink/mavlink/git/commits/9527a843fa6804ad38550ab7f337dc6b64667187",
+      "comment_count": 0,
+      "verification": {
+        "verified": true,
+        "reason": "valid",
+        "signature": "-----BEGIN PGP SIGNATURE-----\n\nwsFcBAABCAAQBQJqe65YCRC1aQ7uu5UhlAAA8KYQAGzk9UfYCTI7boe3E3JBq3FW\nLrvROb4KcXnJQ+i3e/LaVmrsYZjMPZTFXT05YaPK7k6gMNcAgWd3pqmOjnq3Ktlf\nY/XdAs1li4aq7xdPIepMHU35/cOCtDekQbLRy1OJJTz+CL3s8q0/BwIUjRXrxnAX\nNRSexky/PQRWNc6pS+oUPb2IDu5q3VzBfp3sNDJDZLQL3hWbJPJlTak+MxKg3cMh\nUq/HU9QpMgjl9bgERv09R44Mv82prn4K/EfcJyTI/QBW/E3QwAbJzHZbYNKIIc0d\nVrVzD1iHzhdduiU9kZXZaaCLyK9h9+DgrtTeN8Sp4Tr3QwYzPw/0PdcYBj/CcyXW\nAKae03Qj5QI/xBR7MMNGoZbmQVnhQCsBqlCcK8NOYY1oWqcqs1kU1DkT8mVcxVt8\nE2WyXEJjgq/gNSH3kVUzPKT9IRiLoSALjmm+2O4HscK+8hNNSgsDHjb0w7hFw7hJ\nYyx2zRL2VQjKUw8jokQ0wQ4MD1QtDMEc9kzENgPQyhJiV/otZZowu5QI8RTdIFgQ\nliYfXZm08InLFZxac6v/11Ze6bX7gslo2XG8HjXBN00vxgNbnKhEesahNXoQJBTo\nKDNSioYV+WEsdtHKGpfI8g+I6ev6S+5JI0vSjVX6FT+yfMO5gDk2iWUXHP9KMvTI\nXfNvWmqzbn6cq99Ardm9\n=ZeR/\n-----END PGP SIGNATURE-----\n",
+        "payload": "tree 7a5bd0569442c9410900476314f1f6e1acfe3f96\nparent a950998d1ca995bab31266f01e3de38affbbd0bf\nauthor murata,katsutoshi <ma2maru@gmail.com> 1786490456 +0900\ncommitter GitHub <noreply@github.com> 1786490456 +1000\n\ncommon: add SYS_STATUS extended bits for 3rd and 4th magnetometers (#2560)",
+        "verified_at": "2026-08-11T23:21:06Z"
+      }
+    },
+    "url": "https://api.github.com/repos/mavlink/mavlink/commits/9527a843fa6804ad38550ab7f337dc6b64667187",
+    "html_url": "https://github.com/mavlink/mavlink/commit/9527a843fa6804ad38550ab7f337dc6b64667187",
+    "comments_url": "https://api.github.com/repos/mavlink/mavlink/commits/9527a843fa6804ad38550ab7f337dc6b64667187/comments",
+    "author": {
+      "login": "muramura",
+      "id": 646194,
+      "node_id": "MDQ6VXNlcjY0NjE5NA==",
+      "avatar_url": "https://avatars.githubusercontent.com/u/646194?v=4",
+      "gravatar_id": "",
+      "url": "https://api.github.com/users/muramura",
+      "html_url": "https://github.com/muramura",
+      "followers_url": "https://api.github.com/users/muramura/followers",
+      "following_url": "https://api.github.com/users/muramura/following{/other_user}",
+      "gists_url": "https://api.github.com/users/muramura/gists{/gist_id}",
+      "starred_url": "https://api.github.com/users/muramura/starred{/owner}{/repo}",
+      "subscriptions_url": "https://api.github.com/users/muramura/subscriptions",
+      "organizations_url": "https://api.github.com/users/muramura/orgs",
+      "repos_url": "https://api.github.com/users/muramura/repos",
+      "events_url": "https://api.github.com/users/muramura/events{/privacy}",
+      "received_events_url": "https://api.github.com/users/muramura/received_events",
+      "type": "User",
+      "user_view_type": "public",
+      "site_admin": false
+    },
+    "committer": {
+      "login": "web-flow",
+      "id": 19864447,
+      "node_id": "MDQ6VXNlcjE5ODY0NDQ3",
+      "avatar_url": "https://avatars.githubusercontent.com/u/19864447?v=4",
+      "gravatar_id": "",
+      "url": "https://api.github.com/users/web-flow",
+      "html_url": "https://github.com/web-flow",
+      "followers_url": "https://api.github.com/users/web-flow/followers",
+      "following_url": "https://api.github.com/users/web-flow/following{/other_user}",
+      "gists_url": "https://api.github.com/users/web-flow/gists{/gist_id}",
+      "starred_url": "https://api.github.com/users/web-flow/starred{/owner}{/repo}",
+      "subscriptions_url": "https://api.github.com/users/web-flow/subscriptions",
+      "organizations_url": "https://api.github.com/users/web-flow/orgs",
+      "repos_url": "https://api.github.com/users/web-flow/repos",
+      "events_url": "https://api.github.com/users/web-flow/events{/privacy}",
+      "received_events_url": "https://api.github.com/users/web-flow/received_events",
+      "type": "User",
+      "user_view_type": "public",
+      "site_admin": false
+    },
+    "parents": [
+      {
+        "sha": "a950998d1ca995bab31266f01e3de38affbbd0bf",
+        "url": "https://api.github.com/repos/mavlink/mavlink/commits/a950998d1ca995bab31266f01e3de38affbbd0bf",
+        "html_url": "https://github.com/mavlink/mavlink/commit/a950998d1ca995bab31266f01e3de38affbbd0bf"
+      }
+    ]
+  },
+  {
+    "sha": "92c81a5ff7533f01f4ebaa9fd8aebb5b24a69982",
+    "node_id": "C_kwDOACGBC9oAKDkyYzgxYTVmZjc1MzNmMDFmNGViYWE5ZmQ4YWViYjViMjRhNjk5ODI",
+    "commit": {
+      "author": {
+        "name": "Peter Barker",
+        "email": "pbarker@barker.dropbear.id.au",
+        "date": "2026-07-29T00:30:14Z"
+      },
+      "committer": {
+        "name": "GitHub",
+        "email": "noreply@github.com",
+        "date": "2026-07-29T00:30:14Z"
+      },
+      "message": "common.xml: remove PREFLIGHT_STORAGE_MISSION_ACTION and its use (#2537)\n\nthe PR which added this value didn't mention the addition of this enumeration, so I can only assume that it came along for the ride by accident.",
+      "tree": {
+        "sha": "98f116e44c0b976e2e04b4aa85635166b40debfd",
+        "url": "https://api.github.com/repos/mavlink/mavlink/git/trees/98f116e44c0b976e2e04b4aa85635166b40debfd"
+      },
+      "url": "https://api.github.com/repos/mavlink/mavlink/git/commits/92c81a5ff7533f01f4ebaa9fd8aebb5b24a69982",
+      "comment_count": 0,
+      "verification": {
+        "verified": true,
+        "reason": "valid",
+        "signature": "-----BEGIN PGP SIGNATURE-----\n\nwsFcBAABCAAQBQJqaUmWCRC1aQ7uu5UhlAAAhhIQAAO4a4f6lQMZ/xkbrC+gbo9a\nMiRRQi68f7D8Wvy+Ib3KIg57SKLzk4xZHrF+LaWTUsCj/M7VsK8n61J+xEGgvOp8\nUuR856cE5Ah3/V9wyHwryAk1erloZ9KUw5hZ3jNgTvCgmcFhuGWCHnMQKZvHZi2u\nIdRl1Py5MQfOSS5yAnYPeQ0ylMI04/1/6yTB9oLzSUkXl61zMB21zEbSJoq/5o1n\ndPQujIYkd3b+UVXnIv84+ls4Fs076j2jyZPQSktylf2uWQBFKHM0rZYSRBs8Ykcg\n5p9tmlVn8xiRg2XJYSBI1W71Qsm0nRPYCRwBTQ0Ea3zM0K3aJIoEB/EpF93PBLTQ\nxo8EretK5KFdVzAHuNndxStdOtM4gVtRfcpxdwFwHjYqs61Ez9QR4m8IqKNHdCbf\n+6+UwKWxr5uxPKjzJDWqAXOiDq3b8ujWiWAblosEyZnIahdtdu27L8dtBJowXxq/\ng7wsXtMbMBJi1BjdK3P0OmhVzrRO5t9srV51IGAaaVRJpfakIDBkNUlVHjaZH4Eu\n+BLf2LtemIryYU2QIBswnslV8uCaO21KbaW7Q5QFCH40iVaYiotuqcKhL812XbrE\n9O9B0gZy8yqU8Sg0xKyRrZmyWpkOIMigN1GXmQWfb/PW2eezbN6sAH0GSNgVAI+L\nUnRIWdr4xcT9IT/1ZIBB\n=v7bb\n-----END PGP SIGNATURE-----\n",
+        "payload": "tree 98f116e44c0b976e2e04b4aa85635166b40debfd\nparent de1e078a3a7c53c9262a95b7417959a0f8bf4150\nauthor Peter Barker <pbarker@barker.dropbear.id.au> 1785285014 +1000\ncommitter GitHub <noreply@github.com> 1785285014 +1000\n\ncommon.xml: remove PREFLIGHT_STORAGE_MISSION_ACTION and its use (#2537)\n\nthe PR which added this value didn't mention the addition of this enumeration, so I can only assume that it came along for the ride by accident.",
+        "verified_at": "2026-07-29T00:30:14Z"
+      }
+    },
+    "url": "https://api.github.com/repos/mavlink/mavlink/commits/92c81a5ff7533f01f4ebaa9fd8aebb5b24a69982",
+    "html_url": "https://github.com/mavlink/mavlink/commit/92c81a5ff7533f01f4ebaa9fd8aebb5b24a69982",
+    "comments_url": "https://api.github.com/repos/mavlink/mavlink/commits/92c81a5ff7533f01f4ebaa9fd8aebb5b24a69982/comments",
+    "author": {
+      "login": "peterbarker",
+      "id": 7077857,
+      "node_id": "MDQ6VXNlcjcwNzc4NTc=",
+      "avatar_url": "https://avatars.githubusercontent.com/u/7077857?v=4",
+      "gravatar_id": "",
+      "url": "https://api.github.com/users/peterbarker",
+      "html_url": "https://github.com/peterbarker",
+      "followers_url": "https://api.github.com/users/peterbarker/followers",
+      "following_url": "https://api.github.com/users/peterbarker/following{/other_user}",
+      "gists_url": "https://api.github.com/users/peterbarker/gists{/gist_id}",
+      "starred_url": "https://api.github.com/users/peterbarker/starred{/owner}{/repo}",
+      "subscriptions_url": "https://api.github.com/users/peterbarker/subscriptions",
+      "organizations_url": "https://api.github.com/users/peterbarker/orgs",
+      "repos_url": "https://api.github.com/users/peterbarker/repos",
+      "events_url": "https://api.github.com/users/peterbarker/events{/privacy}",
+      "received_events_url": "https://api.github.com/users/peterbarker/received_events",
+      "type": "User",
+      "user_view_type": "public",
+      "site_admin": false
+    },
+    "committer": {
+      "login": "web-flow",
+      "id": 19864447,
+      "node_id": "MDQ6VXNlcjE5ODY0NDQ3",
+      "avatar_url": "https://avatars.githubusercontent.com/u/19864447?v=4",
+      "gravatar_id": "",
+      "url": "https://api.github.com/users/web-flow",
+      "html_url": "https://github.com/web-flow",
+      "followers_url": "https://api.github.com/users/web-flow/followers",
+      "following_url": "https://api.github.com/users/web-flow/following{/other_user}",
+      "gists_url": "https://api.github.com/users/web-flow/gists{/gist_id}",
+      "starred_url": "https://api.github.com/users/web-flow/starred{/owner}{/repo}",
+      "subscriptions_url": "https://api.github.com/users/web-flow/subscriptions",
+      "organizations_url": "https://api.github.com/users/web-flow/orgs",
+      "repos_url": "https://api.github.com/users/web-flow/repos",
+      "events_url": "https://api.github.com/users/web-flow/events{/privacy}",
+      "received_events_url": "https://api.github.com/users/web-flow/received_events",
+      "type": "User",
+      "user_view_type": "public",
+      "site_admin": false
+    },
+    "parents": [
+      {
+        "sha": "de1e078a3a7c53c9262a95b7417959a0f8bf4150",
+        "url": "https://api.github.com/repos/mavlink/mavlink/commits/de1e078a3a7c53c9262a95b7417959a0f8bf4150",
+        "html_url": "https://github.com/mavlink/mavlink/commit/de1e078a3a7c53c9262a95b7417959a0f8bf4150"
+      }
+    ]
+  },
+  {
+    "sha": "2421d0d245dc7606356418e509fab4b9b13fa7c9",
+    "node_id": "C_kwDOACGBC9oAKDI0MjFkMGQyNDVkYzc2MDYzNTY0MThlNTA5ZmFiNGI5YjEzZmE3Yzk",
+    "commit": {
+      "author": {
+        "name": "Hamish Willee",
+        "email": "hamishwillee@gmail.com",
+        "date": "2026-07-16T22:36:19Z"
+      },
+      "committer": {
+        "name": "GitHub",
+        "email": "noreply@github.com",
+        "date": "2026-07-16T22:36:19Z"
+      },
+      "message": "common: CAMERA_TRACKING_STATUS_FLAGS_COASTING and MTI not WIP (#2547)",
+      "tree": {
+        "sha": "a55981de89d1811a0b1a262fc184bcdb31e484a9",
+        "url": "https://api.github.com/repos/mavlink/mavlink/git/trees/a55981de89d1811a0b1a262fc184bcdb31e484a9"
+      },
+      "url": "https://api.github.com/repos/mavlink/mavlink/git/commits/2421d0d245dc7606356418e509fab4b9b13fa7c9",
+      "comment_count": 0,
+      "verification": {
+        "verified": true,
+        "reason": "valid",
+        "signature": "-----BEGIN PGP SIGNATURE-----\n\nwsFcBAABCAAQBQJqWVzjCRC1aQ7uu5UhlAAApToQAEVINj17E8LtXkdceq0Ki06q\nAgqB2TdItfkgJt1Oi1/bcJQU25qyVcpW1mTSBfOSsGg7/IdzmXTLOG9rRDdj+OoZ\nuJhpt+VYS17ig+hH98Udz0eSGhaIJlnDxCIGbK+dk+iKJMgSuXSin2lGxpeGCQDl\n+2QcIE5flNJ59a7qWwvtJheg+V1kjmtybBA0oGpex0NrzBUXmzzVylJxpz37n7Vg\n4oTRqg8KosN+GnZ/bIx5X7GekXABtEhcYdMWrruXDUyV3XbOlnUHTMlSvhHRPPZz\njiGgvMQ7lgatuWzu//UxwUBl7EUi2FH0uLFevwzq5/LfhxWhPGvc0Lzi9PJAL/Ld\nWS2PvuH9P/eeXcKPpyN8tQoNEeMg/gRPtQ4snZhypGtXNzEmuEsZrinbZGfPLueL\nkfNI8NTkrUzpR4iIlcmB6lDnZVPg/r44EUEQoQawJ629ZPBT1VZIb1/nzXbNIz8u\nzyqSUqUpbKjZe9iy2PjNo4fn9RvGU4X4SGcAI4mVcTKbtUqA3fKMQn8O2F14jOYa\ny6+d9TVpV6I61PN48lm7akx9KcBV1uhl4mxRo7ANOmhd4sPu0d8AAxjK8lIaouA5\nr9FPNZLM8IZSAgi4p12o3pmsyt62fex5ehuut6iW1rCVxv4Lvg68N8ds0UEC/CoZ\nYovoMLaXtGTgsqV8oLzl\n=hvEP\n-----END PGP SIGNATURE-----\n",
+        "payload": "tree a55981de89d1811a0b1a262fc184bcdb31e484a9\nparent 94ceacaa367cdbcc4e2f5e128dd87164d5c95a52\nauthor Hamish Willee <hamishwillee@gmail.com> 1784241379 +1000\ncommitter GitHub <noreply@github.com> 1784241379 +1000\n\ncommon: CAMERA_TRACKING_STATUS_FLAGS_COASTING and MTI not WIP (#2547)",
+        "verified_at": "2026-07-16T22:36:19Z"
+      }
+    },
+    "url": "https://api.github.com/repos/mavlink/mavlink/commits/2421d0d245dc7606356418e509fab4b9b13fa7c9",
+    "html_url": "https://github.com/mavlink/mavlink/commit/2421d0d245dc7606356418e509fab4b9b13fa7c9",
+    "comments_url": "https://api.github.com/repos/mavlink/mavlink/commits/2421d0d245dc7606356418e509fab4b9b13fa7c9/comments",
+    "author": {
+      "login": "hamishwillee",
+      "id": 5368500,
+      "node_id": "MDQ6VXNlcjUzNjg1MDA=",
+      "avatar_url": "https://avatars.githubusercontent.com/u/5368500?v=4",
+      "gravatar_id": "",
+      "url": "https://api.github.com/users/hamishwillee",
+      "html_url": "https://github.com/hamishwillee",
+      "followers_url": "https://api.github.com/users/hamishwillee/followers",
+      "following_url": "https://api.github.com/users/hamishwillee/following{/other_user}",
+      "gists_url": "https://api.github.com/users/hamishwillee/gists{/gist_id}",
+      "starred_url": "https://api.github.com/users/hamishwillee/starred{/owner}{/repo}",
+      "subscriptions_url": "https://api.github.com/users/hamishwillee/subscriptions",
+      "organizations_url": "https://api.github.com/users/hamishwillee/orgs",
+      "repos_url": "https://api.github.com/users/hamishwillee/repos",
+      "events_url": "https://api.github.com/users/hamishwillee/events{/privacy}",
+      "received_events_url": "https://api.github.com/users/hamishwillee/received_events",
+      "type": "User",
+      "user_view_type": "public",
+      "site_admin": false
+    },
+    "committer": {
+      "login": "web-flow",
+      "id": 19864447,
+      "node_id": "MDQ6VXNlcjE5ODY0NDQ3",
+      "avatar_url": "https://avatars.githubusercontent.com/u/19864447?v=4",
+      "gravatar_id": "",
+      "url": "https://api.github.com/users/web-flow",
+      "html_url": "https://github.com/web-flow",
+      "followers_url": "https://api.github.com/users/web-flow/followers",
+      "following_url": "https://api.github.com/users/web-flow/following{/other_user}",
+      "gists_url": "https://api.github.com/users/web-flow/gists{/gist_id}",
+      "starred_url": "https://api.github.com/users/web-flow/starred{/owner}{/repo}",
+      "subscriptions_url": "https://api.github.com/users/web-flow/subscriptions",
+      "organizations_url": "https://api.github.com/users/web-flow/orgs",
+      "repos_url": "https://api.github.com/users/web-flow/repos",
+      "events_url": "https://api.github.com/users/web-flow/events{/privacy}",
+      "received_events_url": "https://api.github.com/users/web-flow/received_events",
+      "type": "User",
+      "user_view_type": "public",
+      "site_admin": false
+    },
+    "parents": [
+      {
+        "sha": "94ceacaa367cdbcc4e2f5e128dd87164d5c95a52",
+        "url": "https://api.github.com/repos/mavlink/mavlink/commits/94ceacaa367cdbcc4e2f5e128dd87164d5c95a52",
+        "html_url": "https://github.com/mavlink/mavlink/commit/94ceacaa367cdbcc4e2f5e128dd87164d5c95a52"
+      }
+    ]
+  },
+  {
+    "sha": "1fe1417edba14c178a20303c6914d3b301097a02",
+    "node_id": "C_kwDOACGBC9oAKDFmZTE0MTdlZGJhMTRjMTc4YTIwMzAzYzY5MTRkM2IzMDEwOTdhMDI",
+    "commit": {
+      "author": {
+        "name": "Claudio Chies",
+        "email": "61051109+Claudio-Chies@users.noreply.github.com",
+        "date": "2026-07-15T02:05:31Z"
+      },
+      "committer": {
+        "name": "GitHub",
+        "email": "noreply@github.com",
+        "date": "2026-07-15T02:05:31Z"
+      },
+      "message": "feat(failure injection): add  traffic avoidance systems to failure_unit (#2543)\n\n* feat(failure injection): add  traffic avoidance systems to failure_unit\n\n* feat(failure injection): add FAILURE_TYPE_DRIFT to failure types in common.xml\n\n* fix(failure injection): improve description for FAILURE_TYPE_DRIFT in common.xml\n\n---------\n\nCo-authored-by: Claudio Chies <chiesc@chies.com>",
+      "tree": {
+        "sha": "1ee3e4e93c6eb9ddb2261113db70dde69ff72bd1",
+        "url": "https://api.github.com/repos/mavlink/mavlink/git/trees/1ee3e4e93c6eb9ddb2261113db70dde69ff72bd1"
+      },
+      "url": "https://api.github.com/repos/mavlink/mavlink/git/commits/1fe1417edba14c178a20303c6914d3b301097a02",
+      "comment_count": 0,
+      "verification": {
+        "verified": true,
+        "reason": "valid",
+        "signature": "-----BEGIN PGP SIGNATURE-----\n\nwsFcBAABCAAQBQJqVurrCRC1aQ7uu5UhlAAAWOEQADOpmZJR8nnzOEnAATduMmh+\nGLW0QfPHle/vjeDIcNVY/5OXdAVSekQli8sH8fnEc1/pv6BEL+RoSrz9umNrAqaF\nRev80EPnbzi8FTGD8whACzFZ5iBShQTNdbYbr7MN/fx3j24KM/BsJyI6SsgMIKF8\nAJcH2L93otRw9qFObuounleAnmJnLllJgGv67/dA0UJpbRt0i+VEsSFerbkRqgDH\nW2Xxstah6cwoI/ICKxgNtdI0KffjkGGTOsTXqwGNV/5iJDfdwKNo1nAgtC2Ye2m8\nr9CnM9sIF+ilegxZH0m3KzFzSBr3edV0kM1RWKJgUJqllIHjGKo1vKcKOKV+bmmK\nISoMqcZxgegNgjWiWstS3fm9TJU19H9vkng30pfs+JiXcqOmo7XMLiFwlreNwEhP\nI60T+xQCn6rIybHRZYUOjHGhDXYPmyKhm9lRofljumz5N1wFnt5GGwVmSXgA6hel\n3T/sM5wR+cnYCcTg3F+JfQM/Mfy8YI4ozYzUIguAo60h6sXyrr1CJsG3zrnogGB1\nOofmubDCG1u2TVctNkF9ol/NEKVypk0r47r2kva72MWma66YDp7gmRyVDcs2600E\n8YtpNGHm4eeReSgn/qPaNrdpvTT3R8nSa63V4QVKskZOBlQwSrrDBVlf/3CbW4lc\nDH5pu55jEhjs0bgG8sQJ\n=8AH2\n-----END PGP SIGNATURE-----\n",
+        "payload": "tree 1ee3e4e93c6eb9ddb2261113db70dde69ff72bd1\nparent 03a027d04b8da05e1c34fb61fa5bdef01763376e\nauthor Claudio Chies <61051109+Claudio-Chies@users.noreply.github.com> 1784081131 -0700\ncommitter GitHub <noreply@github.com> 1784081131 +1000\n\nfeat(failure injection): add  traffic avoidance systems to failure_unit (#2543)\n\n* feat(failure injection): add  traffic avoidance systems to failure_unit\n\n* feat(failure injection): add FAILURE_TYPE_DRIFT to failure types in common.xml\n\n* fix(failure injection): improve description for FAILURE_TYPE_DRIFT in common.xml\n\n---------\n\nCo-authored-by: Claudio Chies <chiesc@chies.com>",
+        "verified_at": "2026-07-15T02:05:31Z"
+      }
+    },
+    "url": "https://api.github.com/repos/mavlink/mavlink/commits/1fe1417edba14c178a20303c6914d3b301097a02",
+    "html_url": "https://github.com/mavlink/mavlink/commit/1fe1417edba14c178a20303c6914d3b301097a02",
+    "comments_url": "https://api.github.com/repos/mavlink/mavlink/commits/1fe1417edba14c178a20303c6914d3b301097a02/comments",
+    "author": {
+      "login": "Claudio-Chies",
+      "id": 61051109,
+      "node_id": "MDQ6VXNlcjYxMDUxMTA5",
+      "avatar_url": "https://avatars.githubusercontent.com/u/61051109?v=4",
+      "gravatar_id": "",
+      "url": "https://api.github.com/users/Claudio-Chies",
+      "html_url": "https://github.com/Claudio-Chies",
+      "followers_url": "https://api.github.com/users/Claudio-Chies/followers",
+      "following_url": "https://api.github.com/users/Claudio-Chies/following{/other_user}",
+      "gists_url": "https://api.github.com/users/Claudio-Chies/gists{/gist_id}",
+      "starred_url": "https://api.github.com/users/Claudio-Chies/starred{/owner}{/repo}",
+      "subscriptions_url": "https://api.github.com/users/Claudio-Chies/subscriptions",
+      "organizations_url": "https://api.github.com/users/Claudio-Chies/orgs",
+      "repos_url": "https://api.github.com/users/Claudio-Chies/repos",
+      "events_url": "https://api.github.com/users/Claudio-Chies/events{/privacy}",
+      "received_events_url": "https://api.github.com/users/Claudio-Chies/received_events",
+      "type": "User",
+      "user_view_type": "public",
+      "site_admin": false
+    },
+    "committer": {
+      "login": "web-flow",
+      "id": 19864447,
+      "node_id": "MDQ6VXNlcjE5ODY0NDQ3",
+      "avatar_url": "https://avatars.githubusercontent.com/u/19864447?v=4",
+      "gravatar_id": "",
+      "url": "https://api.github.com/users/web-flow",
+      "html_url": "https://github.com/web-flow",
+      "followers_url": "https://api.github.com/users/web-flow/followers",
+      "following_url": "https://api.github.com/users/web-flow/following{/other_user}",
+      "gists_url": "https://api.github.com/users/web-flow/gists{/gist_id}",
+      "starred_url": "https://api.github.com/users/web-flow/starred{/owner}{/repo}",
+      "subscriptions_url": "https://api.github.com/users/web-flow/subscriptions",
+      "organizations_url": "https://api.github.com/users/web-flow/orgs",
+      "repos_url": "https://api.github.com/users/web-flow/repos",
+      "events_url": "https://api.github.com/users/web-flow/events{/privacy}",
+      "received_events_url": "https://api.github.com/users/web-flow/received_events",
+      "type": "User",
+      "user_view_type": "public",
+      "site_admin": false
+    },
+    "parents": [
+      {
+        "sha": "03a027d04b8da05e1c34fb61fa5bdef01763376e",
+        "url": "https://api.github.com/repos/mavlink/mavlink/commits/03a027d04b8da05e1c34fb61fa5bdef01763376e",
+        "html_url": "https://github.com/mavlink/mavlink/commit/03a027d04b8da05e1c34fb61fa5bdef01763376e"
+      }
+    ]
+  }
+]

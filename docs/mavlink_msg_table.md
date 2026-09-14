@@ -1,0 +1,26 @@
+| 消息 | ID | CRC_EXTRA | 基础载荷(B) | 完整载荷(B) |
+|---|---|---|---|---|
+| HEARTBEAT | 0 | 50 | 9 | 9 |
+| SYS_STATUS | 1 | 124 | 31 | 43 |
+| SYSTEM_TIME | 2 | 137 | 12 | 12 |
+| PING | 4 | 237 | 14 | 14 |
+| SET_MODE | 11 | 89 | 6 | 6 |
+| PARAM_REQUEST_LIST | 21 | 159 | 2 | 2 |
+| PARAM_VALUE | 22 | 220 | 25 | 25 |
+| GPS_RAW_INT | 24 | 24 | 30 | 52 |
+| ATTITUDE | 30 | 39 | 28 | 28 |
+| LOCAL_POSITION_NED | 32 | 185 | 28 | 28 |
+| GLOBAL_POSITION_INT | 33 | 104 | 28 | 28 |
+| RC_CHANNELS_RAW | 35 | 244 | 22 | 22 |
+| VFR_HUD | 74 | 20 | 20 | 20 |
+| COMMAND_INT | 75 | 158 | 35 | 35 |
+| COMMAND_LONG | 76 | 152 | 33 | 33 |
+| COMMAND_ACK | 77 | 143 | 3 | 10 |
+| HIL_ACTUATOR_CONTROLS | 93 | 47 | 81 | 81 |
+| HIL_SENSOR | 107 | 108 | 64 | 65 |
+| RADIO_STATUS | 109 | 185 | 9 | 9 |
+| HIL_GPS | 113 | 124 | 36 | 39 |
+| HIL_STATE_QUATERNION | 115 | 4 | 64 | 64 |
+| BATTERY_STATUS | 147 | 154 | 36 | 54 |
+| HOME_POSITION | 242 | 104 | 52 | 60 |
+| STATUSTEXT | 253 | 83 | 51 | 54 |

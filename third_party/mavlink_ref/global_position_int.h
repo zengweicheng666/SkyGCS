@@ -1,0 +1,1 @@
+Couldn't find the requested file /common/mavlink_msg_global_position_int.h in mavlink/c_library_v2.
