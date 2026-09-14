@@ -8,6 +8,7 @@
 // ============================================================================
 #include <QCoreApplication>
 #include <QTimer>
+#include <cmath>
 #include <cstdio>
 
 #include "../src/comm/mavlinkendpoint.h"
@@ -48,9 +49,19 @@ int main(int argc, char* argv[])
     bool gotPos = false;
     bool gotMissionReached = false;
     int missionReachedSeq = -1;
+    // 参数
+    bool gotParamList = false;
+    float paramCruiseValue = -1.0f;
 
     QObject::connect(endpoint, &MavlinkEndpoint::vehicleOnline, [&](bool online) {
         gotOnline = gotOnline || online;
+    });
+    QObject::connect(endpoint->vehicle(), &VehicleState::paramChanged,
+                     [&](const QString& name, float value) {
+        if (name == QStringLiteral("MPC_XY_CRUISE")) {
+            paramCruiseValue = value;
+            gotParamList = endpoint->vehicle()->paramCount() >= 8;
+        }
     });
     QObject::connect(endpoint, &MavlinkEndpoint::commandAck, [&](uint16_t cmd, uint8_t res, int, int) {
         if (cmd == mav::CMD_COMPONENT_ARM_DISARM && res == mav::RESULT_ACCEPTED)
@@ -126,6 +137,14 @@ int main(int argc, char* argv[])
         endpoint->startMission();    // 上传完成后开始任务
     });
 
+    // ---- 阶段3: 参数管理 ----
+    QTimer::singleShot(16500, [&]() {
+        endpoint->requestParamList();   // 请求 8 个参数
+    });
+    QTimer::singleShot(18000, [&]() {
+        endpoint->setParam(QStringLiteral("MPC_XY_CRUISE"), 8.5f);   // 修改巡航速度
+    });
+
     QTimer::singleShot(52000, [&]() {
         const VehicleState* v = endpoint->vehicle();
         check(v->isOnline(), "心跳 → 飞行器在线");
@@ -145,6 +164,13 @@ int main(int argc, char* argv[])
               "任务期间位置向航点方向移动 (峰值北/东偏移 >20m)");
         check(v->missionCurrent() == 255 && !v->missionActive(),
               "任务结束: 当前航点复位 (MISSION_CURRENT=255)");
+        // 参数管理 (阶段3)
+        check(v->paramCount() == 8, "参数列表读取完整 (8 个)");
+        check(gotParamList, "收到参数列表 (含 MPC_XY_CRUISE)");
+        check(std::abs(paramCruiseValue - 8.5f) < 1e-3f,
+              "PARAM_SET 修改被飞控确认回传 (MPC_XY_CRUISE=8.5)");
+        check(v->paramType(QStringLiteral("MPC_XY_CRUISE")) == mav::PARAM_TYPE_REAL32,
+              "参数类型正确 (FLOAT)");
         std::printf("\n%s (%d 项)\n", g_fail ? "存在失败项" : "全部通过", g_fail);
         app.exit(g_fail ? 1 : 0);
     });

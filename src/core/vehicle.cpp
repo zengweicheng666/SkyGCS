@@ -228,6 +228,72 @@ void VehicleState::setMissionResult(int result)
     emit missionChanged();
 }
 
+// ---- 参数 (PARAM) ----
+bool VehicleState::paramValue(const QString& name, float& value) const
+{
+    const auto it = params_.constFind(name);
+    if (it == params_.constEnd())
+        return false;
+    value = it->value;
+    return true;
+}
+
+uint8_t VehicleState::paramType(const QString& name) const
+{
+    const auto it = params_.constFind(name);
+    return it == params_.constEnd() ? 0 : it->type;
+}
+
+bool VehicleState::paramDirty(const QString& name) const
+{
+    const auto it = params_.constFind(name);
+    return it == params_.constEnd() ? false : it->dirty;
+}
+
+int VehicleState::paramIndex(const QString& name) const
+{
+    return paramOrder_.indexOf(name);
+}
+
+QString VehicleState::paramIdAt(int index) const
+{
+    if (index < 0 || index >= paramOrder_.size())
+        return QString();
+    return paramOrder_.at(index);
+}
+
+void VehicleState::updateParam(const QString& name, float value, uint8_t type,
+                               int index, int count)
+{
+    ParamEntry& e = params_[name];
+    const bool isNew = !e.dirty && (paramOrder_.indexOf(name) < 0);
+    e.value = value;
+    e.type = type;
+    e.dirty = false;                    // 飞控回传 → 确认
+    if (isNew) {
+        paramOrder_.append(name);
+        paramOrder_.sort(Qt::CaseInsensitive);
+    }
+    Q_UNUSED(index); Q_UNUSED(count);
+    emit paramChanged(name, value);
+    emit stateChanged();
+}
+
+void VehicleState::markParamDirty(const QString& name, bool dirty)
+{
+    auto it = params_.find(name);
+    if (it == params_.end())
+        return;
+    it->dirty = dirty;
+}
+
+void VehicleState::clearParams()
+{
+    params_.clear();
+    paramOrder_.clear();
+    emit stateChanged();
+}
+
 void VehicleState::markOffline()
 {
     if (!online_)

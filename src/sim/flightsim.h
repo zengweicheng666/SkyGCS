@@ -15,6 +15,8 @@
 #include <QObject>
 #include <QTimer>
 #include <QUdpSocket>
+#include <map>
+#include <string>
 #include <vector>
 
 #include "../mavlink/mavlink_codec.h"
@@ -54,6 +56,13 @@ private:
     void emitStatustext(int severity, const QString& text);
     void encodeAndSend(uint32_t msgid, const void* structPtr);
 
+    // ---- 参数 (PARAM) ----
+    void initParams();
+    void handleParamRequestList(const MavMessage& msg);
+    void handleParamRequestRead(const MavMessage& msg);
+    void handleParamSet(const MavMessage& msg);
+    void sendParamValue(const std::string& id, uint8_t targetSys, uint8_t targetComp);
+
     // 物理状态
     double posN_[3] = {0, 0, 0};     // NED m
     double velN_[3] = {0, 0, 0};     // m/s
@@ -68,6 +77,10 @@ private:
     double targetAlt_ = 5.0;
     double battery_ = 100.0;
     qint64 startMs_ = 0;
+
+    // 参数表 (PX4 风格)
+    std::map<std::string, float>  params_;      // 值 (float 存储, 类型单独记录)
+    std::map<std::string, uint8_t> paramTypes_; // MAV_PARAM_TYPE
 
     // ---- 任务 (Mission) ----
     std::vector<MissionItemIntMsg> missionItems_;   // 已上传航点

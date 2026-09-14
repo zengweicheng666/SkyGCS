@@ -19,9 +19,11 @@
 #include "../comm/seriallink.h"
 #include "../comm/udplink.h"
 #include "commandpanel.h"
+#include "flightlogpanel.h"
 #include "linkdialog.h"
 #include "messageinspector.h"
 #include "missionpanel.h"
+#include "parameterpanel.h"
 #include "serialconsole.h"
 #include "telemetrychart.h"
 #include "telemetrypanel.h"
@@ -51,11 +53,15 @@ MainWindow::MainWindow(QWidget* parent)
     teleSplit->setStretchFactor(1, 4);
     commands_ = new CommandPanel(endpoint_, this);
     mission_ = new MissionPanel(endpoint_, this);
+    params_ = new ParameterPanel(endpoint_, this);
+    flightLog_ = new FlightLogPanel(endpoint_, this);
     serialConsole_ = new SerialConsole(this);
     inspector_ = new MessageInspector(endpoint_, this);
     tabs_->addTab(teleSplit, tr("遥测监控"));
     tabs_->addTab(commands_, tr("飞行指令"));
     tabs_->addTab(mission_, tr("任务规划"));
+    tabs_->addTab(params_, tr("参数管理"));
+    tabs_->addTab(flightLog_, tr("飞行日志"));
     tabs_->addTab(serialConsole_, tr("载荷串口控制台"));
     tabs_->addTab(inspector_, tr("消息检查器"));
     setCentralWidget(tabs_);

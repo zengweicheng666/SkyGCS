@@ -5,8 +5,12 @@
 // ============================================================================
 #include <QObject>
 #include <QDateTime>
+#include <QHash>
 #include <QString>
+#include <QStringList>
 #include <cstdint>
+
+#include "../mavlink/mavlink_types.h"
 
 namespace skygcs {
 
@@ -30,6 +34,7 @@ public:
 
     // ---- 模式/状态 ----
     bool armed() const { return armed_; }
+    uint32_t customMode() const { return customMode_; }
     QString modeName() const;            // 解析 PX4 custom_mode
     uint8_t systemStatus() const { return systemStatus_; }
     QString systemStatusName() const;
@@ -83,6 +88,21 @@ public:
     bool missionUploaded() const { return missionUploaded_; }
     int missionResult() const { return missionResult_; }     // MAV_MISSION_RESULT
 
+    // ---- 参数 (PARAM) ----
+    struct ParamEntry {
+        float   value = 0;
+        uint8_t type = mav::PARAM_TYPE_REAL32;
+        bool    dirty = false;      // 已发送待确认 (飞控回传后清除)
+    };
+    QStringList paramNames() const { return params_.keys(); }
+    int paramCount() const { return params_.size(); }
+    bool hasParam(const QString& name) const { return params_.contains(name); }
+    bool paramValue(const QString& name, float& value) const;
+    uint8_t paramType(const QString& name) const;
+    bool paramDirty(const QString& name) const;
+    int paramIndex(const QString& name) const;      // 按插入序, -1=无
+    QString paramIdAt(int index) const;
+
     // ---- 由 endpoint 调用的更新接口 ----
     void updateHeartbeat(uint8_t sysid, uint8_t compid, uint8_t type, uint8_t autopilot,
                          uint8_t baseMode, uint32_t customMode, uint8_t systemStatus);
@@ -101,12 +121,16 @@ public:
     void updateMissionReached(int seq);
     void setMissionUploaded(bool ok);
     void setMissionResult(int result);
+    void updateParam(const QString& name, float value, uint8_t type, int index, int count);
+    void markParamDirty(const QString& name, bool dirty = true);
+    void clearParams();
     void markOffline();
 
 signals:
     void stateChanged();                  // 任何字段更新
     void connectionChanged(bool online);
     void missionChanged();                // 任务状态变化
+    void paramChanged(const QString& name, float value);   // 参数到达/变化
 
 private:
     bool online_ = false;
@@ -144,6 +168,9 @@ private:
     bool missionActive_ = false;
     bool missionUploaded_ = false;
     int missionResult_ = -1;
+
+    QHash<QString, ParamEntry> params_;          // 参数表
+    QStringList paramOrder_;                     // 插入序 (用于 index)
 };
 
 } // namespace skygcs

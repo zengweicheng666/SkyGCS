@@ -2,7 +2,7 @@
 // 本文件由 tools/gen_mavlink.py 自动生成 —— 请勿手工修改
 // 字段序/CRC/LEN 提取自官方 c_library_v2 (github.com/mavlink/c_library_v2)
 // 已按 mavlink C 库 crc_accumulate 算法交叉验证
-// 生成时间: 2026-09-14 18:48:57
+// 生成时间: 2026-09-14 19:39:41
 // ============================================================================
 #pragma once
 #include <cstdint>
@@ -18,8 +18,10 @@ enum MavMsgId : uint32_t {
     MAV_MSG_ID_SYSTEM_TIME = 2,
     MAV_MSG_ID_PING = 4,
     MAV_MSG_ID_SET_MODE = 11,
+    MAV_MSG_ID_PARAM_REQUEST_READ = 20,
     MAV_MSG_ID_PARAM_REQUEST_LIST = 21,
     MAV_MSG_ID_PARAM_VALUE = 22,
+    MAV_MSG_ID_PARAM_SET = 23,
     MAV_MSG_ID_GPS_RAW_INT = 24,
     MAV_MSG_ID_ATTITUDE = 30,
     MAV_MSG_ID_LOCAL_POSITION_NED = 32,
@@ -93,6 +95,14 @@ static constexpr FieldDef kFields_SET_MODE[] = {
     { FieldType::U8, 5, 1 },
 };
 
+// PARAM_REQUEST_READ: id=20, crc_extra=214, payload=20B
+static constexpr FieldDef kFields_PARAM_REQUEST_READ[] = {
+    { FieldType::I16, 0, 2 },
+    { FieldType::U8, 2, 1 },
+    { FieldType::U8, 3, 1 },
+    { FieldType::CHAR, 4, 1, 16 },
+};
+
 // PARAM_REQUEST_LIST: id=21, crc_extra=159, payload=2B
 static constexpr FieldDef kFields_PARAM_REQUEST_LIST[] = {
     { FieldType::U8, 0, 1 },
@@ -106,6 +116,15 @@ static constexpr FieldDef kFields_PARAM_VALUE[] = {
     { FieldType::U16, 6, 2 },
     { FieldType::CHAR, 8, 1, 16 },
     { FieldType::U8, 24, 1 },
+};
+
+// PARAM_SET: id=23, crc_extra=168, payload=23B
+static constexpr FieldDef kFields_PARAM_SET[] = {
+    { FieldType::F32, 0, 4 },
+    { FieldType::U8, 4, 1 },
+    { FieldType::U8, 5, 1 },
+    { FieldType::CHAR, 6, 1, 16 },
+    { FieldType::U8, 22, 1 },
 };
 
 // GPS_RAW_INT: id=24, crc_extra=24, payload=52B
@@ -384,8 +403,10 @@ static constexpr MsgDef kMsgDefs[] = {
     { 2, "SYSTEM_TIME", 137, 12, 12, kFields_SYSTEM_TIME, 2 },
     { 4, "PING", 237, 14, 14, kFields_PING, 4 },
     { 11, "SET_MODE", 89, 6, 6, kFields_SET_MODE, 3 },
+    { 20, "PARAM_REQUEST_READ", 214, 20, 20, kFields_PARAM_REQUEST_READ, 4 },
     { 21, "PARAM_REQUEST_LIST", 159, 2, 2, kFields_PARAM_REQUEST_LIST, 2 },
     { 22, "PARAM_VALUE", 220, 25, 25, kFields_PARAM_VALUE, 5 },
+    { 23, "PARAM_SET", 168, 23, 23, kFields_PARAM_SET, 5 },
     { 24, "GPS_RAW_INT", 24, 30, 52, kFields_GPS_RAW_INT, 10 },
     { 30, "ATTITUDE", 39, 28, 28, kFields_ATTITUDE, 7 },
     { 32, "LOCAL_POSITION_NED", 185, 28, 28, kFields_LOCAL_POSITION_NED, 7 },
@@ -410,6 +431,6 @@ static constexpr MsgDef kMsgDefs[] = {
     { 242, "HOME_POSITION", 104, 52, 60, kFields_HOME_POSITION, 10 },
     { 253, "STATUSTEXT", 83, 51, 54, kFields_STATUSTEXT, 2 },
 };
-static constexpr size_t kMsgDefCount = 30;
+static constexpr size_t kMsgDefCount = 32;
 
 } // namespace skygcs

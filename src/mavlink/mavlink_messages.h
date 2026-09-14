@@ -124,6 +124,23 @@ struct ParamValueMsg {
     uint8_t  param_type;
 };
 
+// PARAM_REQUEST_READ (id=20)
+struct ParamRequestReadMsg {
+    int16_t  param_index;      // -1 → 用 param_id 定位
+    uint8_t  target_system;
+    uint8_t  target_component;
+    char     param_id[16];
+};
+
+// PARAM_SET (id=23)
+struct ParamSetMsg {
+    float    param_value;
+    uint8_t  target_system;
+    uint8_t  target_component;
+    char     param_id[16];
+    uint8_t  param_type;
+};
+
 // GPS_RAW_INT (id=24)
 struct GpsRawIntMsg {
     uint64_t time_usec;
@@ -473,6 +490,48 @@ inline bool unpackMissionItemReached(const MavMessage& msg, MissionItemReachedMs
 {
     const MsgDef* def = MavlinkCodec::findDef(MAV_MSG_ID_MISSION_ITEM_REACHED);
     return def && MavlinkCodec::unpack(*def, msg.data(), msg.size(), &out);
+}
+
+// ---- 参数 (PARAM) ----
+inline bool unpackParamValue(const MavMessage& msg, ParamValueMsg& out)
+{
+    const MsgDef* def = MavlinkCodec::findDef(MAV_MSG_ID_PARAM_VALUE);
+    return def && MavlinkCodec::unpack(*def, msg.data(), msg.size(), &out);
+}
+
+inline bool packParamRequestList(uint8_t sysid, uint8_t compid, MavMessage& out)
+{
+    ParamRequestListMsg m{};
+    m.target_system = sysid; m.target_component = compid;
+    const MsgDef* def = MavlinkCodec::findDef(MAV_MSG_ID_PARAM_REQUEST_LIST);
+    return def && MavlinkCodec::pack(*def, &m, out);
+}
+
+inline bool packParamRequestRead(const char* paramId, uint8_t sysid, uint8_t compid,
+                                 MavMessage& out, int16_t index = -1)
+{
+    ParamRequestReadMsg m{};
+    m.param_index = index;
+    m.target_system = sysid; m.target_component = compid;
+    std::memset(m.param_id, 0, sizeof(m.param_id));
+    if (paramId)
+        std::strncpy(m.param_id, paramId, sizeof(m.param_id) - 1);
+    const MsgDef* def = MavlinkCodec::findDef(MAV_MSG_ID_PARAM_REQUEST_READ);
+    return def && MavlinkCodec::pack(*def, &m, out);
+}
+
+inline bool packParamSet(const char* paramId, float value, uint8_t paramType,
+                         uint8_t sysid, uint8_t compid, MavMessage& out)
+{
+    ParamSetMsg m{};
+    m.param_value = value;
+    m.target_system = sysid; m.target_component = compid;
+    m.param_type = paramType;
+    std::memset(m.param_id, 0, sizeof(m.param_id));
+    if (paramId)
+        std::strncpy(m.param_id, paramId, sizeof(m.param_id) - 1);
+    const MsgDef* def = MavlinkCodec::findDef(MAV_MSG_ID_PARAM_SET);
+    return def && MavlinkCodec::pack(*def, &m, out);
 }
 
 } // namespace skygcs

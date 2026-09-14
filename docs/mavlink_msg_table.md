@@ -5,8 +5,10 @@
 | SYSTEM_TIME | 2 | 137 | 12 | 12 |
 | PING | 4 | 237 | 14 | 14 |
 | SET_MODE | 11 | 89 | 6 | 6 |
+| PARAM_REQUEST_READ | 20 | 214 | 20 | 20 |
 | PARAM_REQUEST_LIST | 21 | 159 | 2 | 2 |
 | PARAM_VALUE | 22 | 220 | 25 | 25 |
+| PARAM_SET | 23 | 168 | 23 | 23 |
 | GPS_RAW_INT | 24 | 24 | 30 | 52 |
 | ATTITUDE | 30 | 39 | 28 | 28 |
 | LOCAL_POSITION_NED | 32 | 185 | 28 | 28 |

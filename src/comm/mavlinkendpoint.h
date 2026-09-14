@@ -56,6 +56,11 @@ public:
     bool startMission();        // CMD_MISSION_START
     bool abortMissionUpload();  // 取消上传流程
 
+    // ---- 参数 (PARAM) ----
+    bool requestParamList();                          // 请求全部参数
+    bool readParam(const QString& name);              // 按名读取单个参数
+    bool setParam(const QString& name, float value, uint8_t type = mav::PARAM_TYPE_REAL32);
+
     // 发送任意 MavMessage (用于仿真注入/扩展)
     bool sendMessage(const MavMessage& msg);
 
@@ -95,6 +100,7 @@ private:
     void handleMissionAck(const MavMessage& msg);
     void handleMissionCurrent(const MavMessage& msg);
     void handleMissionItemReached(const MavMessage& msg);
+    void handleParamValue(const MavMessage& msg);
 
     QList<LinkInterface*> links_;
     QHash<LinkInterface*, MavlinkCodec*> codecs_;

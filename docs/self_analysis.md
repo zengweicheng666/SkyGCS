@@ -34,11 +34,12 @@ SkyGCS 是一套**从协议栈到地面站 UI 全自研**的无人机地面站�
 |---|---|---|
 | **P1（本阶段）** | 任务规划（Mission）：MISSION_COUNT/ITEM_INT/REQUEST/ACK/CURRENT/REACHED 协议 + 仿真航点执行 + UI + 端到端测试 | ✅ 已完成 |
 | **P1（本阶段）** | 遥测实时曲线（QtCharts）：高度/速度/电量趋势 | ✅ 已完成 |
-| P2 | 飞行日志：遥测 CSV 落盘 + 回放 | 待办 |
-| P2 | 参数管理：PARAM 协议 + 参数面板 | 待办 |
+| **P2（本阶段）** | 飞行日志：遥测 CSV 落盘 + 回放（倍速/进度，驱动全 UI） | ✅ 已完成 |
+| **P2（本阶段）** | 参数管理：PARAM_REQUEST_READ/LIST/SET/VALUE 协议 + 参数面板 | ✅ 已完成 |
 | P3 | 对接真实 PX4 SITL、QGC 互通实测 | 待办 |
 | P3 | 载荷协议自动化测试（HDLC/Modbus/SLCAN 与已知字节流比对） | 待办 |
 | P3 | 跨平台构建矩阵（MSVC/Linux/Qt5.15） | 待办 |
+| P3 | 飞控参数下发到仿真物理模型（改 MPC_XY_CRUISE 影响巡航速度） | 待办 |
 
 ## 五、本阶段已实施进阶（落地后回填）
 
@@ -47,3 +48,9 @@ SkyGCS 是一套**从协议栈到地面站 UI 全自研**的无人机地面站�
 - [x] 地面站任务面板（航点添加/删除/上传/开始/进度状态）
 - [x] 遥测实时曲线（QtCharts：高度/垂直速度/电量，60s 滚动窗口）
 - [x] 端到端航点任务测试（test_integration 9→14 项，含 RTL 后 MISSION_CURRENT=255 复位断言）
+- [x] **PARAM 协议扩展**（PARAM_REQUEST_READ id=20 crc=214 / REQUEST_LIST id=21 / VALUE id=22 / SET id=23 crc=168，消息表 30→32 条）
+- [x] **仿真器参数表**（8 个 PX4 风格参数，响应 LIST/READ/SET，修改后回传确认）
+- [x] **参数管理面板**（读取列表/双击改值/PARAM_SET/确认变绿）
+- [x] **飞行日志**（CSV 500ms 采样落盘 + 回放器驱动 VehicleState + 面板倍速/进度）
+- [x] **参数端到端测试**（test_integration 14→18 项：列表读取完整、PARAM_SET 确认回传、类型正确）
+- [x] **飞行日志往返测试**（新增 test_flightlog 14 项：落盘格式/行数/回放状态还原）

@@ -15,8 +15,10 @@
 #include "../src/comm/udplink.h"
 #include "../src/sim/flightsim.h"
 #include "../src/ui/commandpanel.h"
+#include "../src/ui/flightlogpanel.h"
 #include "../src/ui/messageinspector.h"
 #include "../src/ui/missionpanel.h"
+#include "../src/ui/parameterpanel.h"
 #include "../src/ui/telemetrychart.h"
 #include "../src/ui/telemetrypanel.h"
 
@@ -42,7 +44,7 @@ int main(int argc, char* argv[])
     sim->setHome(24.51, 117.65, 30.0);
     sim->startUdpServer(14550);
 
-    // 独立窗口组合: 遥测(数值+曲线) / 飞行指令 / 任务规划 / 消息检查器
+    // 独立窗口组合: 遥测(数值+曲线) / 飞行指令 / 任务规划 / 参数管理 / 飞行日志 / 消息检查器
     QWidget host;
     host.setWindowTitle(QStringLiteral("SkyGCS 无人机地面站 (MAVLink / QT / C++)"));
     host.resize(1295, 857);
@@ -56,6 +58,9 @@ int main(int argc, char* argv[])
     tabs->addTab(new CommandPanel(endpoint, tabs), QStringLiteral("飞行指令"));
     auto* mission = new MissionPanel(endpoint, tabs);
     tabs->addTab(mission, QStringLiteral("任务规划"));
+    auto* params = new ParameterPanel(endpoint, tabs);
+    tabs->addTab(params, QStringLiteral("参数管理"));
+    tabs->addTab(new FlightLogPanel(endpoint, tabs), QStringLiteral("飞行日志"));
     auto* msgList = new QWidget(tabs);
     auto* ml = new QVBoxLayout(msgList);
     ml->addWidget(new MessageInspector(endpoint, msgList));
@@ -91,9 +96,17 @@ int main(int argc, char* argv[])
     QTimer::singleShot(15000, [&]() {
         endpoint->startMission();
     });
+    QTimer::singleShot(17000, [&]() {
+        // 读取参数列表 (参数管理演示)
+        endpoint->requestParamList();
+    });
+    QTimer::singleShot(19500, [&]() {
+        // 修改巡航速度参数, 等待飞控回传确认
+        endpoint->setParam(QStringLiteral("MPC_XY_CRUISE"), 8.5f);
+    });
     QTimer::singleShot(22000, [&]() {
-        // 切换到任务规划页, 展示任务进度
-        tabs->setCurrentWidget(mission);
+        // 切换到参数管理页, 展示参数表 (含确认状态)
+        tabs->setCurrentWidget(params);
     });
     QTimer::singleShot(26000, [&]() {
         const QString out = (argc > 1) ? QString::fromLocal8Bit(argv[1])
@@ -106,6 +119,9 @@ int main(int argc, char* argv[])
         std::printf("vehicle online=%d armed=%d altRel=%.1f mode=%s cur=%d reached=%d\n",
                     v->isOnline(), v->armed() ? 1 : 0, v->relAlt(),
                     qPrintable(v->modeName()), v->missionCurrent(), v->missionReached());
+        float cruise = -1;
+        v->paramValue(QStringLiteral("MPC_XY_CRUISE"), cruise);
+        std::printf("params=%d MPC_XY_CRUISE=%.2f\n", v->paramCount(), cruise);
         app.exit(ok ? 0 : 1);
     });
     return app.exec();

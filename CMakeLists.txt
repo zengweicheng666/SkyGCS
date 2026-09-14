@@ -14,6 +14,7 @@ add_executable(skygcs
     src/main.cpp
     src/mavlink/mavlink_codec.cpp
     src/core/vehicle.cpp
+    src/core/flightlog.cpp
     src/comm/linkinterface.h
     src/comm/seriallink.cpp
     src/comm/udplink.cpp
@@ -25,6 +26,8 @@ add_executable(skygcs
     src/ui/telemetrypanel.cpp
     src/ui/commandpanel.cpp
     src/ui/missionpanel.cpp
+    src/ui/parameterpanel.cpp
+    src/ui/flightlogpanel.cpp
     src/ui/telemetrychart.cpp
     src/ui/linkdialog.cpp
     src/ui/serialconsole.cpp
@@ -53,11 +56,20 @@ if(SKYGCS_BUILD_TESTS)
     target_include_directories(test_integration PRIVATE src)
     target_link_libraries(test_integration PRIVATE Qt::Core Qt::Network)
 
+    # 2b) 飞行日志 记录/回放 往返测试
+    add_executable(test_flightlog tests/test_flightlog.cpp
+        src/mavlink/mavlink_codec.cpp
+        src/core/vehicle.cpp
+        src/core/flightlog.cpp)
+    target_include_directories(test_flightlog PRIVATE src)
+    target_link_libraries(test_flightlog PRIVATE Qt::Core)
+
     # 3) UI 离屏渲染截图 (验证/文档用)
     add_executable(shot_main tests/shot_main.cpp
         src/comm/linkinterface.h
         src/mavlink/mavlink_codec.cpp
         src/core/vehicle.cpp
+        src/core/flightlog.cpp
         src/comm/udplink.cpp
         src/comm/seriallink.cpp
         src/comm/mavlinkendpoint.cpp
@@ -68,6 +80,8 @@ if(SKYGCS_BUILD_TESTS)
         src/ui/telemetrypanel.cpp
         src/ui/commandpanel.cpp
         src/ui/missionpanel.cpp
+        src/ui/parameterpanel.cpp
+        src/ui/flightlogpanel.cpp
         src/ui/telemetrychart.cpp
         src/ui/linkdialog.cpp
         src/ui/serialconsole.cpp

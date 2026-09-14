@@ -91,6 +91,7 @@ void MavlinkEndpoint::handleMessage(const MavMessage& msg)
     case MAV_MSG_ID_MISSION_ACK: handleMissionAck(msg); break;
     case MAV_MSG_ID_MISSION_CURRENT: handleMissionCurrent(msg); break;
     case MAV_MSG_ID_MISSION_ITEM_REACHED: handleMissionItemReached(msg); break;
+    case MAV_MSG_ID_PARAM_VALUE: handleParamValue(msg); break;
     default: break;
     }
 }
@@ -270,6 +271,59 @@ void MavlinkEndpoint::handleMissionItemReached(const MavMessage& msg)
     if (!unpackMissionItemReached(msg, m))
         return;
     vehicle_.updateMissionReached(m.seq);
+}
+
+// ---------------------------------------------------------------------------
+// 参数 (PARAM)
+// ---------------------------------------------------------------------------
+void MavlinkEndpoint::handleParamValue(const MavMessage& msg)
+{
+    ParamValueMsg m;
+    if (!unpackParamValue(msg, m))
+        return;
+    char id[17];
+    std::memcpy(id, m.param_id, 16);
+    id[16] = '\0';
+    vehicle_.updateParam(QString::fromLatin1(id), m.param_value, m.param_type,
+                         m.param_index, m.param_count);
+    emit logMessage(QObject::tr("[参数] %1 = %2 (%3)")
+                    .arg(QString::fromLatin1(id)).arg(m.param_value)
+                    .arg(mav::paramTypeName(m.param_type)));
+}
+
+bool MavlinkEndpoint::requestParamList()
+{
+    vehicle_.clearParams();
+    MavMessage out;
+    if (!packParamRequestList(targetSysid_, targetCompid_, out))
+        return false;
+    if (!sendMessage(out))
+        return false;
+    emit logMessage(QObject::tr("[参数] 请求参数列表..."));
+    return true;
+}
+
+bool MavlinkEndpoint::readParam(const QString& name)
+{
+    MavMessage out;
+    const QByteArray id = name.toLatin1();
+    if (!packParamRequestRead(id.constData(), targetSysid_, targetCompid_, out))
+        return false;
+    return sendMessage(out);
+}
+
+bool MavlinkEndpoint::setParam(const QString& name, float value, uint8_t type)
+{
+    MavMessage out;
+    const QByteArray id = name.toLatin1();
+    if (!packParamSet(id.constData(), value, type, targetSysid_, targetCompid_, out))
+        return false;
+    if (!sendMessage(out))
+        return false;
+    vehicle_.markParamDirty(name, true);
+    emit logMessage(QObject::tr("[参数] 设置 %1 = %2, 等待飞控确认...")
+                    .arg(name).arg(value));
+    return true;
 }
 
 // ---------------------------------------------------------------------------

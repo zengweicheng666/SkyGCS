@@ -20,6 +20,8 @@ namespace skygcs {
 class TelemetryPanel;
 class CommandPanel;
 class MissionPanel;
+class ParameterPanel;
+class FlightLogPanel;
 class SerialConsole;
 class MessageInspector;
 
@@ -48,6 +50,8 @@ private:
     TelemetryPanel* telemetry_ = nullptr;
     CommandPanel* commands_ = nullptr;
     MissionPanel* mission_ = nullptr;
+    ParameterPanel* params_ = nullptr;
+    FlightLogPanel* flightLog_ = nullptr;
     SerialConsole* serialConsole_ = nullptr;
     MessageInspector* inspector_ = nullptr;
 

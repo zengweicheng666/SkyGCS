@@ -64,5 +64,23 @@ inline QString missionResultName(uint8_t r) {
     }
 }
 
+// MAV_PARAM_TYPE → 显示名
+inline QString paramTypeName(uint8_t t)
+{
+    switch (t) {
+    case PARAM_TYPE_UINT8:   return QStringLiteral("UINT8");
+    case PARAM_TYPE_INT8:    return QStringLiteral("INT8");
+    case PARAM_TYPE_UINT16:  return QStringLiteral("UINT16");
+    case PARAM_TYPE_INT16:   return QStringLiteral("INT16");
+    case PARAM_TYPE_UINT32:  return QStringLiteral("UINT32");
+    case PARAM_TYPE_INT32:   return QStringLiteral("INT32");
+    case PARAM_TYPE_UINT64:  return QStringLiteral("UINT64");
+    case PARAM_TYPE_INT64:   return QStringLiteral("INT64");
+    case PARAM_TYPE_REAL32:  return QStringLiteral("FLOAT");
+    case PARAM_TYPE_REAL64:  return QStringLiteral("DOUBLE");
+    default:                 return QStringLiteral("UNKNOWN");
+    }
+}
+
 } // namespace mav
 } // namespace skygcs

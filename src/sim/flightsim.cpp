@@ -23,6 +23,22 @@ FlightSim::FlightSim(QObject* parent)
     connect(&timer_, &QTimer::timeout, this, &FlightSim::onTick);
     connect(&udp_, &QUdpSocket::readyRead, this, &FlightSim::onUdpReady);
     codec_.setLocalIds(1, 1);   // 模拟 PX4: sysid=1, compid=1
+    initParams();
+}
+
+// PX4 风格默认参数 (仅仿真演示集, 非完整 PX4 参数库)
+void FlightSim::initParams()
+{
+    params_.clear();
+    paramTypes_.clear();
+    params_["MPC_XY_CRUISE"] = 10.0f;   paramTypes_["MPC_XY_CRUISE"] = mav::PARAM_TYPE_REAL32;
+    params_["MPC_Z_VEL_MAX"] = 3.0f;    paramTypes_["MPC_Z_VEL_MAX"] = mav::PARAM_TYPE_REAL32;
+    params_["MPC_LAND_SPEED"] = 1.0f;   paramTypes_["MPC_LAND_SPEED"] = mav::PARAM_TYPE_REAL32;
+    params_["RTL_RETURN_ALT"] = 30.0f;  paramTypes_["RTL_RETURN_ALT"] = mav::PARAM_TYPE_REAL32;
+    params_["BAT_CAPACITY"] = 3000.0f;  paramTypes_["BAT_CAPACITY"] = mav::PARAM_TYPE_INT32;
+    params_["MAV_SYS_ID"] = 1.0f;       paramTypes_["MAV_SYS_ID"] = mav::PARAM_TYPE_INT32;
+    params_["COM_DISARM_LAND"] = 1.0f;  paramTypes_["COM_DISARM_LAND"] = mav::PARAM_TYPE_INT32;
+    params_["NAV_ACC_RAD"] = 2.0f;      paramTypes_["NAV_ACC_RAD"] = mav::PARAM_TYPE_REAL32;
 }
 
 void FlightSim::setHome(double lat, double lon, double altMsl)
@@ -217,9 +233,107 @@ void FlightSim::handleCommand(const MavMessage& msg)
         }
         break;
     }
+    case MAV_MSG_ID_PARAM_REQUEST_LIST: {
+        handleParamRequestList(msg);
+        break;
+    }
+    case MAV_MSG_ID_PARAM_REQUEST_READ: {
+        handleParamRequestRead(msg);
+        break;
+    }
+    case MAV_MSG_ID_PARAM_SET: {
+        handleParamSet(msg);
+        break;
+    }
     default:
         break;
     }
+}
+
+// ---------------------------------------------------------------------------
+// 参数 (PARAM)
+// ---------------------------------------------------------------------------
+void FlightSim::sendParamValue(const std::string& id, uint8_t /*targetSys*/,
+                               uint8_t /*targetComp*/)
+{
+    auto it = params_.find(id);
+    if (it == params_.end())
+        return;
+    ParamValueMsg m{};
+    m.param_value = it->second;
+    m.param_count = static_cast<uint16_t>(params_.size());
+    m.param_index = static_cast<uint16_t>(std::distance(params_.begin(), it));
+    m.param_type = paramTypes_[id];
+    std::memset(m.param_id, 0, sizeof(m.param_id));
+    std::memcpy(m.param_id, id.c_str(), std::min<size_t>(15, id.size()));
+    encodeAndSend(MAV_MSG_ID_PARAM_VALUE, &m);
+}
+
+void FlightSim::handleParamRequestList(const MavMessage& msg)
+{
+    emitStatustext(mav::SEVERITY_INFO,
+                   QStringLiteral("收到参数列表请求 (%1 个参数)").arg(params_.size()));
+    for (const auto& kv : params_)
+        sendParamValue(kv.first, msg.sysid, msg.compid);
+}
+
+void FlightSim::handleParamRequestRead(const MavMessage& msg)
+{
+    ParamRequestReadMsg req;
+    const MsgDef* def = MavlinkCodec::findDef(MAV_MSG_ID_PARAM_REQUEST_READ);
+    if (!def || !MavlinkCodec::unpack(*def, msg.data(), msg.size(), &req))
+        return;
+    if (req.param_index >= 0 && req.param_index < static_cast<int16_t>(params_.size())) {
+        auto it = params_.begin();
+        std::advance(it, req.param_index);
+        sendParamValue(it->first, msg.sysid, msg.compid);
+        return;
+    }
+    char id[17];
+    std::memcpy(id, req.param_id, 16);
+    id[16] = '\0';
+    std::string name(id);
+    if (!name.empty()) {
+        auto it = params_.find(name);
+        if (it != params_.end()) {
+            sendParamValue(name, msg.sysid, msg.compid);
+            return;
+        }
+    }
+    // 未知参数 → param_count=0 表示无此参数
+    ParamValueMsg m{};
+    m.param_value = 0;
+    m.param_count = 0;
+    m.param_index = 0xFFFF;
+    m.param_type = 0;
+    std::memset(m.param_id, 0, sizeof(m.param_id));
+    encodeAndSend(MAV_MSG_ID_PARAM_VALUE, &m);
+}
+
+void FlightSim::handleParamSet(const MavMessage& msg)
+{
+    ParamSetMsg s;
+    const MsgDef* def = MavlinkCodec::findDef(MAV_MSG_ID_PARAM_SET);
+    if (!def || !MavlinkCodec::unpack(*def, msg.data(), msg.size(), &s))
+        return;
+    char id[17];
+    std::memcpy(id, s.param_id, 16);
+    id[16] = '\0';
+    std::string name(id);
+    auto it = params_.find(name);
+    if (it == params_.end()) {
+        emitStatustext(mav::SEVERITY_ERROR,
+                       QStringLiteral("参数 %1 不存在, 拒绝修改").arg(QString::fromLatin1(id)));
+        return;
+    }
+    it->second = s.param_value;
+    if (s.param_type != 0)
+        paramTypes_[name] = s.param_type;
+    emitStatustext(mav::SEVERITY_INFO,
+                   QStringLiteral("参数已修改: %1 = %2")
+                       .arg(QString::fromLatin1(id)).arg(s.param_value));
+    // 回传新值确认
+    sendParamValue(name, msg.sysid, msg.compid);
 }
 
 void FlightSim::processCommandLong(const CommandLongMsg& c)
