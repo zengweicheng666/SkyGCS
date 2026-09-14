@@ -1,0 +1,21 @@
+# ---- 构建产物 ----
+build/
+*.user
+*.autosave
+*.suo
+
+# ---- IDE / 编辑器 ----
+.vscode/
+.idea/
+*.iml
+*.swp
+*.swo
+
+# ---- 运行时 / 日志 ----
+*.log
+*.tmp
+
+# ---- 系统文件 ----
+Thumbs.db
+Desktop.ini
+.DS_Store
